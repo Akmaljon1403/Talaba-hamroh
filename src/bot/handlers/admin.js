@@ -16,6 +16,11 @@ export const adminActionStates = new Map();
 const pendingAdminMutations = new Map();
 
 export async function handleAdminPanel(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    if (ctx.callbackQuery) await ctx.answerCallbackQuery('Admin paneldan bot bilan shaxsiy chatda foydalaning.');
+    else await ctx.reply('🔒 Xavfsizlik uchun admin paneldan bot bilan shaxsiy chatda foydalaning.');
+    return;
+  }
   if (!ctx.isAdmin) {
     if (ctx.callbackQuery) {
       await ctx.answerCallbackQuery('Sizda admin ruxsati yo‘q.');
@@ -43,6 +48,11 @@ export async function handleAdminPanel(ctx) {
 }
 
 export async function handleAdminAddAdminPrompt(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Admin boshqaruvi faqat shaxsiy chatda ishlaydi.');
+    return;
+  }
+
   if (!ctx.isSuperAdmin) {
     await ctx.answerCallbackQuery('Yangi admin qo‘shish faqat superadmin uchun.');
     return;
@@ -59,6 +69,11 @@ export async function handleAdminAddAdminPrompt(ctx) {
 }
 
 export async function handleAdminManageAdmins(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Admin boshqaruvi faqat shaxsiy chatda ishlaydi.');
+    return;
+  }
+
   if (!ctx.isSuperAdmin) {
     await ctx.answerCallbackQuery('Adminlarni boshqarish faqat superadmin uchun.');
     return;
@@ -82,6 +97,11 @@ export async function handleAdminManageAdmins(ctx) {
 }
 
 export async function handleAdminRequestRemove(ctx, targetTelegramId) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Admin boshqaruvi faqat shaxsiy chatda ishlaydi.');
+    return;
+  }
+
   if (!ctx.isSuperAdmin) {
     await ctx.answerCallbackQuery('Bu amal faqat superadmin uchun.');
     return;
@@ -127,6 +147,11 @@ async function showAdminMutationResult(ctx, message, alertText) {
 }
 
 export async function handleAdminConfirmMutation(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Admin boshqaruvi faqat shaxsiy chatda ishlaydi.');
+    return;
+  }
+
   if (!ctx.isSuperAdmin) {
     await ctx.answerCallbackQuery('Bu amal faqat superadmin uchun.');
     return;
