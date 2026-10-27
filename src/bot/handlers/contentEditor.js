@@ -257,7 +257,7 @@ export async function handleContentSaveConfirm(ctx) {
   }
 
   try {
-    const updated = await updateEditableField(state.entityType, state.entityId, state.fieldKey, state.value, state.oldValue);
+    const updated = await updateEditableField(state.entityType, state.entityId, state.fieldKey, state.value, state.oldValue, userId);
     contentEditStates.delete(userId);
     const config = getEditableEntityConfig(state.entityType);
     const field = getEditableField(state.entityType, state.fieldKey);
@@ -312,4 +312,53 @@ export async function handleContentEditCancel(ctx) {
     { reply_markup: new InlineKeyboard().text('🗂 Ma’lumotlar ro‘yxati', 'content_editor_home') }
   );
   await ctx.answerCallbackQuery('Bekor qilindi.');
+}
+
+
+export async function handleContentEditHistory(ctx) {
+  if (!(await requirePrivateChat(ctx))) return;
+  if (!ctx.isAdmin) {
+    await ctx.answerCallbackQuery('Faqat adminlar tahrirlar tarixini ko‘ra oladi.');
+    return;
+  }
+
+  const edits = await getRecentContentEdits(12);
+  const typeLabels = {
+    dept: 'Kafedra',
+    subject: 'Fan',
+    teacher: 'O‘qituvchi / mudir',
+    base: 'Klinik baza',
+    room: 'Auditoriya',
+    book: 'Kitob',
+    calendar: 'O‘quv jadvali',
+    faculty: 'Fakultet',
+    service: 'Talaba xizmati'
+  };
+  let text = '🧾 <b>So‘nggi tahrirlar tarixi</b>\n\n';
+  const kb = new InlineKeyboard();
+
+  if (edits.length === 0) {
+    text += 'Hozircha hech qanday tahrir saqlanmagan.';
+  } else {
+    edits.forEach((item, index) => {
+      const typeLabel = typeLabels[item.entity_type] || item.entity_type;
+      const config = getEditableEntityConfig(item.entity_type);
+      const field = getEditableField(item.entity_type, item.field_name);
+      const fieldLabel = field?.label || item.field_name;
+      const oldValue = String(item.old_value ?? '—').replace(/\\s+/g, ' ').slice(0, 90);
+      const newValue = String(item.new_value ?? '—').replace(/\\s+/g, ' ').slice(0, 90);
+      const date = new Date(item.created_at).toLocaleString('uz-UZ', { timeZone: 'Asia/Tashkent' });
+
+      text += `${index + 1}. <b>${escapeHtml(typeLabel)}</b> #${item.entity_id}\n` +
+        `   Maydon: <b>${escapeHtml(fieldLabel)}</b>\n` +
+        `   <code>${escapeHtml(oldValue)}</code> → <code>${escapeHtml(newValue)}</code>\n` +
+        `   Admin ID: <code>${escapeHtml(item.actor_telegram_id)}</code>\n` +
+        `   🕒 ${escapeHtml(date)}\n\n`;
+    });
+  }
+
+  kb.text('⬅️ Ma’lumotlar boshqaruvi', 'content_editor_home')
+    .text('⚙️ Admin paneli', 'admin_panel');
+  await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });
+  await ctx.answerCallbackQuery();
 }
