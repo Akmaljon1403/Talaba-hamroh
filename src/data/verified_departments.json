@@ -1,0 +1,2493 @@
+[
+  {
+    "name": "Kommunal va mehnat gigiyenasi",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Gigiyena, harbiy gigiyena. Tibbiy ekologiya",
+        "courses": "2-3",
+        "semesters": "4/5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ekologiya",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Gigiyena. Tibbiy ekologiya",
+        "courses": "1-2",
+        "semesters": "1/3/4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Kommunal gigiyena",
+        "courses": "3-4-5",
+        "semesters": "6/7/8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Mehnat gigiyenasi",
+        "courses": "3-4-5",
+        "semesters": "6/7/8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Radiatsion gigiyena",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Gigiyena va ekologiya. Valeologiya",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ekologiya va gigiyena",
+        "courses": "1",
+        "semesters": "1",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Ovqatlanish, bolalar va o‘smirlar gigiyenasi",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Mutaxassislikka kirish (Tibbiy profilaktika",
+        "courses": "1",
+        "semesters": "2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Bolalar va o'smirlar gigiyenasi",
+        "courses": "3-4-5",
+        "semesters": "6/7/8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ovqatlanish gigiyenasi",
+        "courses": "3-4-5",
+        "semesters": "6/7/8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Nutristiologiya",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Nutritsiologiya (Dietologiya)",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Fakultativ kurs. Jismoniy tarbiya va sport",
+        "courses": "1",
+        "semesters": "1",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Marketing, menejment",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Jamoat salomatligi. Marketing, menejment",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Jamoat salomatligi.",
+        "courses": "5-4",
+        "semesters": "9/10/7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Davolovchi jismoniy tarbiya va an'anaviy",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Sog'lom turmush tarzi",
+        "courses": "2",
+        "semesters": "4/5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Jismoniy tarbiya va sport",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3-5",
+        "semesters": "6/9",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Jamoat salomatligi va sog'liqni saqlashni",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Yuqumli kasalliklar",
+        "courses": "3-4-5",
+        "semesters": "7/8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Epidemiologiya",
+        "courses": "5-4",
+        "semesters": "7/8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Bolalar yuqumli kasalliklari",
+        "courses": "6",
+        "semesters": "11/12",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Epidemiologiya. Xarbiy epidemiologiya",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "4-5",
+        "courses": "7",
+        "semesters": "/8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Yuqumli kasalliklar. Epidemiologiya",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Yuqumli kasalliklar. Ftiziatriya",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Endokrinologiyada hamshiralik ishi",
+        "courses": "3",
+        "semesters": "3/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiy psixologiya",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Reabilitologiya. Kinezologiya",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Hamshiralik ishi",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "amaliyotida kommunikatsiya. Tibbiy",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Universal progressiv model",
+        "courses": "2",
+        "semesters": "3/4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Infeksion nazorat. Klinik epidemiologiya",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Terapiyada hamshiralik ishi",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Gerontologiyada hamshiralik ishi",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Hamshiralik ishida boshqaruv",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Yuqimli kasaliklarda hamshiralik ishi",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Asab kasalliklarida hamshiralik ishi",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Neontalogiyada hamshiralik ishi",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Psixiatriya va narkologiyada hamshiralik ishi",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Pediatriyada hamshiralik ishi",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Onkologiyada hamshiralik ishi",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Jamoada hamshiralik ishi",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Funksional diagnostika hamshirasi",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Karantin va o'ta xavfli yuqumli kasalliklar",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tez tibbiy yordam. Favqulodda vaziyatlar",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Bakteriologiya",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Radiologiyada hamshiralik ishi",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Mikrobiologiya, virusologiya va immunologiya",
+    "level": "bakalavriat",
+    "headName": "Rasulov Fozil Hasanovich",
+    "contactPhone": "91-283-39-58",
+    "subjects": [
+      {
+        "name": "Mikrobiologiya, virusologiya va immunologiya",
+        "courses": "1-2-3",
+        "semesters": "2/3/4/5",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Xalq tabobati va farmakologiya",
+    "level": "bakalavriat",
+    "headName": "Xoliqova Oyista Yuldashevna",
+    "contactPhone": "91-650-19-73",
+    "subjects": [
+      {
+        "name": "Farmokologiya",
+        "courses": "2-3-4",
+        "semesters": "3/5/6/7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Xalq tabobati",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Klinik farmokologiya",
+        "courses": "3-4",
+        "semesters": "5/7/",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Mutaxasislikka kirish (Farmatsiya)",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Farmakognoziya",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Farmatsevtik kimyo",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Farmatsevtik biotexnologiya",
+        "courses": "5",
+        "semesters": "9",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Farmasevtika ishini tashkil qilish",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Farmatsevtik texnologiya",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tayyor dori turlari texnologiyasi",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Klinik farmatsiya va farmakokinetika asoslari",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Biofarmatsiya",
+        "courses": "5",
+        "semesters": "10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Fizioterapiya",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Manual terapiya",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Refloksoterapiya",
+        "courses": "3-4",
+        "semesters": "6/7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Sharq tabobati patologik sindromlar",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Kineziologiya, osteopatiya",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Naturopatiya",
+        "courses": "4",
+        "semesters": "8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "4-5",
+        "courses": "7",
+        "semesters": "/8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Regional patologiya. Kasb kasalliklari. Gipnoz",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Fitoterapiya",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Farmatsevtik yordam",
+        "courses": "2",
+        "semesters": "3/4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Farmasevtik ma'lumot",
+        "courses": "3-5",
+        "semesters": "5/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Farmatsevtik bioetika",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Farmatsevtik botanika",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Biotibbiyot muhandisligi, biofizika va axborot texnologiyalari",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Biotibbiyot signallarini qayta ishlash",
+        "courses": "2",
+        "semesters": "3/4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Mexanika va elektronika",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiyotda ikkilamchi asboblar",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiyotda axborot texnologiyalari",
+        "courses": "1",
+        "semesters": "2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Nazariy mexanika",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ta'limda axborot texnologiyalari",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ta'lim texnologiyalari",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Farmatsevtikada axborot texnologiyalari",
+        "courses": "1",
+        "semesters": "1",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Fizika",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Texnik tizilmalarda axborot texnologiyalari",
+        "courses": "1",
+        "semesters": "1",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Biofizika",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Xayot faoliyati xavfsizligi. Fuqaro muhofazasi",
+        "courses": "2-3",
+        "semesters": "3/4/5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Oliy matematika",
+        "courses": "1-2",
+        "semesters": "1/2/3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiyot qurilmalarini dasturlash",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Muhandislik va kompyuter grafikasi",
+        "courses": "1",
+        "semesters": "1",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Yo'nalishga kirish",
+        "courses": "1",
+        "semesters": "1",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Biotibbiyot sxemalari",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Biotibbiyot datchiklari",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Elektrotexnika va elektronika",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Sxematexnika",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Elektrotexnikaning umumiy va nazariy",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "uskunalari va tizimlaridagi impuls texnikasi",
+        "courses": "4",
+        "semesters": "8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Biomaterialshunoslik",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "5",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Mikroprotsessor texnikasi.",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "5",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Biologik va tibbiyot tizimlarini boshqarish",
+        "courses": "5",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "5",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "5",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiy elektronika",
+        "courses": "5",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Metrologiya va standartlashtirish",
+        "courses": "2-5",
+        "semesters": "4/7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Qurilma va tizimlarni dasturlash",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "o'zaro ta'sir asoslari",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Umumiy fizika va biofizika",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Intelektual o'lchov texnikasi",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Impuls texnikasi",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiy qurilmalarda axborot texnologiyasi",
+        "courses": "4",
+        "semesters": "8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Matematika va matematik statistika",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ichki kasalliklar propdevtikasi",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Terapiya. Klinik farmakologiya",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ichki kasalliklar 4 л",
+        "courses": "7",
+        "semesters": "/8",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Terapiya yo",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Ambulator poliklinik terapiya",
+        "courses": "6",
+        "semesters": "/11/12",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ichki kasalliklar (davolash ishi)",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Pulmonologiya",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Reabilitalogiya, sport tibbiyoti",
+        "courses": "6",
+        "semesters": "11/12",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Xarbiy dala jarrohligi",
+        "courses": "5",
+        "semesters": "9",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Neyroxirurgiya",
+        "courses": "5",
+        "semesters": "10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Neyroxirurugiya, bolalar neyroxirurgiyasi",
+        "courses": "5",
+        "semesters": "10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Travmatologiya va ortopediya",
+        "courses": "3-4",
+        "semesters": "6/7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Reabilitologiya",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Xirurgiya. Neyroxirurgiya",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Xirurgiya. Neyroxirurgiya. Tez tibbiy yordam",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Normal anatomiya, operativ jarrohlik va topografik anatomiya",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Odam anatomiyasi",
+        "courses": "1-2",
+        "semesters": "1/2/3",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Gospital terapiya",
+    "level": "bakalavriat",
+    "headName": "Mahmudov Nurillo Ismoilovich",
+    "contactPhone": "90-562-11-11",
+    "subjects": [
+      {
+        "name": "Klinik laboratoriya diagnostika",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ichki kasaliklar. Kasb kasaliklari XDT",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ichki kasalliklar. Klinik allergiologiya,",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Klinik laboratoriya diagnostika",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ichki kasaliklar. Kasb kasaliklari XDT",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Laboratoriya ishiga kirish",
+        "courses": "1",
+        "semesters": "2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Terapiya",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ichki kasaliklar XDT",
+        "courses": "2-3",
+        "semesters": "4/5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Funksional diagnostika",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "5-6",
+        "semesters": "9/10/11",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiyot kasbiga kirish",
+        "courses": "1",
+        "semesters": "1",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Umumiy",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Oftalmologiya",
+        "courses": "4-5",
+        "semesters": "7/8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Bolalar xirurgiyasi",
+        "courses": "4-5-6",
+        "semesters": "7/8/9/10/12",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Umumiy xirurgiya",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Xirurgik kasalliklar",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Oftalmologiya, bolalar oftalmologiyasi",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Oilaviy shifokorlikda xirurgik kasaliklar",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Fakultativ va gospital",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Anesteziologiya reanimatologiya",
+        "courses": "5",
+        "semesters": "9",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Klinik anatomiya",
+        "courses": "2-3",
+        "semesters": "4/5",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Akusherlik va ginekologiya",
+    "level": "bakalavriat",
+    "headName": "Suyarqulova Madxiya Erkinovna",
+    "contactPhone": "90-581-47-46",
+    "subjects": [
+      {
+        "name": "Akusherlik va ginekologiya 4 - ^ / ^ /",
+        "courses": "8",
+        "semesters": "/11/12",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Akusherlik va ginekologiya. Pediatriya",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Reproduktiv salomatlik",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4-5",
+        "semesters": "8/9",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "4-5",
+        "courses": "7",
+        "semesters": "/8/9/10",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Urologiya va onkologiya",
+    "level": "bakalavriat",
+    "headName": "Yuldashov Fayzulla Yuldashevich",
+    "contactPhone": "90-277-00-88",
+    "subjects": [
+      {
+        "name": "Onkologiya",
+        "courses": "3-5",
+        "semesters": "5/6/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Palliativ tibbiy yordam",
+        "courses": "5",
+        "semesters": "10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Xirurgik kasalliklar. Urologiya",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Nevrologiya va psixiatriya",
+    "level": "bakalavriat",
+    "headName": "Muradimova Alfiya Rashidovna",
+    "contactPhone": "91-608-42-89",
+    "subjects": [
+      {
+        "name": "Psixiatriya, narkologiya",
+        "courses": "4-5",
+        "semesters": "7/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Nevrologiya, tibbiy genetika",
+        "courses": "4",
+        "semesters": "8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Psixiatriya, narkologiya. Tibbiy psixologiya.",
+        "courses": "4",
+        "semesters": "8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Nevrologiya, bolalar nevrologiyasi",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Asab kasalliklari. Tibbiy genetika.",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiy psixologiya",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Psixiatriya, narkologiya, bolalar psixiatriyasi",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Neyroreabilitalogiya va manual terapiya",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Pediatriya",
+    "level": "bakalavriat",
+    "headName": "Shermatov Rasuljon Mamasiddiqovich",
+    "contactPhone": "99-605-77-08",
+    "subjects": [
+      {
+        "name": "Pediatriya (davolash ishi]",
+        "courses": "3-4",
+        "semesters": "6/7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Neonatologiya",
+        "courses": "4",
+        "semesters": "8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ambulator poliklinik pediatriya",
+        "courses": "6",
+        "semesters": "11/12",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Pediatriya. Neonatologiya.",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Klinik gemostaziologiya",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiyot kasbiga kirish",
+        "courses": "1",
+        "semesters": "2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Bolalar kasalliklari propedevtikasi",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tez tibbiy yordam",
+        "courses": "5-6",
+        "semesters": "9/10/11/12",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Pediatriya (Pediatriya, Xalq tabobati)",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Anesteziologiya, reanimatologiya",
+        "courses": "5",
+        "semesters": "9",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Pediatriya. Neonatologiya.",
+        "courses": "4-5",
+        "semesters": "7/8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "5",
+        "semesters": "9",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Pediatriya. Tibbiy genetika",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Stomatologiya va otorinolaringologiya",
+    "level": "bakalavriat",
+    "headName": "Umarov Odiljon Maxmudovich",
+    "contactPhone": "90-562-34-68",
+    "subjects": [
+      {
+        "name": "Otorinolaringologiya, stomatologiya",
+        "courses": "4-5",
+        "semesters": "8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Otorinolaringologiya",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Stomatologiya",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Stomatologiyaga kirish",
+        "courses": "1",
+        "semesters": "1",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ortopedik stomatologiya propedevtikasi",
+        "courses": "1-2",
+        "semesters": "2/3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Klinik restavratsion stomatalogiya",
+        "courses": "2",
+        "semesters": "3/4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Og'iz bo'shlig'i gigiyenasi",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Klinik endodontiya",
+        "courses": "3-4",
+        "semesters": "5/6/7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Xirurgik stomatologiya",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Fakultet ortopedik stomatologiya",
+        "courses": "1",
+        "semesters": "35/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Og'iz bo'shligi jarrohligi",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Stomatologik kasalliklar profilaktikasi",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Bolalar kariesologiyasi",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Dental implantologiya",
+        "courses": "4",
+        "semesters": "7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ortodontiya",
+        "courses": "4-5",
+        "semesters": "7/8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Yuz-jag' kasalliklari va jarohatlari",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Bolalar jarrohligi stomatologiyasi",
+        "courses": "4-5",
+        "semesters": "8/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Paradontologiya",
+        "courses": "4-5",
+        "semesters": "8/9",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "To'liq olinadigan tishlar bilan protezlash",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Preklinik restavratsion stomatologiya",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Olinadigan tishlar bilan protezlash",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Og'iz bo'shlig'i shiliq parda kasalliklari",
+        "courses": "5",
+        "semesters": "9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Yuz-jag' jarrohligi",
+        "courses": "5",
+        "semesters": "10",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Dermatovenerologiya va allergologiya",
+    "level": "bakalavriat",
+    "headName": "Sidikov Akmal Abdikaxarovich",
+    "contactPhone": "73-245-59-07",
+    "subjects": [
+      {
+        "name": "Dermatovenerologiya",
+        "courses": "3-4",
+        "semesters": "6/7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Klinik allergologiya, immunologiya",
+        "courses": "5",
+        "semesters": "5/9",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Dermatovenerologiya va bolalar",
+        "courses": "3-4",
+        "semesters": "6/7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiy radiologiya 3-4 V",
+        "courses": "5",
+        "semesters": "/6/7",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ftiziatriya, bolalar ftiziatriyasi",
+        "courses": "5",
+        "semesters": "/9/10",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ichki kasalliklar. Endokrinologiya",
+        "courses": "3",
+        "semesters": "5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ftiziatriya",
+        "courses": "4",
+        "semesters": "6/7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Endokrinologiya",
+        "courses": "3-4",
+        "semesters": "5/7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Endokrinologiya, bolalar endokronologiyasi",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Umumiy va tibbiy radiologiya",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ichki kasalliklar. Ftiziatriya",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "O'zbek/Rus tili. Tibbiyotda xorijiy til",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "0 ‘zbek tilining sohada qo'llanilishi",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiyotda xorijiy til",
+        "courses": "1",
+        "semesters": "2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "0'zbek(Rus tili)",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Xorijiy til",
+        "courses": "1-2",
+        "semesters": "2/4",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Lotin tili, pedagogika va psixologiya",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Lotin tili va tibbiy terminologiya",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Psixologiya",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Psixologiya va pedagogika",
+        "courses": "1-5",
+        "semesters": "2/9",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Lotin tili terminologiya",
+        "courses": "1",
+        "semesters": "1",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Kasbiy ta'lim metodikasi",
+        "courses": "3",
+        "semesters": "6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Kasbiy psixologiya. Kasbiy pedagogika",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "asoslari",
+        "courses": "1",
+        "semesters": "2",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Tibbiy va biologik kimyo",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Tibbiy kimyo",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Biokimyo",
+        "courses": "2-3",
+        "semesters": "3/4/5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiy kimyo va biologik kimyo",
+        "courses": "1",
+        "semesters": "2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Noorganik kimyo",
+        "courses": "1-2",
+        "semesters": "2/3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Fizik va kolloid kimyo",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Analitik kimyo",
+        "courses": "2",
+        "semesters": "3/4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Organik kimyo",
+        "courses": "2",
+        "semesters": "3/4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Toksikologik kimyo",
+        "courses": "4",
+        "semesters": "7/8",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Biologik kimyo",
+        "courses": "3",
+        "semesters": "3/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Kimyo",
+        "courses": "1",
+        "semesters": "2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiy kimyo. Biokimyo",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "I",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Falsafa",
+        "courses": "1-2-3",
+        "semesters": "1/2/3/4/5",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Dinshunoslik",
+        "courses": "1-2",
+        "semesters": "1/2/3/4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Ma'naviyatshunoslik",
+        "courses": "2",
+        "semesters": "4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiyotda ma’naviyat asoslari",
+        "courses": "3",
+        "semesters": "5",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Gistologiya va biologiya",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Tibbiy biologiya. Umumiy genetika",
+        "courses": "1",
+        "semesters": "4/2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Gistologiya, sitologiya, embriologiya",
+        "courses": "1-2",
+        "semesters": "2/3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "1",
+        "courses": "1",
+        "semesters": "/2/3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Tibbiy biologiya",
+        "courses": "1",
+        "semesters": "1/1",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Bioekologiya",
+        "courses": "2",
+        "semesters": "3/4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Farmatsevtik botanika",
+        "courses": "2",
+        "semesters": "3",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Fiziologiya",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Normal fiziolog*fyp",
+        "courses": "2",
+        "semesters": "3/4",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Fiziologiya -YuJS fiziologiyasi",
+        "courses": "1-2",
+        "semesters": "2/3",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Fiziologiya",
+        "courses": "1",
+        "semesters": "2",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Fiziologiya odam anatomiyasi asoslari bilan",
+        "courses": "1",
+        "semesters": "2",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Patologik fiziologiya va patologik anatomiya",
+    "level": "bakalavriat",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Patologik fiziologiya",
+        "courses": "2-3",
+        "semesters": "4/5/67",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "3-4-5-6",
+        "courses": "6",
+        "semesters": "/8/9/12",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Patologik anatomiya",
+        "courses": "2-3",
+        "semesters": "4/5/6",
+        "level": "bakalavriat"
+      },
+      {
+        "name": "Patologiya",
+        "courses": "2",
+        "semesters": "3/4",
+        "level": "bakalavriat"
+      }
+    ]
+  },
+  {
+    "name": "Kommunal va mehnat gigiyenasi",
+    "level": "magistratura",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Gigiyena umumiy asoslari",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "magistratura"
+      },
+      {
+        "name": "Gigiyena xususiy asoslari",
+        "courses": "1-2",
+        "semesters": "1/2/3",
+        "level": "magistratura"
+      },
+      {
+        "name": "1-2",
+        "courses": "1",
+        "semesters": "/2/3/4",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ilmiy amaliyot (tajriba ortirish) (Gigiyena)",
+        "courses": "2",
+        "semesters": "4",
+        "level": "magistratura"
+      },
+      {
+        "name": "Sog'liqni saqlash menejmenti",
+        "courses": "1",
+        "semesters": "2",
+        "level": "magistratura"
+      },
+      {
+        "name": "Aholi salomatligini o'rganish va baholash",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "magistratura"
+      },
+      {
+        "name": "Sog'liqni saqlash menejmenti va iqtisodiyoti",
+        "courses": "1-2",
+        "semesters": "1/2/3",
+        "level": "magistratura"
+      },
+      {
+        "name": "1-2",
+        "courses": "1",
+        "semesters": "/2/3/4",
+        "level": "magistratura"
+      },
+      {
+        "name": "1-2",
+        "courses": "1",
+        "semesters": "/2/3/",
+        "level": "magistratura"
+      },
+      {
+        "name": "saqlashni boshqarish va jamoat salomatligini",
+        "courses": "2",
+        "semesters": "4",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Xalq tabobati va farmakologiya",
+    "level": "magistratura",
+    "headName": "Xoliqova Oyista Yuldashevna",
+    "contactPhone": "91-650-19-73",
+    "subjects": [
+      {
+        "name": "Klinik farmakologiya",
+        "courses": "2",
+        "semesters": "4",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Biotibbiyot muhandisligi, biofizika va axborot texnologiyalari",
+    "level": "magistratura",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Tibbiy biotexnik tizimlar nazaryasi",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "magistratura"
+      },
+      {
+        "name": "Nerv va fiziologik signallarni qayta ishlash",
+        "courses": "1",
+        "semesters": "1",
+        "level": "magistratura"
+      },
+      {
+        "name": "Tibbiyotda lazerlarni qo'llanilishi",
+        "courses": "1",
+        "semesters": "1",
+        "level": "magistratura"
+      },
+      {
+        "name": "Tibbiyotda ultratovushni qo'llanilishi",
+        "courses": "1",
+        "semesters": "1",
+        "level": "magistratura"
+      },
+      {
+        "name": "dissertatsiyasini tayyorlash (Tibbiy-biologik",
+        "courses": "1-2",
+        "semesters": "1/2/3/4",
+        "level": "magistratura"
+      },
+      {
+        "name": "",
+        "courses": "2",
+        "semesters": "4",
+        "level": "magistratura"
+      },
+      {
+        "name": "Tibbiyot texnikasi va texnologiyasi",
+        "courses": "1-2",
+        "semesters": "2/3",
+        "level": "magistratura"
+      },
+      {
+        "name": "",
+        "courses": "1-2",
+        "semesters": "2/3",
+        "level": "magistratura"
+      },
+      {
+        "name": "Tibbiyot neyro tarmoqlar",
+        "courses": "1",
+        "semesters": "2",
+        "level": "magistratura"
+      },
+      {
+        "name": "",
+        "courses": "1",
+        "semesters": "2",
+        "level": "magistratura"
+      },
+      {
+        "name": "Qayta muhandislik",
+        "courses": "1",
+        "semesters": "2",
+        "level": "magistratura"
+      },
+      {
+        "name": "",
+        "courses": "1",
+        "semesters": "2",
+        "level": "magistratura"
+      },
+      {
+        "name": "Rentgen texnikalarini loyihalash",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "magistratura"
+      },
+      {
+        "name": "Skanerlash qurilmalari",
+        "courses": "1",
+        "semesters": "1",
+        "level": "magistratura"
+      },
+      {
+        "name": "Radiologiya",
+        "courses": "1",
+        "semesters": "1",
+        "level": "magistratura"
+      },
+      {
+        "name": "Rentgen texnikasi va texnologiyasi",
+        "courses": "1-2",
+        "semesters": "2/3",
+        "level": "magistratura"
+      },
+      {
+        "name": "Rengen qurilmalarini dasturlash",
+        "courses": "1",
+        "semesters": "1",
+        "level": "magistratura"
+      },
+      {
+        "name": "Rentgen va skanerlash texnikalari servisi",
+        "courses": "1",
+        "semesters": "2",
+        "level": "magistratura"
+      },
+      {
+        "name": "Rentgen tasvirlariga ishlov berish",
+        "courses": "1-2",
+        "semesters": "2/3",
+        "level": "magistratura"
+      },
+      {
+        "name": "",
+        "courses": "1",
+        "semesters": "1",
+        "level": "magistratura"
+      },
+      {
+        "name": "1-2-3",
+        "courses": "1",
+        "semesters": "/2/3/4/5/6",
+        "level": "magistratura"
+      },
+      {
+        "name": "",
+        "courses": "2",
+        "semesters": "4/6",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ichki kasalliklar",
+        "courses": "1-2",
+        "semesters": "1/2/3/4",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Terapiya yo",
+    "level": "magistratura",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "",
+        "courses": "1",
+        "semesters": "1",
+        "level": "magistratura"
+      },
+      {
+        "name": "Klinik kardiologiya",
+        "courses": "1-2-3",
+        "semesters": "1/2/3/4/5",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Umumiy",
+    "level": "magistratura",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Xirurgiyaning umumiy asoslari",
+        "courses": "1-2-3",
+        "semesters": "1/2/3/4/5",
+        "level": "magistratura"
+      },
+      {
+        "name": "Xirurgiyaning xususiy asoslari",
+        "courses": "1-2-3",
+        "semesters": "1/2/3/4/5",
+        "level": "magistratura"
+      },
+      {
+        "name": "1-2-3",
+        "courses": "1",
+        "semesters": "/2/3/4/5/6",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ilmiy pedagogik ishi (Xirurgiya)",
+        "courses": "1-2",
+        "semesters": "1/2/3",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Fakultativ va gospital",
+    "level": "magistratura",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Xususiy otoloringalogiya",
+        "courses": "1-2-3",
+        "semesters": "2/3/4/5",
+        "level": "magistratura"
+      },
+      {
+        "name": "dissertatsiyasini tayyorlash",
+        "courses": "1-2-3",
+        "semesters": "1/2/3/4/5/6",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ilmiy pedagogik ishi (Otoloringalogiya)",
+        "courses": "1-2",
+        "semesters": "1/2/3/",
+        "level": "magistratura"
+      },
+      {
+        "name": "2-3 (Otorinolaringologiya) /",
+        "courses": "1",
+        "semesters": "4/6",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Akusherlik va ginekologiya",
+    "level": "magistratura",
+    "headName": "Suyarqulova Madxiya Erkinovna",
+    "contactPhone": "90-581-47-46",
+    "subjects": [
+      {
+        "name": "Ginekologiya 2-3 °",
+        "courses": "3",
+        "semesters": "/4/5",
+        "level": "magistratura"
+      },
+      {
+        "name": "Akusherlik",
+        "courses": "1-3",
+        "semesters": "1/2/5",
+        "level": "magistratura"
+      },
+      {
+        "name": "1-2-3",
+        "courses": "1",
+        "semesters": "/2/3/4/5",
+        "level": "magistratura"
+      },
+      {
+        "name": "dissertatsiyasini tayyorlash (Akusher va",
+        "courses": "1-2-3",
+        "semesters": "1/2/3/4/5/6",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Urologiya va onkologiya",
+    "level": "magistratura",
+    "headName": "Yuldashov Fayzulla Yuldashevich",
+    "contactPhone": "90-277-00-88",
+    "subjects": [
+      {
+        "name": "Onkologiyaning xususiy asoslari",
+        "courses": "1-2-3",
+        "semesters": "1/2/3/4/5",
+        "level": "magistratura"
+      },
+      {
+        "name": "dissertatsiyasini tayyorlash (Umumiy",
+        "courses": "1-2-3",
+        "semesters": "1/2/3/4/5/6",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ilmiy pedagogik ishi (Umumiy onkologiya)",
+        "courses": "1-2",
+        "semesters": "1/2/3",
+        "level": "magistratura"
+      },
+      {
+        "name": "",
+        "courses": "2-3",
+        "semesters": "4/6",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Pediatriya",
+    "level": "magistratura",
+    "headName": "Shermatov Rasuljon Mamasiddiqovich",
+    "contactPhone": "99-605-77-08",
+    "subjects": [
+      {
+        "name": "Profilaktik pediatriya",
+        "courses": "1",
+        "semesters": "1",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ijtimoiy pediatriya",
+        "courses": "2-3",
+        "semesters": "4/5",
+        "level": "magistratura"
+      },
+      {
+        "name": "1-2-3",
+        "courses": "1",
+        "semesters": "/2/3/4/5/6",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ilmiy pedagogik ishi (Pediatriya)",
+        "courses": "1-2",
+        "semesters": "1/2/3",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ilmiy amaliyot (tajriba ortirish) (Pediatriya)",
+        "courses": "2",
+        "semesters": "4/6",
+        "level": "magistratura"
+      },
+      {
+        "name": "Bolalar va o'smirlar kasalliklari",
+        "courses": "1-2",
+        "semesters": "1/2/3/4",
+        "level": "magistratura"
+      },
+      {
+        "name": "Tibbiy yordam sifatini oshirish",
+        "courses": "1",
+        "semesters": "3",
+        "level": "magistratura"
+      },
+      {
+        "name": "1-2-3",
+        "courses": "1",
+        "semesters": "/2/3/4/5/6",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ilmiy pedagogik ishi (Pediatriya)",
+        "courses": "1-2",
+        "semesters": "1/2/3/4",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ilmiy amaliyot (tajriba ortirish) (Pediatriya]",
+        "courses": "2",
+        "semesters": "4/6",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Stomatologiya va otorinolaringologiya",
+    "level": "magistratura",
+    "headName": "Umarov Odiljon Maxmudovich",
+    "contactPhone": "90-562-34-68",
+    "subjects": []
+  },
+  {
+    "name": "Endokrinologiya, gematologiya va ftiziatriya",
+    "level": "magistratura",
+    "headName": "Karimova Muqimaxon Muxamadsadikovna",
+    "contactPhone": "94-135-75-55",
+    "subjects": [
+      {
+        "name": "Xususiy endokrinologiya",
+        "courses": "1-2",
+        "semesters": "1/2/3/4",
+        "level": "magistratura"
+      },
+      {
+        "name": "dissertatsiyasini tayyorlash",
+        "courses": "1-2-3",
+        "semesters": "1/2/3/4/5/6",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ilmiy pedagogik ishi (Endokrinologiya)",
+        "courses": "1-2-3",
+        "semesters": "1/2/3/4",
+        "level": "magistratura"
+      },
+      {
+        "name": "",
+        "courses": "2",
+        "semesters": "4",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Lotin tili, pedagogika va psixologiya",
+    "level": "magistratura",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Ilmiy tadqiqot metodologiyasi",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "magistratura"
+      },
+      {
+        "name": "",
+        "courses": "1",
+        "semesters": "2",
+        "level": "magistratura"
+      },
+      {
+        "name": "Maxsus fanlarni o'qitish metodikasi",
+        "courses": "2",
+        "semesters": "/3",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "I",
+    "level": "magistratura",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "",
+        "courses": "1",
+        "semesters": "1",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Gistologiya va biologiya",
+    "level": "magistratura",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "",
+        "courses": "1",
+        "semesters": "1/2",
+        "level": "magistratura"
+      },
+      {
+        "name": "1-2-3",
+        "courses": "1",
+        "semesters": "/2/3/4/5/6",
+        "level": "magistratura"
+      },
+      {
+        "name": "Ilmiy pedagogik ishi (Morfologiya)",
+        "courses": "1-2",
+        "semesters": "1/2/3/4",
+        "level": "magistratura"
+      },
+      {
+        "name": "",
+        "courses": "2-3",
+        "semesters": "4/6",
+        "level": "magistratura"
+      }
+    ]
+  },
+  {
+    "name": "Patologik fiziologiya va patologik anatomiya",
+    "level": "magistratura",
+    "headName": null,
+    "contactPhone": null,
+    "subjects": [
+      {
+        "name": "Patologik anatomiya",
+        "courses": "2",
+        "semesters": "4",
+        "level": "magistratura"
+      }
+    ]
+  }
+]

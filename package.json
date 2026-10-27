@@ -1,0 +1,29 @@
+{
+  "name": "fjsti-talaba-hamroh",
+  "version": "1.0.0",
+  "description": "Farg'ona jamoat salomatligi tibbiyot instituti talaba hamrohi Telegram boti",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test tests/**/*.test.js",
+    "migrate": "node src/db/migrate.js",
+    "seed": "node src/db/seed.js"
+  },
+  "keywords": [
+    "telegram-bot",
+    "fjsti",
+    "talaba-hamroh",
+    "neon-postgres",
+    "render-worker"
+  ],
+  "author": "FJSTI Developer Team",
+  "license": "MIT",
+  "dependencies": {
+    "@grammyjs/conversations": "^2.0.1",
+    "dotenv": "^16.4.7",
+    "grammy": "^1.35.0",
+    "pg": "^8.13.3"
+  }
+}

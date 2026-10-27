@@ -1,0 +1,472 @@
+[
+  {
+    "course": 1,
+    "directions": [
+      {
+        "name": "Tibbiy profilaktika ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 6,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 10,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Oliy hamshiralik ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 5,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Biotibbiyot muhandisligi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 6,
+        "attestationWeeks": 0,
+        "creditIntroWeeks": 2,
+        "vacationWeeks": 13,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Fundamental tibbiyot",
+        "theoryWeeks": 30,
+        "internshipWeeks": 5,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Davolash ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 5,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Farmatsiya",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 2,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 14,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Pediatriya ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 5,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Stomatologiya",
+        "theoryWeeks": 30,
+        "internshipWeeks": 7,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 9,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      }
+    ]
+  },
+  {
+    "course": 2,
+    "directions": [
+      {
+        "name": "Tibbiy profilaktika ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Oliy hamshiralik ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Biotibbiyot muhandisligi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 0,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 2,
+        "vacationWeeks": 13,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Fundamental tibbiyot",
+        "theoryWeeks": 30,
+        "internshipWeeks": 5,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 10,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Davolash ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 6,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 9,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Farmatsiya",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 13,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Pediatriya ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 6,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 9,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Stomatologiya",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      }
+    ]
+  },
+  {
+    "course": 3,
+    "directions": [
+      {
+        "name": "Tibbiy profilaktika ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Oliy hamshiralik ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Biotibbiyot muhandisligi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 2,
+        "vacationWeeks": 9,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Fundamental tibbiyot",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Davolash ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 7,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 10,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Farmatsiya",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Pediatriya ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 5,
+        "attestationWeeks": 7,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 9,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Stomatologiya",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      }
+    ]
+  },
+  {
+    "course": 4,
+    "directions": [
+      {
+        "name": "Tibbiy profilaktika ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Oliy hamshiralik ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 6,
+        "stateExamWeeks": 4,
+        "gpaWeeks": 0,
+        "totalWeeks": 48
+      },
+      {
+        "name": "Xalq tabobati",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 3,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 6,
+        "stateExamWeeks": 4,
+        "gpaWeeks": 0,
+        "totalWeeks": 48
+      },
+      {
+        "name": "Biotibbiyot muhandisligi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 2,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 6,
+        "stateExamWeeks": 5,
+        "gpaWeeks": 0,
+        "totalWeeks": 48
+      },
+      {
+        "name": "Tibbiy biologik ish",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 6,
+        "stateExamWeeks": 4,
+        "gpaWeeks": 0,
+        "totalWeeks": 48
+      },
+      {
+        "name": "Davolash ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 5,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Farmatsiya",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 11,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Pediatriya ishi",
+        "theoryWeeks": 30,
+        "internshipWeeks": 5,
+        "attestationWeeks": 6,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 10,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Stomatologiya",
+        "theoryWeeks": 30,
+        "internshipWeeks": 4,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 1,
+        "vacationWeeks": 12,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 1,
+        "totalWeeks": 52
+      }
+    ]
+  },
+  {
+    "course": 5,
+    "directions": [
+      {
+        "name": "Tibbiy profilaktika ishi",
+        "theoryWeeks": 36,
+        "internshipWeeks": 0,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 6,
+        "stateExamWeeks": 2,
+        "gpaWeeks": 0,
+        "totalWeeks": 48
+      },
+      {
+        "name": "Davolash ishi",
+        "theoryWeeks": 36,
+        "internshipWeeks": 6,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 6,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 0,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Farmatsiya",
+        "theoryWeeks": 34,
+        "internshipWeeks": 6,
+        "attestationWeeks": 3,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 3,
+        "stateExamWeeks": 2,
+        "gpaWeeks": 0,
+        "totalWeeks": 48
+      },
+      {
+        "name": "Pediatriya ishi",
+        "theoryWeeks": 36,
+        "internshipWeeks": 6,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 6,
+        "stateExamWeeks": 0,
+        "gpaWeeks": 0,
+        "totalWeeks": 52
+      },
+      {
+        "name": "Stomatologiya",
+        "theoryWeeks": 34,
+        "internshipWeeks": 6,
+        "attestationWeeks": 2,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 3,
+        "stateExamWeeks": 3,
+        "gpaWeeks": 0,
+        "totalWeeks": 48
+      }
+    ]
+  },
+  {
+    "course": 6,
+    "directions": [
+      {
+        "name": "Pediatriya ishi",
+        "theoryWeeks": 36,
+        "internshipWeeks": 0,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 6,
+        "stateExamWeeks": 2,
+        "gpaWeeks": 0,
+        "totalWeeks": 48
+      },
+      {
+        "name": "Davolash ishi",
+        "theoryWeeks": 36,
+        "internshipWeeks": 0,
+        "attestationWeeks": 4,
+        "creditIntroWeeks": 0,
+        "vacationWeeks": 6,
+        "stateExamWeeks": 2,
+        "gpaWeeks": 0,
+        "totalWeeks": 48
+      }
+    ]
+  }
+]

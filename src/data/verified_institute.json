@@ -1,0 +1,65 @@
+{
+  "name": "Farg‘ona jamoat salomatligi tibbiyot instituti",
+  "shortName": "FJSTI",
+  "establishedYear": "1992 / 2020",
+  "rector": {
+    "fullName": "Sidikov Akmal Abdikaxarovich",
+    "degree": "Tibbiyot fanlari doktori, professor",
+    "receptionHours": "Dushanba - Shanba, 09:00 - 12:00"
+  },
+  "leadership": [
+    {
+      "role": "O‘quv ishlari bo‘yicha prorektor",
+      "fullName": "Boltaboyev Ulug‘bek Abdusalimovich"
+    },
+    {
+      "role": "O‘quv-uslubiy boshqarma boshlig‘i",
+      "fullName": "Komilov Nurmuhammad"
+    },
+    {
+      "role": "Registrator ofisi boshlig‘i",
+      "fullName": "Valiyev A."
+    },
+    {
+      "role": "Talabalar amaliyoti bo‘limi boshlig‘i",
+      "fullName": "Imomov F."
+    }
+  ],
+  "contacts": {
+    "address": "Farg‘ona shahri, Yangi Turon ko‘chasi, 2-a uy",
+    "phone": "+998 (95) 062-23-45",
+    "phoneSecondary": "+998 (95) 063-23-45",
+    "email": "info@fjsti.uz",
+    "workHours": "Dushanba – Shanba, 09:00 – 17:00"
+  },
+  "officialLinks": {
+    "website": "https://fjsti.uz",
+    "telegramChannel": "https://t.me/fjsti_uz",
+    "hemis": "https://hemis.fjsti.uz",
+    "moodle": "http://moodle.fjsti.uz",
+    "library": "https://library.fjsti.uz",
+    "elibrary": "http://e-library.fjsti.uz"
+  },
+  "faculties": [
+    {
+      "name": "Davolash fakulteti",
+      "dean": "Rasulova M.",
+      "directions": ["Davolash ishi", "Fundamental tibbiyot", "Tibbiy biologik ish"]
+    },
+    {
+      "name": "Pediatriya fakulteti",
+      "dean": "Abdullayev G‘. (v.v.b)",
+      "directions": ["Pediatriya ishi", "Stomatologiya", "Xalq tabobati"]
+    },
+    {
+      "name": "Tibbiy profilaktika va jamoat salomatligi fakulteti",
+      "dean": "Xamrakulov T.",
+      "directions": ["Tibbiy profilaktika ishi", "Oliy hamshiralik ishi", "Biotibbiyot muhandisligi", "Farmatsiya"]
+    },
+    {
+      "name": "Xalqaro fakultet",
+      "dean": "Rasmiy tayinlangan mas'ul",
+      "directions": ["Davolash ishi (ingliz tili)", "Pediatriya (ingliz tili)"]
+    }
+  ]
+}
