@@ -43,6 +43,31 @@ export async function seedDatabase() {
       return { success: true, skipped: true };
     }
 
+    // Older deployments do not have a seed-version marker. If canonical records
+    // already exist, preserve them and mark the database as initialized rather
+    // than applying the official seed a second time over existing data.
+    const existingContent = await client.query(`
+      SELECT
+        (SELECT COUNT(*) FROM faculties) AS faculties,
+        (SELECT COUNT(*) FROM departments) AS departments,
+        (SELECT COUNT(*) FROM clinical_bases) AS clinical_bases,
+        (SELECT COUNT(*) FROM academic_calendars) AS academic_calendars,
+        (SELECT COUNT(*) FROM student_services) AS student_services,
+        (SELECT COUNT(*) FROM books) AS books;
+    `);
+    const existingContentRow = existingContent.rows[0] || {};
+    const hasExistingCanonicalContent = Object.values(existingContentRow)
+      .some((count) => Number(count) > 0);
+
+    if (hasExistingCanonicalContent) {
+      await client.query(
+        'INSERT INTO seed_versions (version) VALUES ($1) ON CONFLICT (version) DO NOTHING;',
+        [seedVersion]
+      );
+      await client.query('COMMIT');
+      console.log('[SEED] Mavjud kanonik ma’lumotlar aniqlandi; qayta seed qilinmadi va joriy qiymatlar saqlandi.');
+      return { success: true, skipped: true, existingDataPreserved: true };
+    }
 
     // 2. Seed Faculties
     const instituteData = JSON.parse(
