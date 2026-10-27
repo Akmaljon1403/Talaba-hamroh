@@ -44,12 +44,12 @@ export async function runMigrations() {
     if (editorMigration.rowCount === 0) {
       const editorMigrationPath = path.join(__dirname, 'migrations', '002_admin_editor.sql');
       const editorMigrationSql = fs.readFileSync(editorMigrationPath, 'utf-8');
-      console.log('[MIGRATION] 002_admin_editor qo\\'llanmoqda...');
+      console.log('[MIGRATION] 002_admin_editor qo\'llanmoqda...');
       await client.query(editorMigrationSql);
       await client.query('INSERT INTO schema_migrations (version) VALUES ($1)', ['002_admin_editor']);
-      console.log('[MIGRATION] 002_admin_editor muvaffaqiyatli qo\\'llandi.');
+      console.log('[MIGRATION] 002_admin_editor muvaffaqiyatli qo\'llandi.');
     } else {
-      console.log('[MIGRATION] 002_admin_editor allaqachon mavjud, o\\'tkazib yuborildi.');
+      console.log('[MIGRATION] 002_admin_editor allaqachon mavjud, o\'tkazib yuborildi.');
     }
 
     await client.query('COMMIT');
