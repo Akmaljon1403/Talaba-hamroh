@@ -51,8 +51,8 @@ export function formatClinicalBaseCard(base) {
   if (base.address) {
     text += `📍 <b>Manzil:</b> ${escapeHtml(base.address)}\n`;
   }
-  text += `🚪 <b>Xonalar soni:</b> ${base.total_rooms || (base.rooms ? base.rooms.length : 0)} ta\n`;
-  text += `👥 <b>Umumiy sig'imi:</b> ${base.total_capacity || 0} nafar talaba\n`;
+  text += `🚪 <b>Xonalar soni:</b> ${base.total_rooms ?? (base.rooms ? base.rooms.length : 0)} ta\n`;
+  text += `👥 <b>Umumiy sig'imi:</b> ${base.total_capacity ?? 0} nafar talaba\n`;
 
   if (base.rooms && base.rooms.length > 0) {
     text += `\n📋 <b>Mavjud auditoriyalar:</b>\n`;
