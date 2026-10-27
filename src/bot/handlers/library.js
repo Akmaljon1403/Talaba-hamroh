@@ -1,7 +1,8 @@
 import { InlineKeyboard } from 'grammy';
 import { getBooksByCourse, searchBooks } from '../../db/queries/books.js';
-import { formatBookCard } from '../utils/formatters.js';
+import { formatBookCard, escapeHtml } from '../utils/formatters.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 export async function handleLibrary(ctx) {
   recordSectionClick('library_main');
@@ -44,7 +45,10 @@ export async function handleLibraryCourse(ctx, course) {
   const kb = new InlineKeyboard();
 
   books.forEach((b, idx) => {
-    text += `${idx + 1}. <b>${b.title}</b> (${b.author || 'FJSTI ARM'})\n   📥 <a href="${b.file_url}">Elektron nusxa</a>\n\n`;
+    text += `${idx + 1}. <b>${escapeHtml(b.title)}</b> (${escapeHtml(b.author || 'FJSTI ARM')})\n   📥 <a href="${escapeHtml(b.file_url)}">Elektron nusxa</a>\n\n`;
+    if (ctx.isAdmin && isAdminEditModeActive(ctx.from?.id) && idx < 20) {
+      kb.text(`✏️ Kitob #${b.id}`, `admin_edit:book:${b.id}`).row();
+    }
   });
 
   kb.text('⬅️ Kursni almashtirish', 'library_main')
