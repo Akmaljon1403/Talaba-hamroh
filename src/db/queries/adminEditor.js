@@ -96,18 +96,26 @@ export async function updateEditableEntityField({ entityType, entityId, fieldKey
     // The department detail and search results derive the department head from the same record.
     // Keep the linked teachers table in sync when a department's head name/contact is edited.
     if (entityType === 'department' && fieldKey === 'head_name') {
-      const teachers = await client.query(
-        `UPDATE teachers SET full_name = $1
-         WHERE department_id = $2 AND position ILIKE '%kafedra mudiri%'
-         RETURNING id;`,
-        [value, id]
-      );
-      if (teachers.rowCount === 0 && value) {
+      if (value === null) {
         await client.query(
-          `INSERT INTO teachers (full_name, department_id, position, official_contact, source)
-           VALUES ($1, $2, 'Kafedra mudiri', $3, 'Admin tomonidan tahrirlandi');`,
-          [value, id, current.contact_phone || null]
+          `DELETE FROM teachers
+           WHERE department_id = $1 AND position ILIKE '%kafedra mudiri%';`,
+          [id]
         );
+      } else {
+        const teachers = await client.query(
+          `UPDATE teachers SET full_name = $1
+           WHERE department_id = $2 AND position ILIKE '%kafedra mudiri%'
+           RETURNING id;`,
+          [value, id]
+        );
+        if (teachers.rowCount === 0) {
+          await client.query(
+            `INSERT INTO teachers (full_name, department_id, position, official_contact, source)
+             VALUES ($1, $2, 'Kafedra mudiri', $3, 'Admin tomonidan tahrirlandi');`,
+            [value, id, current.contact_phone || null]
+          );
+        }
       }
     }
     if (entityType === 'department' && fieldKey === 'contact_phone') {
