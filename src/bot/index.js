@@ -63,6 +63,7 @@ import {
   handleAdminEditModeOff
 } from './handlers/admin.js';
 import { refreshAdminEditMode } from './utils/adminEditMode.js';
+import { contentEditStates } from './state/adminState.js';
 import {
   handleContentEditorHome,
   handleContentList,
@@ -114,7 +115,14 @@ export function createBot(token = config.botToken) {
   // Commands
   bot.command('start', handleStart);
   bot.command('help', handleHelp);
-  bot.command('cancel', handleCancel);
+  const cancelCurrentAction = async (ctx) => {
+    if (ctx.from?.id) {
+      adminActionStates.delete(ctx.from.id);
+      contentEditStates.delete(ctx.from.id);
+    }
+    await handleCancel(ctx);
+  };
+  bot.command('cancel', cancelCurrentAction);
   bot.command('myid', handleMyId);
   bot.command('admin', handleAdminPanel);
 
@@ -128,7 +136,7 @@ export function createBot(token = config.botToken) {
   bot.hears('🔍 Qidiruv', handleSearchPrompt);
   bot.hears('✍️ Fikr bildirish', handleFeedbackPrompt);
   bot.hears('⚙️ Admin boshqaruvi', handleAdminPanel);
-  bot.hears('❌ Bekor qilish', handleCancel);
+  bot.hears('❌ Bekor qilish', cancelCurrentAction);
 
   // Inline callback query routers
   bot.callbackQuery('menu_home', async (ctx) => {
