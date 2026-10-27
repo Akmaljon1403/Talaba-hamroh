@@ -59,7 +59,8 @@ import {
   handleAdminManageAdmins,
   handleAdminRequestRemove,
   handleAdminConfirmMutation,
-  handleAdminCancelMutation
+  handleAdminCancelMutation,
+  handleAdminEditHistory
 } from './handlers/admin.js';
 import {
   handleAdminEditModeToggle,
@@ -212,6 +213,7 @@ export function createBot(token = config.botToken) {
   bot.callbackQuery('admin_broadcast', handleAdminBroadcastPrompt);
   bot.callbackQuery('admin_add_book', handleAdminAddBookPrompt);
   bot.callbackQuery('admin_add_teacher', handleAdminAddTeacherPrompt);
+  bot.callbackQuery('admin_edit_history', handleAdminEditHistory);
   bot.callbackQuery('admin_edit_mode_toggle', handleAdminEditModeToggle);
   bot.callbackQuery('admin_add_admin', handleAdminAddAdminPrompt);
   bot.callbackQuery('admin_manage_admins', handleAdminManageAdmins);
