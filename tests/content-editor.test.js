@@ -1,10 +1,17 @@
 import test from 'node:test';
+import { setTimeout as delay } from 'node:timers/promises';
 import assert from 'node:assert/strict';
 import {
   getEditableEntityConfig,
   getEditableField,
   validateEditableValue
 } from '../src/db/queries/contentEditor.js';
+import {
+  enableAdminEditMode,
+  disableAdminEditMode,
+  isAdminEditModeActive,
+  refreshAdminEditMode
+} from '../src/bot/utils/adminEditMode.js';
 import {
   replaceRuntimeAdminRoles,
   registerRuntimeAdmin,
@@ -78,3 +85,17 @@ test('database-backed admin roles are persistent at runtime and separate admin f
   replaceRuntimeAdminRoles([]);
 });
 
+
+
+test('admin edit mode expires after inactivity and can be disabled manually', async () => {
+  const adminId = 900123456791;
+  enableAdminEditMode(adminId, null, null, 20);
+  assert.equal(isAdminEditModeActive(adminId), true);
+  await delay(90);
+  assert.equal(isAdminEditModeActive(adminId), false);
+
+  enableAdminEditMode(adminId, null, null, 1000);
+  assert.equal(refreshAdminEditMode(adminId, null, null), true);
+  disableAdminEditMode(adminId);
+  assert.equal(isAdminEditModeActive(adminId), false);
+});
