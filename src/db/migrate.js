@@ -69,7 +69,7 @@ export async function runMigrations() {
       ['003_admin_edit_audit']
     );
     if (auditMigration.rowCount === 0) {
-      console.log('[MIGRATION] 003_admin_edit_audit qo\\'llanmoqda...');
+      console.log('[MIGRATION] 003_admin_edit_audit qo\'llanmoqda...');
       const auditSqlPath = path.join(__dirname, 'migrations', '003_admin_edit_audit.sql');
       const auditSql = fs.readFileSync(auditSqlPath, 'utf-8');
       await client.query(auditSql);
@@ -77,9 +77,9 @@ export async function runMigrations() {
         'INSERT INTO schema_migrations (version) VALUES ($1)',
         ['003_admin_edit_audit']
       );
-      console.log('[MIGRATION] 003_admin_edit_audit muvaffaqiyatli qo\\'llandi.');
+      console.log('[MIGRATION] 003_admin_edit_audit muvaffaqiyatli qo\'llandi.');
     } else {
-      console.log('[MIGRATION] 003_admin_edit_audit allaqachon mavjud, o\\'tkazib yuborildi.');
+      console.log('[MIGRATION] 003_admin_edit_audit allaqachon mavjud, o\'tkazib yuborildi.');
     }
 
     await client.query('COMMIT');
