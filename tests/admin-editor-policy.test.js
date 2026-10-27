@@ -9,6 +9,14 @@ test('department editor exposes canonical linked fields only', () => {
   assert.equal(getEditableField('department', 'created_at'), null);
 });
 
+test('faculty fields are editable through the canonical database table', () => {
+  const faculty = getEditableEntitySchema('faculty');
+  assert.equal(faculty.table, 'faculties');
+  assert.ok(getEditableField('faculty', 'name'));
+  assert.equal(validateEditableValue('faculty', 'name', 'Pediatriya'), 'Pediatriya');
+  assert.equal(getEditableField('faculty', 'created_at'), null);
+});
+
 test('editor rejects empty required values and unsafe URLs', () => {
   assert.throws(() => validateEditableValue('department', 'name', '   '));
   assert.throws(() => validateEditableValue('book', 'file_url', 'javascript:alert(1)'));
