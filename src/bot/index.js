@@ -54,8 +54,20 @@ import {
   handleAdminAddBookPrompt,
   handleAdminAddTeacherPrompt,
   processAdminInput,
-  adminActionStates
+  adminActionStates,
+  handleAdminAddAdminPrompt,
+  handleAdminManageAdmins,
+  handleAdminRequestRemove,
+  handleAdminConfirmMutation,
+  handleAdminCancelMutation
 } from './handlers/admin.js';
+import {
+  handleAdminEditModeToggle,
+  handleAdminEntityEditMenu,
+  handleAdminEditFieldStart,
+  handleAdminEditCancel,
+  processAdminEditInput
+} from './handlers/adminEditor.js';
 
 export function createBot(token = config.botToken) {
   if (!token) {
@@ -192,11 +204,29 @@ export function createBot(token = config.botToken) {
   bot.callbackQuery('admin_broadcast', handleAdminBroadcastPrompt);
   bot.callbackQuery('admin_add_book', handleAdminAddBookPrompt);
   bot.callbackQuery('admin_add_teacher', handleAdminAddTeacherPrompt);
+  bot.callbackQuery('admin_edit_mode_toggle', handleAdminEditModeToggle);
+  bot.callbackQuery('admin_add_admin', handleAdminAddAdminPrompt);
+  bot.callbackQuery('admin_manage_admins', handleAdminManageAdmins);
+  bot.callbackQuery(/^admin_remove_admin:(\\d+)$/, async (ctx) => {
+    await handleAdminRequestRemove(ctx, ctx.match[1]);
+  });
+  bot.callbackQuery('admin_confirm_admin_change', handleAdminConfirmMutation);
+  bot.callbackQuery('admin_cancel_admin_change', handleAdminCancelMutation);
+  bot.callbackQuery(/^admin_edit:(department|subject|teacher|base|room|book|calendar|service):(\\d+)$/, async (ctx) => {
+    await handleAdminEntityEditMenu(ctx, ctx.match[1], Number(ctx.match[2]));
+  });
+  bot.callbackQuery(/^admin_edit_field:(department|subject|teacher|base|room|book|calendar|service):(\\d+):([a-z_]+)$/, async (ctx) => {
+    await handleAdminEditFieldStart(ctx, ctx.match[1], Number(ctx.match[2]), ctx.match[3]);
+  });
+  bot.callbackQuery('admin_edit_cancel', handleAdminEditCancel);
 
   // Generic text message handler
   bot.on('message:text', async (ctx) => {
     const userId = ctx.from?.id;
     if (!userId) return;
+
+    // Handle a pending field edit before other free-text admin actions.
+    if (await processAdminEditInput(ctx)) return;
 
     // Check if in admin input mode
     if (adminActionStates.has(userId)) {
