@@ -67,6 +67,23 @@ export function createBot(token = config.botToken) {
   // Global error handler
   bot.catch(errorHandler);
 
+  // Diagnostic middleware: log update arrival without logging message contents or user data.
+  bot.use(async (ctx, next) => {
+    const update = ctx.update;
+    const updateType = update.message
+      ? (update.message.text !== undefined ? 'message:text' : 'message:other')
+      : update.callback_query
+        ? 'callback_query'
+        : update.edited_message
+          ? 'edited_message'
+          : update.inline_query
+            ? 'inline_query'
+            : Object.keys(update).find((key) => key !== 'update_id') || 'unknown';
+
+    console.info(`[UPDATE RECEIVED] update_id=${update.update_id} type=${updateType}`);
+    await next();
+  });
+
   // Auth & tracking middleware
   bot.use(authMiddleware);
 

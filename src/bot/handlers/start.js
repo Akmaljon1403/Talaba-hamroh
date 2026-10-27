@@ -1,9 +1,10 @@
 import { getMainKeyboard } from '../keyboards/main.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { escapeHtml } from '../utils/formatters.js';
 
-export async function handleStart(ctx) {
-  const userName = ctx.from?.first_name || 'Talaba';
-  const text = `Assalomu alaykum, <b>${userName}</b>!\n\n` +
+export function buildStartMessage(userName) {
+  const safeUserName = escapeHtml(userName || 'Talaba');
+  return `Assalomu alaykum, <b>${safeUserName}</b>!\n\n` +
     `🏛 <b>Farg‘ona jamoat salomatligi tibbiyot instituti (FJSTI)</b> talaba hamrohi botiga xush kelibsiz!\n\n` +
     `Ushbu bot orqali institut haqida tekshirilgan va rasmiy ma’lumotlarni tezda topishingiz mumkin:\n\n` +
     `• 🏛 <b>Institut haqida:</b> Rektorat, fakultetlar va rasmiy manbalar\n` +
@@ -14,8 +15,14 @@ export async function handleStart(ctx) {
     `• 💡 <b>Talaba xizmatlari:</b> HEMIS, stipendiya, kontrakt, yotoqxona va spravka\n` +
     `• 🔍 <b>Qidiruv:</b> Istalgan fan, o‘qituvchi yoki xonani darhol izlash\n\n` +
     `<i>Kerakli bo‘limni tanlang:</i>`;
+}
 
-  recordSectionClick('start');
+export async function handleStart(ctx) {
+  console.info(`[HANDLER ENTER] /start update_id=${ctx.update.update_id}`);
+  const text = buildStartMessage(ctx.from?.first_name);
+
+  // Analytics is non-critical: failures must not prevent the welcome message.
+  void recordSectionClick('start');
   await ctx.reply(text, {
     parse_mode: 'HTML',
     reply_markup: getMainKeyboard(ctx.from?.id)

@@ -47,6 +47,18 @@ async function bootstrap() {
   console.log('🤖 Telegram bot initsializatsiya qilinmoqda...');
   botInstance = createBot(config.botToken);
 
+  // This service is explicitly configured for Long Polling. A webhook left by
+  // an older deployment prevents Telegram getUpdates from delivering messages.
+  // Inspect only whether a webhook exists; never log the URL because it may be sensitive.
+  const webhookInfo = await botInstance.api.getWebhookInfo();
+  if (webhookInfo.url) {
+    console.warn('[TELEGRAM] An existing webhook was found; removing it for Long Polling. Pending updates will be preserved.');
+    await botInstance.api.deleteWebhook({ drop_pending_updates: false });
+    console.log('[TELEGRAM] Existing webhook removed; Long Polling can receive updates.');
+  } else {
+    console.log('[TELEGRAM] No existing webhook detected; Long Polling is ready.');
+  }
+
   // Optional lightweight health-check server (useful if deployed as Web Service on Render)
   if (process.env.PORT) {
     httpServer = http.createServer((req, res) => {
@@ -71,7 +83,9 @@ async function bootstrap() {
   console.log('⚡️ Telegram Long Polling faollashtirilmoqda...');
   
   // Start bot long polling
-  botInstance.start({
+  // Await polling startup so initialization failures reach bootstrap().catch().
+  // This also keeps the startup lifecycle explicit for Render logs and shutdown.
+  await botInstance.start({
     onStart: (botInfo) => {
       console.log('====================================================');
       console.log(`🎉 Bot muvaffaqiyatli ishga tushdi: @${botInfo.username}`);
