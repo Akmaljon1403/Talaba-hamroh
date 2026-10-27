@@ -76,7 +76,7 @@ export async function handleAboutFaculties(ctx) {
     if (faculty.dean_name) {
       text += `   👤 Dekan: <i>${escapeHtml(faculty.dean_name)}</i>\n`;
     }
-    const description = String(faculty.description || '').replace(/^Yo'nalishlar:\\s*/i, '');
+    const description = String(faculty.description || '').replace(/^Yo'nalishlar:\s*/i, '');
     if (description) text += `   📚 Yo‘nalishlar: ${escapeHtml(description)}\n`;
     text += '\n';
 
