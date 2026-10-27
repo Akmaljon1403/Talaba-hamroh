@@ -102,7 +102,14 @@ export function createBot(token = config.botToken) {
   // Commands
   bot.command('start', handleStart);
   bot.command('help', handleHelp);
-  bot.command('cancel', handleCancel);
+  const cancelCurrentAction = async (ctx) => {
+    if (ctx.from?.id) {
+      adminActionStates.delete(ctx.from.id);
+      adminEditInputStates.delete(ctx.from.id);
+    }
+    await handleCancel(ctx);
+  };
+  bot.command('cancel', cancelCurrentAction);
   bot.command('admin', handleAdminPanel);
 
   // Main menu text handlers
@@ -115,7 +122,7 @@ export function createBot(token = config.botToken) {
   bot.hears('🔍 Qidiruv', handleSearchPrompt);
   bot.hears('✍️ Fikr bildirish', handleFeedbackPrompt);
   bot.hears('⚙️ Admin boshqaruvi', handleAdminPanel);
-  bot.hears('❌ Bekor qilish', handleCancel);
+  bot.hears('❌ Bekor qilish', cancelCurrentAction);
 
   // Inline callback query routers
   bot.callbackQuery('menu_home', async (ctx) => {
@@ -207,15 +214,15 @@ export function createBot(token = config.botToken) {
   bot.callbackQuery('admin_edit_mode_toggle', handleAdminEditModeToggle);
   bot.callbackQuery('admin_add_admin', handleAdminAddAdminPrompt);
   bot.callbackQuery('admin_manage_admins', handleAdminManageAdmins);
-  bot.callbackQuery(/^admin_remove_admin:(\\d+)$/, async (ctx) => {
+  bot.callbackQuery(/^admin_remove_admin:(\d+)$/, async (ctx) => {
     await handleAdminRequestRemove(ctx, ctx.match[1]);
   });
   bot.callbackQuery('admin_confirm_admin_change', handleAdminConfirmMutation);
   bot.callbackQuery('admin_cancel_admin_change', handleAdminCancelMutation);
-  bot.callbackQuery(/^admin_edit:(department|subject|teacher|base|room|book|calendar|service):(\\d+)$/, async (ctx) => {
+  bot.callbackQuery(/^admin_edit:(department|subject|teacher|base|room|book|calendar|service):(\d+)$/, async (ctx) => {
     await handleAdminEntityEditMenu(ctx, ctx.match[1], Number(ctx.match[2]));
   });
-  bot.callbackQuery(/^admin_edit_field:(department|subject|teacher|base|room|book|calendar|service):(\\d+):([a-z_]+)$/, async (ctx) => {
+  bot.callbackQuery(/^admin_edit_field:(department|subject|teacher|base|room|book|calendar|service):(\d+):([a-z_]+)$/, async (ctx) => {
     await handleAdminEditFieldStart(ctx, ctx.match[1], Number(ctx.match[2]), ctx.match[3]);
   });
   bot.callbackQuery('admin_edit_cancel', handleAdminEditCancel);
