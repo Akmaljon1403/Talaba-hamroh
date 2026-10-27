@@ -2,6 +2,7 @@ import { InlineKeyboard } from 'grammy';
 import { getCalendarByCourse } from '../../db/queries/academicCalendar.js';
 import { formatCalendarCard } from '../utils/formatters.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 export async function handleSchedule(ctx) {
   recordSectionClick('schedule_main');
@@ -60,6 +61,10 @@ export async function handleScheduleDetail(ctx, calendarId) {
   const kb = new InlineKeyboard()
     .text('⬅️ Yo‘nalishlarga qaytish', `sched_course:${item.course}`)
     .text('🏠 Asosiy menyu', 'menu_home');
+
+  if (ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+    kb.row().text('✏️ O‘quv grafigini tahrirlash', `admin_edit:calendar:${item.id}`);
+  }
 
   await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });
   await ctx.answerCallbackQuery();
