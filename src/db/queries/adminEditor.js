@@ -38,6 +38,13 @@ export async function updateEditableEntityField({ entityType, entityId, fieldKey
       return { changed: false, entityType, entityId: id, fieldKey, oldValue, newValue: value, entity: current };
     }
 
+    if (entityType === 'faculty' && fieldKey === 'name') {
+      const duplicate = await client.query(
+        'SELECT 1 FROM faculties WHERE id <> $1 AND LOWER(TRIM(name)) = LOWER(TRIM($2)) LIMIT 1;',
+        [id, value]
+      );
+      if (duplicate.rowCount) throw new Error('Bunday nomdagi fakultet allaqachon mavjud.');
+    }
     if (entityType === 'department' && fieldKey === 'name') {
       const duplicate = await client.query(
         'SELECT 1 FROM departments WHERE id <> $1 AND level = $2 AND LOWER(TRIM(name)) = LOWER(TRIM($3)) LIMIT 1;',
