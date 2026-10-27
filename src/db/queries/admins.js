@@ -2,9 +2,13 @@ import { query } from '../pool.js';
 
 export async function getAdminRoles() {
   const res = await query(
-    `SELECT telegram_id::text AS telegram_id, full_name, role, created_at
-     FROM admins
-     ORDER BY created_at ASC;`
+    `SELECT a.telegram_id::text AS telegram_id,
+            COALESCE(a.full_name, u.first_name, u.username, 'Nomi kiritilmagan') AS full_name,
+            a.role,
+            a.created_at
+     FROM admins a
+     LEFT JOIN users u ON u.id = a.telegram_id
+     ORDER BY CASE WHEN a.role = 'superadmin' THEN 0 ELSE 1 END, a.created_at ASC;`
   );
   return res.rows;
 }
