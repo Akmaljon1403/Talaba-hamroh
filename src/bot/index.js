@@ -71,7 +71,8 @@ import {
   handleContentEditField,
   processContentEditInput,
   handleContentSaveConfirm,
-  handleContentEditCancel
+  handleContentEditCancel,
+  handleContentEditHistory
 } from './handlers/contentEditor.js';
 
 export function createBot(token = config.botToken) {
@@ -245,6 +246,7 @@ export function createBot(token = config.botToken) {
   bot.callbackQuery(/^content_field:([a-z_]+):(\d+):([a-z_]+)$/, async (ctx) => {
     await handleContentEditField(ctx, ctx.match[1], parseInt(ctx.match[2], 10), ctx.match[3]);
   });
+  bot.callbackQuery('content_edit_history', handleContentEditHistory);
   bot.callbackQuery('content_save_confirm', handleContentSaveConfirm);
   bot.callbackQuery('content_edit_cancel', handleContentEditCancel);
 
