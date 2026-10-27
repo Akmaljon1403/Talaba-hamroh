@@ -1,6 +1,7 @@
 import { InlineKeyboard } from 'grammy';
 import { getAllServices, getServiceByCategory } from '../../db/queries/studentServices.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 export async function handleServices(ctx) {
   recordSectionClick('services_main');
@@ -43,6 +44,10 @@ export async function handleServiceDetail(ctx, category) {
   const kb = new InlineKeyboard()
     .text('⬅️ Barcha xizmatlar', 'services_main')
     .text('🏠 Asosiy menyu', 'menu_home');
+
+  if (ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+    kb.row().text('✏️ Xizmat matnini tahrirlash', `admin_edit:service:${service.id}`);
+  }
 
   await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb, link_preview_options: { is_disabled: true } });
   await ctx.answerCallbackQuery();
