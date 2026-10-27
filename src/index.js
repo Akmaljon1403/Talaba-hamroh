@@ -8,6 +8,8 @@ import { createBot } from './bot/index.js';
 
 let botInstance = null;
 let httpServer = null;
+let pollingStatus = 'starting';
+let lastSuccessfulPollAt = null;
 
 async function bootstrap() {
   console.log('====================================================');
@@ -55,10 +57,16 @@ async function bootstrap() {
   // A 409 on getUpdates almost always means another process/service is polling this bot token.
   botInstance.api.config.use(async (prev, method, payload, signal) => {
     try {
-      return await prev(method, payload, signal);
+      const result = await prev(method, payload, signal);
+      if (method === 'getUpdates') {
+        pollingStatus = 'polling';
+        lastSuccessfulPollAt = new Date().toISOString();
+      }
+      return result;
     } catch (error) {
       const description = String(error?.description || error?.message || 'Unknown Telegram API error');
       console.error(`[TELEGRAM API ERROR] method=${method} message=${description}`);
+      if (method === 'getUpdates') pollingStatus = 'degraded';
       if (method === 'getUpdates' && (error?.error_code === 409 || /conflict|other getUpdates request/i.test(description))) {
         console.error('[TELEGRAM POLLING CONFLICT] Another running process may be using this BOT_TOKEN. Stop duplicate Render services and any local npm start/dev process.');
       }
@@ -87,8 +95,10 @@ async function bootstrap() {
       if (req.url === '/health' || req.url === '/') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
-          status: 'ok',
+          status: pollingStatus === 'polling' ? 'ok' : pollingStatus,
           service: 'fjsti-talaba-hamroh',
+          telegramPolling: pollingStatus,
+          lastSuccessfulPollAt,
           timestamp: new Date().toISOString()
         }));
       } else {
@@ -110,6 +120,7 @@ async function bootstrap() {
   await botInstance.start({
     onStart: (botInfo) => {
       console.log('====================================================');
+      pollingStatus = 'starting';
       console.log(`🎉 Bot muvaffaqiyatli ishga tushdi: @${botInfo.username}`);
       console.log(`🆔 Bot ID: ${botInfo.id}`);
       console.log(`👥 Adminlar soni: ${config.adminIds.length}`);
