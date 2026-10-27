@@ -1,19 +1,25 @@
 import { InlineKeyboard } from 'grammy';
 import { getAllServices, getServiceByCategory } from '../../db/queries/studentServices.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { escapeHtml } from '../utils/formatters.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 export async function handleServices(ctx) {
   recordSectionClick('services_main');
+  const services = await getAllServices();
 
   const text = `💡 <b>Talabalar uchun Rasmiy Xizmatlar va Yo‘riqnomalar</b>\n\n` +
     `Institut talabalarining o‘qish, hujjatlar, to‘lovlar va ijtimoiy xizmatlar bo‘yicha eng ko‘p beriladigan savollariga rasmiy javoblar:\n\n` +
     `<i>Kerakli xizmat turini tanlang:</i>`;
 
-  const kb = new InlineKeyboard()
-    .text('📱 HEMIS tizimi', 'service_detail:hemis').text('🎓 Kredit-modul va GPA', 'service_detail:kredit_modul').row()
-    .text('📄 Kontrakt va to‘lov', 'service_detail:kontrakt').text('💰 Stipendiyalar', 'service_detail:stipendiya').row()
-    .text('🏢 Yotoqxona (TTJ)', 'service_detail:yotoqxona').text('📑 Ma’lumotnoma (Spravka)', 'service_detail:spravka').row()
-    .text('🏠 Asosiy menyu', 'menu_home');
+  const editMode = Boolean(ctx.chat?.type === 'private' && ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id));
+  const kb = new InlineKeyboard();
+  for (const service of services) {
+    kb.text(`💡 ${service.title.length > 48 ? service.title.slice(0, 45) + '…' : service.title}`, `service_detail:${service.category}`);
+    if (editMode) kb.text('✏️', `content_edit:service:${service.id}`);
+    kb.row();
+  }
+  kb.text('🏠 Asosiy menyu', 'menu_home');
 
   if (ctx.callbackQuery) {
     await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });
@@ -26,22 +32,27 @@ export async function handleServices(ctx) {
 export async function handleServiceDetail(ctx, category) {
   const service = await getServiceByCategory(category);
   if (!service) {
-    await ctx.answerCallbackQuery('Xizmat ma\'lumoti topilmadi.');
+    await ctx.answerCallbackQuery('Xizmat ma’lumoti topilmadi.');
     return;
   }
 
   recordSectionClick(`service_${category}`);
 
-  let text = `📌 <b>${service.title}</b>\n\n` +
-    `${service.content}\n\n`;
+  let text = `📌 <b>${escapeHtml(service.title)}</b>\n\n` +
+    (service.short_description ? `<i>${escapeHtml(service.short_description)}</i>\n\n` : '') +
+    `${escapeHtml(service.content)}\n\n`;
 
   if (service.source_url) {
-    text += `🔗 <b>Rasmiy havola:</b> <a href="${service.source_url}">${service.source_url}</a>\n`;
+    const safeUrl = escapeHtml(service.source_url);
+    text += `🔗 <b>Rasmiy havola:</b> <a href="${safeUrl}">${safeUrl}</a>\n`;
   }
   text += `🕒 <i>Oxirgi yangilanish: ${new Date(service.updated_at).toLocaleDateString('uz-UZ')}</i>`;
 
-  const kb = new InlineKeyboard()
-    .text('⬅️ Barcha xizmatlar', 'services_main')
+  const kb = new InlineKeyboard();
+  if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+    kb.text('✏️ Xizmatni tahrirlash', `content_edit:service:${service.id}`).row();
+  }
+  kb.text('⬅️ Barcha xizmatlar', 'services_main')
     .text('🏠 Asosiy menyu', 'menu_home');
 
   await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb, link_preview_options: { is_disabled: true } });

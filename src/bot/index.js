@@ -3,7 +3,7 @@ import { config } from '../config/env.js';
 import { authMiddleware } from './middlewares/auth.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
-import { handleStart, handleHelp, handleCancel } from './handlers/start.js';
+import { handleStart, handleHelp, handleCancel, handleMyId } from './handlers/start.js';
 import {
   handleAbout,
   handleAboutLeadership,
@@ -54,8 +54,26 @@ import {
   handleAdminAddBookPrompt,
   handleAdminAddTeacherPrompt,
   processAdminInput,
-  adminActionStates
+  adminActionStates,
+  handleAdminAddPrompt,
+  handleAdminList,
+  handleAdminAddCancel,
+  handleAdminConfirmAdd,
+  handleAdminEditModeOn,
+  handleAdminEditModeOff
 } from './handlers/admin.js';
+import { refreshAdminEditMode } from './utils/adminEditMode.js';
+import { contentEditStates } from './state/adminState.js';
+import {
+  handleContentEditorHome,
+  handleContentList,
+  handleContentEditEntity,
+  handleContentEditField,
+  processContentEditInput,
+  handleContentSaveConfirm,
+  handleContentEditCancel,
+  handleContentEditHistory
+} from './handlers/contentEditor.js';
 
 export function createBot(token = config.botToken) {
   if (!token) {
@@ -87,10 +105,26 @@ export function createBot(token = config.botToken) {
   // Auth & tracking middleware
   bot.use(authMiddleware);
 
+  // Keep the five-minute edit-mode timeout activity-based for each admin.
+  bot.use(async (ctx, next) => {
+    if (ctx.from && ctx.isAdmin && ctx.chat?.type === 'private') {
+      refreshAdminEditMode(ctx.from.id, ctx.api, ctx.chat?.id);
+    }
+    await next();
+  });
+
   // Commands
   bot.command('start', handleStart);
   bot.command('help', handleHelp);
-  bot.command('cancel', handleCancel);
+  const cancelCurrentAction = async (ctx) => {
+    if (ctx.from?.id) {
+      adminActionStates.delete(ctx.from.id);
+      contentEditStates.delete(ctx.from.id);
+    }
+    await handleCancel(ctx);
+  };
+  bot.command('cancel', cancelCurrentAction);
+  bot.command('myid', handleMyId);
   bot.command('admin', handleAdminPanel);
 
   // Main menu text handlers
@@ -103,7 +137,7 @@ export function createBot(token = config.botToken) {
   bot.hears('🔍 Qidiruv', handleSearchPrompt);
   bot.hears('✍️ Fikr bildirish', handleFeedbackPrompt);
   bot.hears('⚙️ Admin boshqaruvi', handleAdminPanel);
-  bot.hears('❌ Bekor qilish', handleCancel);
+  bot.hears('❌ Bekor qilish', cancelCurrentAction);
 
   // Inline callback query routers
   bot.callbackQuery('menu_home', async (ctx) => {
@@ -193,10 +227,37 @@ export function createBot(token = config.botToken) {
   bot.callbackQuery('admin_add_book', handleAdminAddBookPrompt);
   bot.callbackQuery('admin_add_teacher', handleAdminAddTeacherPrompt);
 
+  // Admin provisioning and inactivity-expiring edit mode
+  bot.callbackQuery('admin_add', handleAdminAddPrompt);
+  bot.callbackQuery('admin_list', handleAdminList);
+  bot.callbackQuery('admin_add_confirm', handleAdminConfirmAdd);
+  bot.callbackQuery('admin_add_cancel', handleAdminAddCancel);
+  bot.callbackQuery('admin_edit_mode_on', handleAdminEditModeOn);
+  bot.callbackQuery('admin_edit_mode_off', handleAdminEditModeOff);
+
+  // Content editor routes. Entity type and field are validated against server-side allowlists.
+  bot.callbackQuery('content_editor_home', handleContentEditorHome);
+  bot.callbackQuery(/^content_list:([a-z_]+):(\d+)$/, async (ctx) => {
+    await handleContentList(ctx, ctx.match[1], parseInt(ctx.match[2], 10));
+  });
+  bot.callbackQuery(/^content_edit:([a-z_]+):(\d+)$/, async (ctx) => {
+    await handleContentEditEntity(ctx, ctx.match[1], parseInt(ctx.match[2], 10));
+  });
+  bot.callbackQuery(/^content_field:([a-z_]+):(\d+):([a-z_]+)$/, async (ctx) => {
+    await handleContentEditField(ctx, ctx.match[1], parseInt(ctx.match[2], 10), ctx.match[3]);
+  });
+  bot.callbackQuery('content_edit_history', handleContentEditHistory);
+  bot.callbackQuery('content_save_confirm', handleContentSaveConfirm);
+  bot.callbackQuery('content_edit_cancel', handleContentEditCancel);
+
   // Generic text message handler
   bot.on('message:text', async (ctx) => {
     const userId = ctx.from?.id;
     if (!userId) return;
+
+    // Pending content edits take priority over ordinary search text.
+    const contentEditHandled = await processContentEditInput(ctx);
+    if (contentEditHandled) return;
 
     // Check if in admin input mode
     if (adminActionStates.has(userId)) {

@@ -9,6 +9,7 @@ import { searchLocations } from '../../db/queries/locations.js';
 import { logSearch, recordSectionClick } from '../../db/queries/stats.js';
 import { logUnansweredQuestion } from '../../db/queries/unanswered.js';
 import { escapeHtml } from '../utils/formatters.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 export async function handleSearchPrompt(ctx) {
   recordSectionClick('search_prompt');
@@ -85,7 +86,10 @@ export async function executeSearch(ctx, rawQuery) {
   if (subjects.length > 0) {
     text += `📖 <b>Fanlar (${subjects.length} ta):</b>\n`;
     subjects.slice(0, 4).forEach((s) => {
-      text += `• <b>${escapeHtml(s.name)}</b> (${s.courses}-kurs)\n   🏛 Kafedra: <i>${escapeHtml(s.department_name)}</i>\n`;
+      text += `• <b>${escapeHtml(s.name)}</b> (${escapeHtml(s.courses)}-kurs)\n   🏛 Kafedra: <i>${escapeHtml(s.department_name)}</i>\n`;
+      if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+        kb.text(`✏️ Fan: ${s.name.substring(0, 32)}`, `content_edit:subject:${s.id}`).row();
+      }
     });
     text += '\n';
   }
@@ -95,8 +99,12 @@ export async function executeSearch(ctx, rawQuery) {
     text += `🏛 <b>Kafedralar (${depts.length} ta):</b>\n`;
     depts.slice(0, 3).forEach((d) => {
       text += `• <b>${escapeHtml(d.name)}</b>\n`;
-      if (d.head_name) text += `   👤 Mudir: ${escapeHtml(d.head_name)} (${d.contact_phone || 'aloqa mavjud'})\n`;
-      kb.text(`🏛 ${d.name.substring(0, 30)}...`, `dept_detail:${d.id}`).row();
+      if (d.head_name) text += `   👤 Mudir: ${escapeHtml(d.head_name)} (${escapeHtml(d.contact_phone || 'aloqa mavjud')})\n`;
+      kb.text(`🏛 ${d.name.substring(0, 28)}`, `dept_detail:${d.id}`);
+      if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+        kb.text('✏️ Tahrirlash', `content_edit:dept:${d.id}`);
+      }
+      kb.row();
     });
     text += '\n';
   }
@@ -106,7 +114,11 @@ export async function executeSearch(ctx, rawQuery) {
     text += `🏥 <b>Tibbiyot muassasalari / Klinik bazalar (${bases.length} ta):</b>\n`;
     bases.slice(0, 3).forEach((b) => {
       text += `• <b>${escapeHtml(b.name)}</b> (${b.total_rooms} xona, ${b.total_capacity} o'rin)\n`;
-      kb.text(`🏥 ${b.name.substring(0, 30)}...`, `base_detail:${b.id}`).row();
+      kb.text(`🏥 ${b.name.substring(0, 28)}`, `base_detail:${b.id}`);
+      if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+        kb.text('✏️ Tahrirlash', `content_edit:base:${b.id}`);
+      }
+      kb.row();
     });
     text += '\n';
   }
@@ -115,6 +127,11 @@ export async function executeSearch(ctx, rawQuery) {
     text += `🚪 <b>Auditoriyalar (${rooms.length} ta):</b>\n`;
     rooms.slice(0, 4).forEach((r) => {
       text += `• Xona <b>${escapeHtml(r.room_number)}</b> — ${escapeHtml(r.base_name)} (${escapeHtml(r.room_type)}, ${r.capacity} o'rin)\n`;
+      if (r.department_name) text += `   🏛 Kafedra: ${escapeHtml(r.department_name)}\n`;
+      if (r.notes) text += `   📝 Izoh: ${escapeHtml(r.notes)}\n`;
+      if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+        kb.text(`✏️ Xona ${r.room_number}`, `content_edit:room:${r.id}`).row();
+      }
     });
     text += '\n';
   }
@@ -126,6 +143,10 @@ export async function executeSearch(ctx, rawQuery) {
       text += `• <b>${escapeHtml(t.full_name)}</b> — ${escapeHtml(t.position || 'O\'qituvchi')}\n`;
       if (t.department_name) text += `   🏛 ${escapeHtml(t.department_name)}\n`;
       if (t.official_contact) text += `   📞 ${escapeHtml(t.official_contact)}\n`;
+      if (t.source) text += `   🔗 Manba: ${escapeHtml(t.source)}\n`;
+      if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+        kb.text(`✏️ ${t.full_name.substring(0, 30)}`, `content_edit:teacher:${t.id}`).row();
+      }
     });
     text += '\n';
   }
@@ -134,7 +155,10 @@ export async function executeSearch(ctx, rawQuery) {
   if (books.length > 0) {
     text += `📚 <b>Elektron kitoblar (${books.length} ta):</b>\n`;
     books.slice(0, 3).forEach((b) => {
-      text += `• <b>${escapeHtml(b.title)}</b> (${b.author || 'FJSTI ARM'})\n   📥 <a href="${escapeHtml(b.file_url)}">Kitob havolasi</a>\n`;
+      text += `• <b>${escapeHtml(b.title)}</b> (${escapeHtml(b.author || 'FJSTI ARM')})\n   📥 <a href="${escapeHtml(b.file_url)}">Kitob havolasi</a>\n`;
+      if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+        kb.text(`✏️ ${b.title.substring(0, 30)}`, `content_edit:book:${b.id}`).row();
+      }
     });
     text += '\n';
   }

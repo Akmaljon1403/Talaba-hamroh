@@ -120,6 +120,31 @@ fjsti-talaba-hamroh/
 
 ---
 
+## 🛡️ Admin boshqaruvi va kontent tahrirlash
+
+### Administratorlar
+- `ADMIN_TELEGRAM_IDS` dagi IDlar superadmin huquqiga ega.
+- Superadmin `/admin` panelidan yangi admin qo‘shadi; bot orqali ID kiritish va alohida tasdiqlash talab qilinadi.
+- Yangi foydalanuvchi botda `/myid` yuborib, o‘z Telegram ID raqamini bilishi mumkin.
+- Admin ro‘yxati PostgreSQL’da saqlanadi. Bot ishga tushganda bazadagi admin rollari yuklanadi.
+
+### Tahrirlash rejimi
+1. Admin bot bilan shaxsiy chatda `/admin` buyrug‘ini yuboradi.
+2. `🛠 Tahrirlash rejimini yoqish` yoki `🗂 Ma’lumotlar bazasini tahrirlash` tugmasini bosadi.
+3. Ma’lumot turini tanlaydi: kafedralar, fanlar, o‘qituvchilar/mudirlar, klinik bazalar, xonalar, kitoblar, o‘quv jadvallari, fakultetlar yoki talaba xizmatlari.
+4. Yozuv va maydonni tanlaydi, yangi qiymatni yuboradi va saqlashdan oldin tasdiqlaydi.
+5. Tahrirlash rejimi 5 daqiqa faollik bo‘lmasa avtomatik o‘chadi. `/cancel` joriy amalni bekor qilib, kutilayotgan tahrir holatini tozalaydi.
+
+### Ma’lumotlar izchilligi va audit
+- Tahrirlar asosiy PostgreSQL yozuvini yangilaydi. Shu yozuvdan foydalanadigan qidiruvlar va tafsilot sahifalari yangi qiymatni ko‘rsatadi.
+- Kafedra nomi o‘zgarganda, unga ID orqali bog‘langan fan/o‘qituvchi ma’lumotlari yangi nomni ko‘radi; mos klinik baza va xona yozuvlaridagi kafedra nomlari ham sinxronlanadi.
+- Mudir ismi va telefon raqami tahrirlanganda, tegishli bog‘langan yozuvlar ham sinxronlanadi. Xona sig‘imi o‘zgarishi klinik baza sig‘imiga qo‘shilgan/o‘chirilgan farqni tatbiq etadi.
+- Barcha tahrirlar tranzaksiya bilan saqlanadi; shu maydon boshqa admin tomonidan bir vaqtda o‘zgartirilgan bo‘lsa, eskirgan qiymat yangisini bosib ketmaydi.
+- Eski va yangi qiymatlar, admin ID, ma’lumot turi va vaqt `admin_edit_logs` jadvalida qayd etiladi. Oxirgi o‘zgarishlarni `🧾 Tahrirlar tarixi` tugmasidan ko‘rish mumkin.
+- Seed yozuvlari barqaror identifikatorlar bilan bog‘langan; bot qayta ishga tushganda admin qayta nomlagan seed yozuvi ikkinchi marta yaratilmaydi.
+
+Tahrirlash va admin boshqaruvi faqat botning shaxsiy chatida ishlaydi. Qiymatlar server tarafida ruxsat etilgan maydonlar ro‘yxati va tip bo‘yicha tekshiriladi.
+
 ## 🛠 Mahalliy O‘rnatish va Ishga Tushirish
 
 ### 1. Repository'ni klonlash:

@@ -1,5 +1,6 @@
 import http from 'http';
-import { config, validateEnv } from './config/env.js';
+import { config, validateEnv, replaceRuntimeAdminRoles } from './config/env.js';
+import { getAdminRoles } from './db/queries/admins.js';
 import { testConnection, closePool } from './db/pool.js';
 import { runMigrations } from './db/migrate.js';
 import { seedDatabase } from './db/seed.js';
@@ -7,6 +8,8 @@ import { createBot } from './bot/index.js';
 
 let botInstance = null;
 let httpServer = null;
+let pollingStatus = 'starting';
+let lastSuccessfulPollAt = null;
 
 async function bootstrap() {
   console.log('====================================================');
@@ -38,6 +41,9 @@ async function bootstrap() {
     await runMigrations();
     // Auto-seed if database is fresh
     await seedDatabase();
+    const adminRows = await getAdminRoles();
+    replaceRuntimeAdminRoles(adminRows);
+    console.log(`[ADMIN] ${adminRows.length} ta administrator ma’lumotlar bazasidan yuklandi.`);
   } catch (dbInitErr) {
     console.error('❌ Baza initsializatsiyasida xatolik:', dbInitErr.message);
     process.exit(1);
@@ -46,6 +52,30 @@ async function bootstrap() {
   // 3. Initialize & start Telegram Bot (Long Polling)
   console.log('🤖 Telegram bot initsializatsiya qilinmoqda...');
   botInstance = createBot(config.botToken);
+
+  // Diagnose Telegram API failures without logging tokens, payloads, or user content.
+  // A 409 on getUpdates almost always means another process/service is polling this bot token.
+  botInstance.api.config.use(async (prev, method, payload, signal) => {
+    try {
+      const result = await prev(method, payload, signal);
+      if (method === 'getUpdates') {
+        pollingStatus = 'polling';
+        lastSuccessfulPollAt = new Date().toISOString();
+      }
+      return result;
+    } catch (error) {
+      const description = String(error?.description || error?.message || 'Unknown Telegram API error');
+      console.error(`[TELEGRAM API ERROR] method=${method} message=${description}`);
+      if (method === 'getUpdates') pollingStatus = 'degraded';
+      if (method === 'getUpdates' && (error?.error_code === 409 || /conflict|other getUpdates request/i.test(description))) {
+        console.error('[TELEGRAM POLLING CONFLICT] Another running process may be using this BOT_TOKEN. Stop duplicate Render services and any local npm start/dev process.');
+      }
+      if (error?.error_code === 401 || /unauthorized/i.test(description)) {
+        console.error('[TELEGRAM AUTH ERROR] Check BOT_TOKEN in the active Render service environment variables.');
+      }
+      throw error;
+    }
+  });
 
   // This service is explicitly configured for Long Polling. A webhook left by
   // an older deployment prevents Telegram getUpdates from delivering messages.
@@ -65,8 +95,10 @@ async function bootstrap() {
       if (req.url === '/health' || req.url === '/') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
-          status: 'ok',
+          status: pollingStatus === 'polling' ? 'ok' : pollingStatus,
           service: 'fjsti-talaba-hamroh',
+          telegramPolling: pollingStatus,
+          lastSuccessfulPollAt,
           timestamp: new Date().toISOString()
         }));
       } else {
@@ -88,6 +120,7 @@ async function bootstrap() {
   await botInstance.start({
     onStart: (botInfo) => {
       console.log('====================================================');
+      pollingStatus = 'starting';
       console.log(`🎉 Bot muvaffaqiyatli ishga tushdi: @${botInfo.username}`);
       console.log(`🆔 Bot ID: ${botInfo.id}`);
       console.log(`👥 Adminlar soni: ${config.adminIds.length}`);

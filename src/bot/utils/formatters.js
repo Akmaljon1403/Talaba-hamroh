@@ -26,7 +26,7 @@ export function formatDepartmentCard(dept) {
   if (dept.subjects && dept.subjects.length > 0) {
     text += `\n📖 <b>Biriktirilgan fanlar (${dept.subjects.length} ta):</b>\n`;
     dept.subjects.slice(0, 15).forEach((s, idx) => {
-      text += `${idx + 1}. ${escapeHtml(s.name)} (<i>${s.courses}-kurs, ${s.semesters}-semestr</i>)\n`;
+      text += `${idx + 1}. ${escapeHtml(s.name)} (<i>${escapeHtml(s.courses)}-kurs, ${escapeHtml(s.semesters)}-semestr</i>)\n`;
     });
     if (dept.subjects.length > 15) {
       text += `<i>...va yana ${dept.subjects.length - 15} ta fan.</i>\n`;
@@ -51,13 +51,20 @@ export function formatClinicalBaseCard(base) {
   if (base.address) {
     text += `📍 <b>Manzil:</b> ${escapeHtml(base.address)}\n`;
   }
-  text += `🚪 <b>Xonalar soni:</b> ${base.total_rooms || (base.rooms ? base.rooms.length : 0)} ta\n`;
+  if (base.map_link) {
+    const mapUrl = escapeHtml(base.map_link);
+    text += `🗺 <b>Xarita:</b> <a href="${mapUrl}">Xaritada ochish</a>\n`;
+  }
+  const roomCount = base.total_rooms ?? (base.rooms ? base.rooms.length : 0);
+  text += `🚪 <b>Xonalar soni:</b> ${roomCount} ta\n`;
   text += `👥 <b>Umumiy sig'imi:</b> ${base.total_capacity || 0} nafar talaba\n`;
 
   if (base.rooms && base.rooms.length > 0) {
     text += `\n📋 <b>Mavjud auditoriyalar:</b>\n`;
     base.rooms.forEach((r, idx) => {
       text += `• Xona <b>${escapeHtml(r.room_number)}</b> — ${escapeHtml(r.room_type)} (${r.capacity} o'rin)\n`;
+      if (r.department_name) text += `   🏛 Kafedra: ${escapeHtml(r.department_name)}\n`;
+      if (r.notes) text += `   📝 ${escapeHtml(r.notes)}\n`;
     });
   }
 
@@ -66,7 +73,8 @@ export function formatClinicalBaseCard(base) {
 }
 
 export function formatCalendarCard(item) {
-  let text = `📅 <b>${escapeHtml(item.direction_name)} (${item.course}-kurs)</b>\n\n`;
+  const yearLabel = item.academic_year ? ` — ${escapeHtml(item.academic_year)}` : '';
+  let text = `📅 <b>${escapeHtml(item.direction_name)} (${item.course}-kurs${yearLabel})</b>\n\n`;
   text += `🔹 Nazariy ta'lim: <b>${item.theory_weeks}</b> hafta\n`;
   text += `🔹 Attestatsiyalar: <b>${item.attestation_weeks}</b> hafta\n`;
   text += `🔹 Malakaviy amaliyot: <b>${item.internship_weeks}</b> hafta\n`;
@@ -81,7 +89,7 @@ export function formatCalendarCard(item) {
     text += `🔹 GPA hisoblash: <b>${item.gpa_weeks}</b> hafta\n`;
   }
   text += `\n📊 <b>Jami o'quv yili haftalari:</b> ${item.total_weeks} hafta\n`;
-  text += `\n🔗 <i>Manba: FJSTI Rektorati tomonidan tasdiqlangan O'quv jarayoni jadvali</i>`;
+  text += `\n🔗 <i>Manba: ${escapeHtml(item.source || 'FJSTI Rektorati tomonidan tasdiqlangan O‘quv jarayoni jadvali')}</i>`;
   return text;
 }
 
