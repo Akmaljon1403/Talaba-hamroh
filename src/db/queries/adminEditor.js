@@ -1,4 +1,4 @@
-import { getPool } from './pool.js';
+import { getPool, query } from './pool.js';
 import { getEditableEntitySchema, getEditableField, validateEditableValue } from '../../bot/utils/adminEditorPolicy.js';
 
 export async function getEditableEntity(entityType, entityId) {
@@ -165,4 +165,17 @@ export async function updateEditableEntityField({ entityType, entityId, fieldKey
   } finally {
     client.release();
   }
+}
+
+
+export async function getRecentAdminEdits(limit = 12) {
+  const safeLimit = Number.isSafeInteger(Number(limit)) ? Math.max(1, Math.min(30, Number(limit))) : 12;
+  const res = await query(
+    `SELECT actor_telegram_id, entity_type, entity_id, field_name, old_value, new_value, created_at
+     FROM admin_edit_logs
+     ORDER BY created_at DESC
+     LIMIT $1;`,
+    [safeLimit]
+  );
+  return res.rows;
 }
