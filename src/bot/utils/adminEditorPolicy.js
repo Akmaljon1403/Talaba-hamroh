@@ -1,4 +1,13 @@
 const ENTITY_SCHEMAS = {
+  faculty: {
+    label: 'Fakultet',
+    table: 'faculties',
+    fields: [
+      { key: 'name', label: 'Fakultet nomi', type: 'text', maxLength: 200, required: true },
+      { key: 'dean_name', label: 'Dekan F.I.Sh.', type: 'text', maxLength: 200, nullable: true },
+      { key: 'description', label: 'Yo‘nalishlar / tavsif', type: 'text', maxLength: 1500, nullable: true }
+    ]
+  },
   department: {
     label: 'Kafedra',
     table: 'departments',
