@@ -2,6 +2,7 @@ import { InlineKeyboard } from 'grammy';
 import { getAllServices, getServiceByCategory } from '../../db/queries/studentServices.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
 import { isAdminEditModeActive } from '../utils/adminEditMode.js';
+import { escapeHtml } from '../utils/formatters.js';
 
 export async function handleServices(ctx) {
   recordSectionClick('services_main');
@@ -33,11 +34,11 @@ export async function handleServiceDetail(ctx, category) {
 
   recordSectionClick(`service_${category}`);
 
-  let text = `📌 <b>${service.title}</b>\n\n` +
-    `${service.content}\n\n`;
+  let text = `📌 <b>${escapeHtml(service.title)}</b>\n\n` +
+    `${escapeHtml(service.content)}\n\n`;
 
   if (service.source_url) {
-    text += `🔗 <b>Rasmiy havola:</b> <a href="${service.source_url}">${service.source_url}</a>\n`;
+    text += `🔗 <b>Rasmiy havola:</b> <a href="${escapeHtml(service.source_url)}">${escapeHtml(service.source_url)}</a>\n`;
   }
   text += `🕒 <i>Oxirgi yangilanish: ${new Date(service.updated_at).toLocaleDateString('uz-UZ')}</i>`;
 
