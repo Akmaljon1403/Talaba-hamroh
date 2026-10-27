@@ -63,6 +63,25 @@ export async function runMigrations() {
       console.log('[MIGRATION] 002_seed_entity_identity allaqachon mavjud, o\'tkazib yuborildi.');
     }
 
+    // Append-only admin edit audit trail.
+    const auditMigration = await client.query(
+      'SELECT version FROM schema_migrations WHERE version = $1',
+      ['003_admin_edit_audit']
+    );
+    if (auditMigration.rowCount === 0) {
+      console.log('[MIGRATION] 003_admin_edit_audit qo\\'llanmoqda...');
+      const auditSqlPath = path.join(__dirname, 'migrations', '003_admin_edit_audit.sql');
+      const auditSql = fs.readFileSync(auditSqlPath, 'utf-8');
+      await client.query(auditSql);
+      await client.query(
+        'INSERT INTO schema_migrations (version) VALUES ($1)',
+        ['003_admin_edit_audit']
+      );
+      console.log('[MIGRATION] 003_admin_edit_audit muvaffaqiyatli qo\\'llandi.');
+    } else {
+      console.log('[MIGRATION] 003_admin_edit_audit allaqachon mavjud, o\\'tkazib yuborildi.');
+    }
+
     await client.query('COMMIT');
     console.log('[MIGRATION] Barcha migratsiyalar muvaffaqiyatli bajarildi.');
     return { success: true };
