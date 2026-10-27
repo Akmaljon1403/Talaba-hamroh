@@ -18,15 +18,37 @@ export function buildStartMessage(userName) {
 }
 
 export async function handleStart(ctx) {
-  console.info(`[HANDLER ENTER] /start update_id=${ctx.update.update_id}`);
-  const text = buildStartMessage(ctx.from?.first_name);
+  const updateId = ctx.update?.update_id ?? 'unknown';
+  const startedAt = Date.now();
+  let stage = 'message_build';
 
-  // Analytics is non-critical: failures must not prevent the welcome message.
-  void recordSectionClick('start');
-  await ctx.reply(text, {
-    parse_mode: 'HTML',
-    reply_markup: getMainKeyboard(ctx.from?.id)
-  });
+  console.info(`[START] entered update_id=${updateId}`);
+
+  try {
+    const text = buildStartMessage(ctx.from?.first_name);
+    console.info(`[START] message_built update_id=${updateId} chars=${text.length}`);
+
+    // Analytics is non-critical: do not await it or let it block the welcome message.
+    void recordSectionClick('start');
+
+    stage = 'keyboard_build';
+    const keyboard = getMainKeyboard(ctx.from?.id);
+    console.info(`[START] keyboard_built update_id=${updateId}`);
+
+    stage = 'send_message';
+    console.info(`[START] send_begin update_id=${updateId}`);
+    await ctx.reply(text, {
+      parse_mode: 'HTML',
+      reply_markup: keyboard
+    });
+
+    console.info(`[START] send_success update_id=${updateId} elapsed_ms=${Date.now() - startedAt}`);
+  } catch (error) {
+    console.error(
+      `[START] failed update_id=${updateId} stage=${stage} elapsed_ms=${Date.now() - startedAt} error=${error?.description || error?.message || String(error)}`
+    );
+    throw error;
+  }
 }
 
 export async function handleHelp(ctx) {
