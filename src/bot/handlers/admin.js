@@ -77,8 +77,8 @@ export async function handleAdminEditHistory(ctx) {
       const typeLabel = labels[item.entity_type] || item.entity_type;
       const field = getEditableField(item.entity_type, item.field_name);
       const fieldLabel = field?.label || (item.entity_type === 'admin' ? 'Admin huquqi' : item.field_name);
-      const oldValue = String(item.old_value ?? '—').replace(/\\s+/g, ' ').slice(0, 100);
-      const newValue = String(item.new_value ?? '—').replace(/\\s+/g, ' ').slice(0, 100);
+      const oldValue = String(item.old_value ?? '—').replace(/\s+/g, ' ').slice(0, 100);
+      const newValue = String(item.new_value ?? '—').replace(/\s+/g, ' ').slice(0, 100);
       const date = new Date(item.created_at).toLocaleString('uz-UZ', { timeZone: 'Asia/Tashkent' });
       text += `${index + 1}. <b>${escapeHtml(typeLabel)}</b> #${item.entity_id} — ${escapeHtml(fieldLabel)}\n` +
         `   <code>${escapeHtml(oldValue)}</code> → <code>${escapeHtml(newValue)}</code>\n` +
