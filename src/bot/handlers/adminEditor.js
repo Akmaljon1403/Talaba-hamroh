@@ -154,6 +154,11 @@ export async function processAdminEditInput(ctx) {
   if (!userId) return false;
   const state = adminEditInputStates.get(userId);
   if (!state) return false;
+  if (ctx.chat?.type !== 'private') {
+    adminEditInputStates.delete(userId);
+    await ctx.reply('🔒 Kontent tahrirlash faqat bot bilan shaxsiy chatda bajariladi.');
+    return true;
+  }
 
   const text = ctx.message?.text;
   if (typeof text !== 'string') return false;
@@ -180,6 +185,7 @@ export async function processAdminEditInput(ctx) {
     });
 
     if (!result.changed) {
+      adminEditInputStates.delete(userId);
       await ctx.reply('ℹ️ Yangi qiymat avvalgi qiymat bilan bir xil. Ma’lumot o‘zgartirilmadi.');
       return true;
     }
