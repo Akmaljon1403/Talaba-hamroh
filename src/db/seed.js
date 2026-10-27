@@ -334,12 +334,14 @@ export async function seedDatabase() {
     }
     console.log(`[SEED] Boshlang'ich ARM kutubxona kitoblari kiritildi.`);
 
-    // 8. Seed Admins from config
+    // IDs explicitly configured as bootstrap admins remain superadmins in the database.
     for (const adminId of config.adminIds) {
       await client.query(
         `INSERT INTO admins (telegram_id, full_name, role)
          VALUES ($1, $2, $3)
-         ON CONFLICT (telegram_id) DO NOTHING;`,
+         ON CONFLICT (telegram_id) DO UPDATE
+         SET role = 'superadmin',
+             full_name = COALESCE(admins.full_name, EXCLUDED.full_name);`,
         [adminId, 'Super Admin', 'superadmin']
       );
     }
