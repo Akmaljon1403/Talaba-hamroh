@@ -3,6 +3,7 @@ import { getAllClinicalBases, getClinicalBaseById, searchLocations } from '../..
 import { searchRooms } from '../../db/queries/rooms.js';
 import { formatClinicalBaseCard, escapeHtml } from '../utils/formatters.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 const BASES_PER_PAGE = 6;
 
@@ -77,6 +78,13 @@ export async function handleBaseDetail(ctx, baseId) {
   const kb = new InlineKeyboard()
     .text('⬅️ Bazalar ro‘yxatiga', 'bases:page:1')
     .text('🏠 Asosiy menyu', 'menu_home');
+
+  if (ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+    kb.row().text('✏️ Klinik bazani tahrirlash', `admin_edit:base:${base.id}`);
+    (base.rooms || []).slice(0, 20).forEach((room) => {
+      kb.row().text(`✏️ Xona ${String(room.room_number).slice(0, 24)}`, `admin_edit:room:${room.id}`);
+    });
+  }
 
   await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });
   await ctx.answerCallbackQuery();
