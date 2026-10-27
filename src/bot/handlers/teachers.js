@@ -43,6 +43,9 @@ export async function handleDepartmentsPagination(ctx, level = 'bakalavriat', pa
   currentDepts.forEach((d) => {
     const shortName = d.name.length > 38 ? d.name.substring(0, 35) + '...' : d.name;
     kb.text(`🏛 ${shortName}`, `dept_detail:${d.id}`).row();
+    if (ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+      kb.text(`✏️ Kafedra #${d.id}`, `admin_edit:department:${d.id}`).row();
+    }
   });
 
   const navRow = [];
