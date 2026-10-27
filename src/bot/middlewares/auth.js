@@ -20,7 +20,7 @@ export async function authMiddleware(ctx, next) {
     ctx.adminRole = adminRecord?.role || (configuredSuperAdmin ? 'superadmin' : null);
     ctx.isSuperAdmin = ctx.adminRole === 'superadmin' || configuredSuperAdmin;
 
-    if (ctx.isAdmin) touchAdminEditMode(telegramId);
+    if (ctx.isAdmin && ctx.chat?.type === 'private') touchAdminEditMode(telegramId);
 
     // User activity tracking must not block message handling.
     upsertUser(ctx.from).catch((err) => {
