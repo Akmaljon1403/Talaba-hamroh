@@ -5,7 +5,8 @@ import {
   getEditableEntity,
   listEditableEntities,
   updateEditableField,
-  validateEditableValue
+  validateEditableValue,
+  getRecentContentEdits
 } from '../../db/queries/contentEditor.js';
 import { contentEditStates } from '../state/adminState.js';
 import {
@@ -342,11 +343,10 @@ export async function handleContentEditHistory(ctx) {
   } else {
     edits.forEach((item, index) => {
       const typeLabel = typeLabels[item.entity_type] || item.entity_type;
-      const config = getEditableEntityConfig(item.entity_type);
       const field = getEditableField(item.entity_type, item.field_name);
       const fieldLabel = field?.label || item.field_name;
-      const oldValue = String(item.old_value ?? '—').replace(/\\s+/g, ' ').slice(0, 90);
-      const newValue = String(item.new_value ?? '—').replace(/\\s+/g, ' ').slice(0, 90);
+      const oldValue = String(item.old_value ?? '—').replace(/\s+/g, ' ').slice(0, 90);
+      const newValue = String(item.new_value ?? '—').replace(/\s+/g, ' ').slice(0, 90);
       const date = new Date(item.created_at).toLocaleString('uz-UZ', { timeZone: 'Asia/Tashkent' });
 
       text += `${index + 1}. <b>${escapeHtml(typeLabel)}</b> #${item.entity_id}\n` +
