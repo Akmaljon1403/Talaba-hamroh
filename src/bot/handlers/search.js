@@ -9,6 +9,7 @@ import { searchLocations } from '../../db/queries/locations.js';
 import { logSearch, recordSectionClick } from '../../db/queries/stats.js';
 import { logUnansweredQuestion } from '../../db/queries/unanswered.js';
 import { escapeHtml } from '../utils/formatters.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 export async function handleSearchPrompt(ctx) {
   recordSectionClick('search_prompt');
@@ -80,12 +81,14 @@ export async function executeSearch(ctx, rawQuery) {
 
   let text = `🔍 «<b>${escapeHtml(queryStr)}</b>» bo‘yicha topilgan natijalar (${totalResults} ta):\n\n`;
   const kb = new InlineKeyboard();
+  const adminEditActive = Boolean(ctx.isAdmin && isAdminEditModeActive(ctx.from?.id));
 
   // 1. Subjects
   if (subjects.length > 0) {
     text += `📖 <b>Fanlar (${subjects.length} ta):</b>\n`;
     subjects.slice(0, 4).forEach((s) => {
       text += `• <b>${escapeHtml(s.name)}</b> (${s.courses}-kurs)\n   🏛 Kafedra: <i>${escapeHtml(s.department_name)}</i>\n`;
+      if (adminEditActive) kb.text(`✏️ Fan #${s.id}`, `admin_edit:subject:${s.id}`).row();
     });
     text += '\n';
   }
@@ -97,6 +100,7 @@ export async function executeSearch(ctx, rawQuery) {
       text += `• <b>${escapeHtml(d.name)}</b>\n`;
       if (d.head_name) text += `   👤 Mudir: ${escapeHtml(d.head_name)} (${d.contact_phone || 'aloqa mavjud'})\n`;
       kb.text(`🏛 ${d.name.substring(0, 30)}...`, `dept_detail:${d.id}`).row();
+      if (adminEditActive) kb.text(`✏️ Kafedra #${d.id}`, `admin_edit:department:${d.id}`).row();
     });
     text += '\n';
   }
@@ -107,6 +111,7 @@ export async function executeSearch(ctx, rawQuery) {
     bases.slice(0, 3).forEach((b) => {
       text += `• <b>${escapeHtml(b.name)}</b> (${b.total_rooms} xona, ${b.total_capacity} o'rin)\n`;
       kb.text(`🏥 ${b.name.substring(0, 30)}...`, `base_detail:${b.id}`).row();
+      if (adminEditActive) kb.text(`✏️ Baza #${b.id}`, `admin_edit:base:${b.id}`).row();
     });
     text += '\n';
   }
@@ -115,6 +120,7 @@ export async function executeSearch(ctx, rawQuery) {
     text += `🚪 <b>Auditoriyalar (${rooms.length} ta):</b>\n`;
     rooms.slice(0, 4).forEach((r) => {
       text += `• Xona <b>${escapeHtml(r.room_number)}</b> — ${escapeHtml(r.base_name)} (${escapeHtml(r.room_type)}, ${r.capacity} o'rin)\n`;
+      if (adminEditActive) kb.text(`✏️ Xona #${r.id}`, `admin_edit:room:${r.id}`).row();
     });
     text += '\n';
   }
@@ -126,6 +132,7 @@ export async function executeSearch(ctx, rawQuery) {
       text += `• <b>${escapeHtml(t.full_name)}</b> — ${escapeHtml(t.position || 'O\'qituvchi')}\n`;
       if (t.department_name) text += `   🏛 ${escapeHtml(t.department_name)}\n`;
       if (t.official_contact) text += `   📞 ${escapeHtml(t.official_contact)}\n`;
+      if (adminEditActive) kb.text(`✏️ O‘qituvchi #${t.id}`, `admin_edit:teacher:${t.id}`).row();
     });
     text += '\n';
   }
@@ -134,7 +141,8 @@ export async function executeSearch(ctx, rawQuery) {
   if (books.length > 0) {
     text += `📚 <b>Elektron kitoblar (${books.length} ta):</b>\n`;
     books.slice(0, 3).forEach((b) => {
-      text += `• <b>${escapeHtml(b.title)}</b> (${b.author || 'FJSTI ARM'})\n   📥 <a href="${escapeHtml(b.file_url)}">Kitob havolasi</a>\n`;
+      text += `• <b>${escapeHtml(b.title)}</b> (${escapeHtml(b.author || 'FJSTI ARM')})\n   📥 <a href="${escapeHtml(b.file_url)}">Kitob havolasi</a>\n`;
+      if (adminEditActive) kb.text(`✏️ Kitob #${b.id}`, `admin_edit:book:${b.id}`).row();
     });
     text += '\n';
   }
