@@ -17,6 +17,7 @@ function isAuthorizedEditor(ctx) {
 
 function entityName(type, entity) {
   const keys = {
+    faculty: entity.name,
     department: entity.name,
     subject: entity.name,
     teacher: entity.full_name,
