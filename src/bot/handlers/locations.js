@@ -46,6 +46,9 @@ export async function handleBasesPagination(ctx, page = 1) {
   currentBases.forEach((b) => {
     const shortName = b.name.length > 38 ? b.name.substring(0, 35) + '...' : b.name;
     kb.text(`🏥 ${shortName}`, `base_detail:${b.id}`).row();
+    if (ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+      kb.text(`✏️ Baza #${b.id}`, `admin_edit:base:${b.id}`).row();
+    }
   });
 
   // Pagination navigation row
