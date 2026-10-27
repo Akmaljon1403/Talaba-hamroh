@@ -25,7 +25,7 @@ export async function handleStart(ctx) {
   void recordSectionClick('start');
   await ctx.reply(text, {
     parse_mode: 'HTML',
-    reply_markup: getMainKeyboard(ctx.from?.id)
+    reply_markup: getMainKeyboard(ctx.from?.id, ctx.isAdmin)
   });
 }
 
@@ -45,13 +45,13 @@ export async function handleHelp(ctx) {
   recordSectionClick('help');
   await ctx.reply(text, {
     parse_mode: 'HTML',
-    reply_markup: getMainKeyboard(ctx.from?.id),
+    reply_markup: getMainKeyboard(ctx.from?.id, ctx.isAdmin),
     link_preview_options: { is_disabled: true }
   });
 }
 
 export async function handleCancel(ctx) {
   await ctx.reply('Amal bekor qilindi. Asosiy menyudasiz.', {
-    reply_markup: getMainKeyboard(ctx.from?.id)
+    reply_markup: getMainKeyboard(ctx.from?.id, ctx.isAdmin)
   });
 }
