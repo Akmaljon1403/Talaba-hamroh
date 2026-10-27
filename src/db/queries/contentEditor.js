@@ -1,4 +1,4 @@
-import { getPool } from '../pool.js';
+import { getPool, query } from '../pool.js';
 
 const ENTITIES = {
   dept: {
