@@ -18,6 +18,7 @@ export function buildStartMessage(userName) {
 }
 
 export async function handleStart(ctx) {
+  console.info(`[HANDLER ENTER] /start update_id=${ctx.update.update_id}`);
   const text = buildStartMessage(ctx.from?.first_name);
 
   // Analytics is non-critical: failures must not prevent the welcome message.
