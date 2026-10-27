@@ -19,15 +19,28 @@ export function buildStartMessage(userName) {
 }
 
 export async function handleStart(ctx) {
-  console.info(`[HANDLER ENTER] /start update_id=${ctx.update.update_id}`);
-  const text = buildStartMessage(ctx.from?.first_name);
+  const updateId = ctx.update.update_id;
+  console.info(`[HANDLER ENTER] /start update_id=${updateId}`);
 
-  // Analytics is non-critical: failures must not prevent the welcome message.
-  void recordSectionClick('start');
-  await ctx.reply(text, {
-    parse_mode: 'HTML',
-    reply_markup: getMainKeyboard(ctx.from?.id)
-  });
+  try {
+    const text = buildStartMessage(ctx.from?.first_name);
+    console.info(`[START STAGE] message_built update_id=${updateId}`);
+
+    // Analytics is non-critical: failures must not prevent the welcome message.
+    void recordSectionClick('start');
+
+    const keyboard = getMainKeyboard(ctx.from?.id);
+    console.info(`[START STAGE] keyboard_built update_id=${updateId}`);
+
+    await ctx.reply(text, {
+      parse_mode: 'HTML',
+      reply_markup: keyboard
+    });
+    console.info(`[START SUCCESS] welcome_sent update_id=${updateId}`);
+  } catch (error) {
+    console.error(`[START FAILURE] update_id=${updateId} stage=welcome_reply message=${error?.description || error?.message || error}`);
+    throw error;
+  }
 }
 
 export async function handleHelp(ctx) {
