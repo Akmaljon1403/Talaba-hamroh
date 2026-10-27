@@ -12,7 +12,7 @@ import { escapeHtml } from '../utils/formatters.js';
 export const adminEditInputStates = new Map();
 
 function isAuthorizedEditor(ctx) {
-  return Boolean(ctx.isAdmin && isAdminEditModeActive(ctx.from?.id));
+  return Boolean(ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id));
 }
 
 function entityName(type, entity) {
@@ -42,6 +42,10 @@ function editorMenuKeyboard(entityType, entityId) {
 }
 
 export async function handleAdminEditModeToggle(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Tahrirlash rejimini faqat bot bilan shaxsiy chatda yoqish mumkin.');
+    return;
+  }
   if (!ctx.isAdmin) {
     await ctx.answerCallbackQuery('Sizda admin ruxsati yo‘q.');
     return;
