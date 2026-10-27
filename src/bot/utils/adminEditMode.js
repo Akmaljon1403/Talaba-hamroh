@@ -24,22 +24,23 @@ function expireMode(telegramId, state, notify = true) {
 
 function armExpiry(telegramId, state) {
   clearTimer(state);
-  state.expiresAt = Date.now() + ADMIN_EDIT_MODE_IDLE_MS;
+  state.expiresAt = Date.now() + state.timeoutMs;
   state.timer = setTimeout(() => {
     if (Date.now() >= state.expiresAt) {
       expireMode(telegramId, state, true);
     } else {
       armExpiry(telegramId, state);
     }
-  }, ADMIN_EDIT_MODE_IDLE_MS + 50);
+  }, state.timeoutMs + 50);
   state.timer.unref?.();
 }
 
-export function enableAdminEditMode(telegramId, api, chatId) {
+export function enableAdminEditMode(telegramId, api, chatId, timeoutMs = ADMIN_EDIT_MODE_IDLE_MS) {
   const id = Number(telegramId);
   const previous = editModeStates.get(id);
   clearTimer(previous);
-  const state = { api, chatId, expiresAt: 0, timer: null };
+  const safeTimeoutMs = Number.isFinite(timeoutMs) ? Math.max(10, Math.min(timeoutMs, 24 * 60 * 60 * 1000)) : ADMIN_EDIT_MODE_IDLE_MS;
+  const state = { api, chatId, timeoutMs: safeTimeoutMs, expiresAt: 0, timer: null };
   editModeStates.set(id, state);
   armExpiry(id, state);
   return true;
