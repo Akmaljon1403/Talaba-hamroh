@@ -118,6 +118,14 @@ export async function handleAdminRequestRemove(ctx, targetTelegramId) {
   await ctx.answerCallbackQuery();
 }
 
+async function showAdminMutationResult(ctx, message, alertText) {
+  const kb = new InlineKeyboard()
+    .text('👥 Adminlar', 'admin_manage_admins')
+    .text('⚙️ Admin panel', 'admin_panel');
+  await ctx.editMessageText(message, { parse_mode: 'HTML', reply_markup: kb });
+  await ctx.answerCallbackQuery(alertText);
+}
+
 export async function handleAdminConfirmMutation(ctx) {
   if (!ctx.isSuperAdmin) {
     await ctx.answerCallbackQuery('Bu amal faqat superadmin uchun.');
@@ -135,8 +143,7 @@ export async function handleAdminConfirmMutation(ctx) {
     const existing = await getAdminByTelegramId(pending.targetTelegramId);
     if (existing) {
       pendingAdminMutations.delete(ctx.from.id);
-      await ctx.answerCallbackQuery('Bu Telegram ID allaqachon admin.');
-      await handleAdminPanel(ctx);
+      await showAdminMutationResult(ctx, 'ℹ️ Bu Telegram ID allaqachon adminlar ro‘yxatida.', 'Bu ID allaqachon admin.');
       return;
     }
 
@@ -147,15 +154,17 @@ export async function handleAdminConfirmMutation(ctx) {
     });
     if (!created) {
       pendingAdminMutations.delete(ctx.from.id);
-      await ctx.answerCallbackQuery('Admin qo‘shilmadi: ID avval ro‘yxatga olingan bo‘lishi mumkin.');
-      await handleAdminPanel(ctx);
+      await showAdminMutationResult(ctx, '⚠️ Admin qo‘shilmadi. ID avval ro‘yxatga olingan bo‘lishi mumkin.', 'Admin qo‘shilmadi.');
       return;
     }
 
     await logAdminChange({ actorTelegramId: ctx.from.id, targetTelegramId: pending.targetTelegramId, action: 'add' });
     pendingAdminMutations.delete(ctx.from.id);
-    await ctx.answerCallbackQuery('Yangi admin muvaffaqiyatli qo‘shildi.');
-    await handleAdminPanel(ctx);
+    await showAdminMutationResult(
+      ctx,
+      `✅ <b>Yangi admin qo‘shildi.</b>\n\nIsm: <b>${escapeHtml(created.full_name || pending.targetName)}</b>\nTelegram ID: <code>${escapeHtml(pending.targetTelegramId)}</code>\n\nAdmin huquqi bazada saqlandi va botni qayta ishga tushirganda ham yo‘qolmaydi.`,
+      'Yangi admin muvaffaqiyatli qo‘shildi.'
+    );
     return;
   }
 
@@ -163,8 +172,7 @@ export async function handleAdminConfirmMutation(ctx) {
     const target = await getAdminByTelegramId(pending.targetTelegramId);
     if (!target || target.role === 'superadmin' || String(target.telegram_id) === String(ctx.from.id)) {
       pendingAdminMutations.delete(ctx.from.id);
-      await ctx.answerCallbackQuery('Adminni xavfsiz o‘chirish shartlari bajarilmadi.');
-      await handleAdminPanel(ctx);
+      await showAdminMutationResult(ctx, '⚠️ Adminni o‘chirish xavfsizlik qoidalari sababli bajarilmadi.', 'Admin o‘chirilmadi.');
       return;
     }
     if (await countSuperAdmins() < 1) {
@@ -178,16 +186,26 @@ export async function handleAdminConfirmMutation(ctx) {
       await logAdminChange({ actorTelegramId: ctx.from.id, targetTelegramId: pending.targetTelegramId, action: 'remove' });
     }
     pendingAdminMutations.delete(ctx.from.id);
-    await ctx.answerCallbackQuery(deleted ? 'Admin huquqi olib tashlandi.' : 'Admin o‘chirilmadi.');
-    await handleAdminPanel(ctx);
+    await showAdminMutationResult(
+      ctx,
+      deleted
+        ? `✅ <b>Admin huquqi olib tashlandi.</b>\n\n<code>${escapeHtml(pending.targetTelegramId)}</code> endi botning admin funksiyalaridan foydalana olmaydi.`
+        : '⚠️ Admin o‘chirilmadi. Ro‘yxatni yangilab tekshiring.',
+      deleted ? 'Admin huquqi olib tashlandi.' : 'Admin o‘chirilmadi.'
+    );
   }
 }
 
 export async function handleAdminCancelMutation(ctx) {
   pendingAdminMutations.delete(ctx.from?.id);
   adminActionStates.delete(ctx.from?.id);
+  const kb = new InlineKeyboard()
+    .text('👥 Adminlar', 'admin_manage_admins')
+    .text('⚙️ Admin panel', 'admin_panel');
+  await ctx.editMessageText('Amal bekor qilindi. Adminlar ro‘yxati yoki panelga qaytishingiz mumkin.', {
+    reply_markup: kb
+  });
   await ctx.answerCallbackQuery('Amal bekor qilindi.');
-  await handleAdminPanel(ctx);
 }
 
 export async function handleAdminStats(ctx) {
@@ -369,7 +387,7 @@ export async function processAdminInput(ctx) {
 
     const parts = text.split('|').map((part) => part.trim());
     const targetIdText = parts[0] || '';
-    if (!/^\\d{5,15}$/.test(targetIdText) || !Number.isSafeInteger(Number(targetIdText)) || Number(targetIdText) <= 0) {
+    if (!/^\d{5,15}$/.test(targetIdText) || !Number.isSafeInteger(Number(targetIdText)) || Number(targetIdText) <= 0) {
       await ctx.reply('⚠️ Telegram ID noto‘g‘ri. Faqat raqam kiriting (masalan, <code>123456789</code>).', { parse_mode: 'HTML' });
       return true;
     }
