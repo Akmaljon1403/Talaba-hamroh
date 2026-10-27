@@ -3,6 +3,7 @@ import { getAllDepartments, getDepartmentById, searchDepartments } from '../../d
 import { searchTeachers } from '../../db/queries/teachers.js';
 import { formatDepartmentCard, formatTeacherCard, escapeHtml } from '../utils/formatters.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 const DEPTS_PER_PAGE = 6;
 
@@ -73,6 +74,10 @@ export async function handleDepartmentDetail(ctx, deptId) {
   const kb = new InlineKeyboard()
     .text('⬅️ Kafedralarga qaytish', `depts:${dept.level}:page:1`)
     .text('🏠 Asosiy menyu', 'menu_home');
+
+  if (ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+    kb.row().text('✏️ Kafedrani tahrirlash', `admin_edit:department:${dept.id}`);
+  }
 
   await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });
   await ctx.answerCallbackQuery();
