@@ -120,6 +120,29 @@ fjsti-talaba-hamroh/
 
 ---
 
+## 🛡️ Admin boshqaruvi va kontent tahrirlash
+
+### Admin rollari
+- `ADMIN_TELEGRAM_IDS` orqali belgilangan superadminlar saqlanib qoladi va bot ichidan boshqa superadmin tayinlashi shart bo‘lmagan boshlang‘ich boshqaruv huquqiga ega bo‘ladi.
+- Superadmin `/admin` panelidan yangi adminni Telegram ID orqali qo‘shishi yoki oddiy adminning huquqini bekor qilishi mumkin. Qo‘shish/o‘chirish amallari alohida tasdiqlanadi.
+- Oddiy admin kontentni tahrirlashi, statistika ko‘rishi va mavjud admin amallaridan foydalanishi mumkin; yangi admin tayinlash va adminlarni o‘chirish faqat superadmin uchun.
+
+### Vaqtinchalik tahrirlash rejimi
+1. Admin bot bilan **shaxsiy chatda** `/admin` buyrug‘ini yuboradi.
+2. `🛡 Tahrirlash rejimini yoqish` tugmasini bosadi.
+3. Qidiruv natijalari va tegishli ro‘yxat/kartalarda paydo bo‘lgan `✏️` tugmasini tanlab, o‘zgartirmoqchi bo‘lgan maydonni belgilaydi.
+4. Yangi qiymatni yuboradi. Bot qiymatni tekshiradi, ma’lumotni tranzaksiya bilan saqlaydi va tahrir jurnaliga yozadi.
+5. Rejim 10 daqiqa faollik bo‘lmasa avtomatik o‘chadi. `/cancel` joriy kiritishni bekor qiladi.
+
+Quyidagi yozuv turlari tahrirlash paneliga ulangan: **fakultetlar, kafedralar, fanlar, o‘qituvchilar, klinik bazalar, auditoriyalar, kitoblar, o‘quv grafigi va talaba xizmatlari**.
+
+### Ma’lumotlarning izchilligi
+- Tahrirlar JSON fayl nusxasini almashtirmaydi; ular botning asosiy PostgreSQL yozuviga saqlanadi. Tegishli bo‘limlar shu yozuvdan o‘qiydi, shu sabab nom o‘zgarishi ID orqali bog‘langan qidiruv va tafsilotlarda aks etadi.
+- Kafedra nomi o‘zgarganda kafedraga ID orqali bog‘langan fanlar va o‘qituvchilar yangi nomni avtomatik ko‘radi; ayni kafedra nomi sifatida saqlangan mos klinik baza/xona matnlari ham sinxronlanadi.
+- Har bir muvaffaqiyatli o‘zgarishning eski va yangi qiymati `admin_edit_logs` jadvalida saqlanadi. Admin paneldagi `🧾 Tahrirlar tarixi` oxirgi o‘zgarishlarni ko‘rsatadi.
+- Mavjud, allaqachon to‘ldirilgan bazada yangi editor birinchi marta ishga tushganda rasmiy seed ma’lumotlarini qaytadan yozmaydi. Bu mavjud kontentni tasodifan bosib ketish xavfini kamaytiradi.
+- Xavfsizlik uchun admin boshqaruvi va kontent tahrirlash faqat bot bilan shaxsiy chatda ishlaydi. Matn/havolalar validatsiyadan o‘tadi; SQL maydonlari faqat oldindan ruxsat berilgan sxemadan tanlanadi.
+
 ## 🛠 Mahalliy O‘rnatish va Ishga Tushirish
 
 ### 1. Repository'ni klonlash:
