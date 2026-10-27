@@ -11,6 +11,8 @@ import { getAllDepartments } from '../../db/queries/departments.js';
 import { escapeHtml } from '../utils/formatters.js';
 import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 import { getAllAdmins, getAdminByTelegramId, createAdmin, deleteAdmin, countSuperAdmins, logAdminChange } from '../../db/queries/admins.js';
+import { getRecentAdminEdits } from '../../db/queries/adminEditor.js';
+import { getEditableField } from '../utils/adminEditorPolicy.js';
 
 export const adminActionStates = new Map();
 const pendingAdminMutations = new Map();
@@ -45,6 +47,48 @@ export async function handleAdminPanel(ctx) {
   } else {
     await ctx.reply(text, { parse_mode: 'HTML', reply_markup: kb });
   }
+}
+
+export async function handleAdminEditHistory(ctx) {
+  if (!ctx.isAdmin || ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Tahrirlar tarixini faqat admin shaxsiy chatda ko‘ra oladi.');
+    return;
+  }
+
+  const edits = await getRecentAdminEdits(12);
+  const labels = {
+    department: 'Kafedra',
+    subject: 'Fan',
+    teacher: 'O‘qituvchi',
+    base: 'Klinik baza',
+    room: 'Auditoriya',
+    book: 'Kitob',
+    calendar: 'O‘quv grafigi',
+    service: 'Talaba xizmati',
+    admin: 'Admin huquqi'
+  };
+
+  let text = `🧾 <b>So‘nggi tahrirlar tarixi</b>\n\n`;
+  const kb = new InlineKeyboard();
+  if (edits.length === 0) {
+    text += 'Hozircha tahrirlar qayd etilmagan.';
+  } else {
+    edits.forEach((item, index) => {
+      const typeLabel = labels[item.entity_type] || item.entity_type;
+      const field = getEditableField(item.entity_type, item.field_name);
+      const fieldLabel = field?.label || (item.entity_type === 'admin' ? 'Admin huquqi' : item.field_name);
+      const oldValue = String(item.old_value ?? '—').replace(/\\s+/g, ' ').slice(0, 100);
+      const newValue = String(item.new_value ?? '—').replace(/\\s+/g, ' ').slice(0, 100);
+      const date = new Date(item.created_at).toLocaleString('uz-UZ', { timeZone: 'Asia/Tashkent' });
+      text += `${index + 1}. <b>${escapeHtml(typeLabel)}</b> #${item.entity_id} — ${escapeHtml(fieldLabel)}\n` +
+        `   <code>${escapeHtml(oldValue)}</code> → <code>${escapeHtml(newValue)}</code>\n` +
+        `   👤 Admin ID: <code>${item.actor_telegram_id}</code>\n   🕒 ${escapeHtml(date)}\n\n`;
+    });
+  }
+
+  kb.text('⬅️ Admin panel', 'admin_panel').text('🏠 Menyu', 'menu_home');
+  await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });
+  await ctx.answerCallbackQuery();
 }
 
 export async function handleAdminAddAdminPrompt(ctx) {
