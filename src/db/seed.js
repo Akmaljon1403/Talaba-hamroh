@@ -20,6 +20,30 @@ export async function seedDatabase() {
   try {
     await client.query('BEGIN');
 
+    // Keep environment-configured bootstrap administrators as superadmins on every start.
+    for (const adminId of config.adminIds) {
+      await client.query(
+        `INSERT INTO admins (telegram_id, full_name, role)
+         VALUES ($1, 'Super Admin', 'superadmin')
+         ON CONFLICT (telegram_id) DO UPDATE SET role = 'superadmin';`,
+        [String(adminId)]
+      );
+    }
+
+    // Apply the official seed only once. This protects later canonical admin edits
+    // from being overwritten or duplicated on a restart/redeploy.
+    const seedVersion = '001_verified_official_dataset';
+    const seedAlreadyApplied = await client.query(
+      'SELECT version FROM seed_versions WHERE version = $1 LIMIT 1;',
+      [seedVersion]
+    );
+    if (seedAlreadyApplied.rowCount > 0) {
+      await client.query('COMMIT');
+      console.log('[SEED] Rasmiy boshlang‘ich ma’lumotlar oldin yuklangan; admin tahrirlari saqlandi.');
+      return { success: true, skipped: true };
+    }
+
+
     // 2. Seed Faculties
     const instituteData = JSON.parse(
       fs.readFileSync(path.join(__dirname, '../data/verified_institute.json'), 'utf-8')
@@ -270,19 +294,12 @@ export async function seedDatabase() {
     }
     console.log(`[SEED] Boshlang'ich ARM kutubxona kitoblari kiritildi.`);
 
-    // 8. Seed Admins from config
-    for (const adminId of config.adminIds) {
-      await client.query(
-        `INSERT INTO admins (telegram_id, full_name, role)
-         VALUES ($1, $2, $3)
-         ON CONFLICT (telegram_id) DO NOTHING;`,
-        [adminId, 'Super Admin', 'superadmin']
-      );
-    }
-    if (config.adminIds.length > 0) {
-      console.log(`[SEED] ${config.adminIds.length} ta admin ro'yxatga olindi.`);
-    }
+    // Environment-configured bootstrap admins were synchronized before seed execution.
 
+    await client.query(
+      'INSERT INTO seed_versions (version) VALUES ($1) ON CONFLICT (version) DO NOTHING;',
+      ['001_verified_official_dataset']
+    );
     await client.query('COMMIT');
     console.log('[SEED] Ma\'lumotlar bazasi muvaffaqiyatli to\'ldirildi (100% verified seed complete)!');
     return { success: true };
