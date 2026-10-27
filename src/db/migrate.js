@@ -36,6 +36,22 @@ export async function runMigrations() {
       console.log('[MIGRATION] 001_initial_schema allaqachon mavjud, o\'tkazib yuborildi.');
     }
 
+    // Incremental migrations must also run for databases with the original schema already applied.
+    const editorMigration = await client.query(
+      'SELECT version FROM schema_migrations WHERE version = $1',
+      ['002_admin_editor']
+    );
+    if (editorMigration.rowCount === 0) {
+      const editorMigrationPath = path.join(__dirname, 'migrations', '002_admin_editor.sql');
+      const editorMigrationSql = fs.readFileSync(editorMigrationPath, 'utf-8');
+      console.log('[MIGRATION] 002_admin_editor qo\\'llanmoqda...');
+      await client.query(editorMigrationSql);
+      await client.query('INSERT INTO schema_migrations (version) VALUES ($1)', ['002_admin_editor']);
+      console.log('[MIGRATION] 002_admin_editor muvaffaqiyatli qo\\'llandi.');
+    } else {
+      console.log('[MIGRATION] 002_admin_editor allaqachon mavjud, o\\'tkazib yuborildi.');
+    }
+
     await client.query('COMMIT');
     console.log('[MIGRATION] Barcha migratsiyalar muvaffaqiyatli bajarildi.');
     return { success: true };
