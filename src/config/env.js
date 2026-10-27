@@ -28,7 +28,37 @@ export function validateEnv() {
   };
 }
 
+const runtimeAdminRoles = new Map();
+
+export function replaceRuntimeAdminRoles(adminRows = []) {
+  runtimeAdminRoles.clear();
+  for (const row of adminRows) {
+    const telegramId = Number(row.telegram_id);
+    if (Number.isSafeInteger(telegramId) && telegramId > 0) {
+      runtimeAdminRoles.set(telegramId, row.role || 'admin');
+    }
+  }
+}
+
+export function registerRuntimeAdmin(telegramId, role = 'admin') {
+  const id = Number(telegramId);
+  if (!Number.isSafeInteger(id) || id <= 0) {
+    throw new TypeError('Telegram ID admini noto‘g‘ri.');
+  }
+  runtimeAdminRoles.set(id, role);
+}
+
+export function getAdminRole(telegramId) {
+  const id = Number(telegramId);
+  if (!Number.isSafeInteger(id) || id <= 0) return null;
+  if (config.adminIds.includes(id)) return 'superadmin';
+  return runtimeAdminRoles.get(id) || null;
+}
+
 export function isAdmin(telegramId) {
-  if (!telegramId) return false;
-  return config.adminIds.includes(Number(telegramId));
+  return getAdminRole(telegramId) !== null;
+}
+
+export function isSuperAdmin(telegramId) {
+  return getAdminRole(telegramId) === 'superadmin';
 }

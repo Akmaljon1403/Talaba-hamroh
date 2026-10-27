@@ -1,6 +1,7 @@
 import { InlineKeyboard } from 'grammy';
 import { getBooksByCourse, searchBooks } from '../../db/queries/books.js';
-import { formatBookCard } from '../utils/formatters.js';
+import { formatBookCard, escapeHtml } from '../utils/formatters.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
 
 export async function handleLibrary(ctx) {
@@ -43,8 +44,14 @@ export async function handleLibraryCourse(ctx, course) {
   let text = `📚 <b>${course}-kurs bo‘yicha mavjud adabiyotlar:</b>\n\n`;
   const kb = new InlineKeyboard();
 
+  const editMode = Boolean(ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id));
   books.forEach((b, idx) => {
-    text += `${idx + 1}. <b>${b.title}</b> (${b.author || 'FJSTI ARM'})\n   📥 <a href="${b.file_url}">Elektron nusxa</a>\n\n`;
+    text += `${idx + 1}. <b>${escapeHtml(b.title)}</b> (${escapeHtml(b.author || 'FJSTI ARM')})\n   📥 <a href="${escapeHtml(b.file_url)}">Elektron nusxa</a>\n\n`;
+    if (b.subject_name) text += `   📚 Fan: ${escapeHtml(b.subject_name)}\\n`;
+    if (b.course) text += `   🎓 Kurs: ${b.course}-kurs\\n`;
+    if (b.source) text += `   🔗 Manba: ${escapeHtml(b.source)}\\n`;
+
+    if (editMode) kb.text(`✏️ ${b.title.substring(0, 30)}`, `content_edit:book:${b.id}`).row();
   });
 
   kb.text('⬅️ Kursni almashtirish', 'library_main')

@@ -28,3 +28,14 @@ export async function getAllCourses() {
   const res = await query(sql);
   return res.rows.map(r => r.course);
 }
+
+
+export async function getAcademicYears() {
+  const res = await query(
+    `SELECT DISTINCT academic_year
+     FROM academic_calendars
+     WHERE academic_year IS NOT NULL AND BTRIM(academic_year) <> ''
+     ORDER BY academic_year DESC;`
+  );
+  return res.rows.map((row) => row.academic_year);
+}

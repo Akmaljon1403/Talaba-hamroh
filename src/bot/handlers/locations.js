@@ -3,6 +3,7 @@ import { getAllClinicalBases, getClinicalBaseById, searchLocations } from '../..
 import { searchRooms } from '../../db/queries/rooms.js';
 import { formatClinicalBaseCard, escapeHtml } from '../utils/formatters.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 const BASES_PER_PAGE = 6;
 
@@ -44,7 +45,11 @@ export async function handleBasesPagination(ctx, page = 1) {
   const kb = new InlineKeyboard();
   currentBases.forEach((b) => {
     const shortName = b.name.length > 38 ? b.name.substring(0, 35) + '...' : b.name;
-    kb.text(`🏥 ${shortName}`, `base_detail:${b.id}`).row();
+    kb.text(`🏥 ${shortName}`, `base_detail:${b.id}`);
+    if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+      kb.text('✏️ Tahrirlash', `content_edit:base:${b.id}`);
+    }
+    kb.row();
   });
 
   // Pagination navigation row
@@ -74,8 +79,11 @@ export async function handleBaseDetail(ctx, baseId) {
   }
 
   const text = formatClinicalBaseCard(base);
-  const kb = new InlineKeyboard()
-    .text('⬅️ Bazalar ro‘yxatiga', 'bases:page:1')
+  const kb = new InlineKeyboard();
+  if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+    kb.text('✏️ Klinik bazani tahrirlash', `content_edit:base:${base.id}`).row();
+  }
+  kb.text('⬅️ Bazalar ro‘yxatiga', 'bases:page:1')
     .text('🏠 Asosiy menyu', 'menu_home');
 
   await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });

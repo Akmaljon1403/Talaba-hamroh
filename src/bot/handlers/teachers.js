@@ -3,6 +3,7 @@ import { getAllDepartments, getDepartmentById, searchDepartments } from '../../d
 import { searchTeachers } from '../../db/queries/teachers.js';
 import { formatDepartmentCard, formatTeacherCard, escapeHtml } from '../utils/formatters.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 const DEPTS_PER_PAGE = 6;
 
@@ -41,7 +42,11 @@ export async function handleDepartmentsPagination(ctx, level = 'bakalavriat', pa
   const kb = new InlineKeyboard();
   currentDepts.forEach((d) => {
     const shortName = d.name.length > 38 ? d.name.substring(0, 35) + '...' : d.name;
-    kb.text(`🏛 ${shortName}`, `dept_detail:${d.id}`).row();
+    kb.text(`🏛 ${shortName}`, `dept_detail:${d.id}`);
+    if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+      kb.text('✏️ Tahrirlash', `content_edit:dept:${d.id}`);
+    }
+    kb.row();
   });
 
   const navRow = [];
@@ -70,8 +75,11 @@ export async function handleDepartmentDetail(ctx, deptId) {
   }
 
   const text = formatDepartmentCard(dept);
-  const kb = new InlineKeyboard()
-    .text('⬅️ Kafedralarga qaytish', `depts:${dept.level}:page:1`)
+  const kb = new InlineKeyboard();
+  if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+    kb.text('✏️ Kafedrani tahrirlash', `content_edit:dept:${dept.id}`).row();
+  }
+  kb.text('⬅️ Kafedralarga qaytish', `depts:${dept.level}:page:1`)
     .text('🏠 Asosiy menyu', 'menu_home');
 
   await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });

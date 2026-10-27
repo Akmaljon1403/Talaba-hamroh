@@ -2,7 +2,7 @@ import { query } from '../pool.js';
 
 export async function getAllServices() {
   const sql = `
-    SELECT category, title, short_description, updated_at
+    SELECT id, category, title, short_description, updated_at
     FROM student_services
     ORDER BY id ASC;
   `;

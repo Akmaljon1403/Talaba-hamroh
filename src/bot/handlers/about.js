@@ -4,6 +4,9 @@ import { fileURLToPath } from 'url';
 import { InlineKeyboard } from 'grammy';
 import { getBackKeyboard } from '../keyboards/navigation.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { getAllFaculties } from '../../db/queries/faculties.js';
+import { escapeHtml } from '../utils/formatters.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,18 +65,27 @@ export async function handleAboutLeadership(ctx) {
 
 export async function handleAboutFaculties(ctx) {
   recordSectionClick('about_faculties');
+  const faculties = await getAllFaculties();
+  let text = `🏢 <b>Institut Fakultetlari va Ta’lim Yo‘nalishlari:</b>\n\n`;
+  const kb = new InlineKeyboard();
+  const editMode = Boolean(ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id));
 
-  let text = `🏢 <b>Institut Fakultetlari va Ta'lim Yo‘nalishlari:</b>\n\n`;
-  instituteData.faculties.forEach((f, idx) => {
-    text += `${idx + 1}. <b>${f.name}</b>\n`;
-    text += `   👤 Dekan: <i>${f.dean}</i>\n`;
-    text += `   📚 Yo‘nalishlar: ${f.directions.join(', ')}\n\n`;
+  faculties.forEach((faculty, idx) => {
+    text += `${idx + 1}. <b>${escapeHtml(faculty.name)}</b>\n`;
+    if (faculty.dean_name) text += `   👤 Dekan: <i>${escapeHtml(faculty.dean_name)}</i>\n`;
+    if (faculty.code) text += `   🆔 Kod: <code>${escapeHtml(faculty.code)}</code>\n`;
+    if (faculty.description) {
+      const description = faculty.description.replace(/^Yo'nalishlar:\s*/i, '');
+      text += `   📚 Yo‘nalishlar: ${escapeHtml(description)}\n`;
+    }
+    text += '\n';
+    if (editMode) {
+      kb.text(`✏️ ${faculty.name.substring(0, 35)}`, `content_edit:faculty:${faculty.id}`).row();
+    }
   });
 
-  text += `🔗 <i>Manba: O'quv-uslubiy boshqarma rasmiy ma'lumotlari</i>`;
-
-  const kb = new InlineKeyboard()
-    .text('⬅️ Orqaga', 'about_main')
+  text += `🔗 <i>Manba: O‘quv-uslubiy boshqarma rasmiy ma’lumotlari</i>`;
+  kb.text('⬅️ Orqaga', 'about_main')
     .text('🏠 Asosiy menyu', 'menu_home');
 
   await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });

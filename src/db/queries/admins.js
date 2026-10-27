@@ -1,0 +1,40 @@
+import { query } from '../pool.js';
+
+export async function getAdminRoles() {
+  const res = await query(
+    `SELECT telegram_id::text AS telegram_id, full_name, role, created_at
+     FROM admins
+     ORDER BY created_at ASC;`
+  );
+  return res.rows;
+}
+
+export async function getAdminByTelegramId(telegramId) {
+  const res = await query(
+    `SELECT telegram_id::text AS telegram_id, full_name, role, created_at
+     FROM admins
+     WHERE telegram_id = $1
+     LIMIT 1;`,
+    [telegramId]
+  );
+  return res.rows[0] || null;
+}
+
+export async function createAdmin(telegramId, fullName = null) {
+  const res = await query(
+    `INSERT INTO admins (telegram_id, full_name, role)
+     VALUES ($1, $2, 'admin')
+     ON CONFLICT (telegram_id) DO NOTHING
+     RETURNING telegram_id::text AS telegram_id, full_name, role, created_at;`,
+    [telegramId, fullName]
+  );
+
+  if (res.rowCount > 0) {
+    return { created: true, admin: res.rows[0] };
+  }
+
+  return {
+    created: false,
+    admin: await getAdminByTelegramId(telegramId)
+  };
+}

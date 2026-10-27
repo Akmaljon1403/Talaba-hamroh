@@ -1,12 +1,18 @@
 import { InlineKeyboard } from 'grammy';
-import { getCalendarByCourse } from '../../db/queries/academicCalendar.js';
+import { getCalendarByCourse, getAcademicYears } from '../../db/queries/academicCalendar.js';
+import { escapeHtml } from '../utils/formatters.js';
 import { formatCalendarCard } from '../utils/formatters.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { isAdminEditModeActive } from '../utils/adminEditMode.js';
 
 export async function handleSchedule(ctx) {
   recordSectionClick('schedule_main');
 
-  const text = `📅 <b>Bakalavriat O‘quv Jarayoni Grafigi (2026/2027)</b>\n\n` +
+  const academicYears = await getAcademicYears();
+  const academicYearLabel = academicYears.length
+    ? academicYears.map(escapeHtml).join(', ')
+    : '2026/2027';
+  const text = `📅 <b>Bakalavriat O‘quv Jarayoni Grafigi (${academicYearLabel})</b>\n\n` +
     `Farg‘ona jamoat salomatligi tibbiyot instituti rektorati tomonidan tasdiqlangan rasmiy o‘quv jarayoni taqvimi.\n\n` +
     `<i>O‘zingiz o‘qiyotgan kursni tanlang:</i>`;
 
@@ -35,8 +41,11 @@ export async function handleCourseSchedule(ctx, course) {
     `Kerakli ta'lim yo‘nalishini tanlang:`;
 
   const kb = new InlineKeyboard();
+  const editMode = Boolean(ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id));
   calendars.forEach((c) => {
-    kb.text(`📚 ${c.direction_name}`, `sched_detail:${c.id}`).row();
+    kb.text(`📚 ${c.direction_name}`, `sched_detail:${c.id}`);
+    if (editMode) kb.text('✏️', `content_edit:calendar:${c.id}`);
+    kb.row();
   });
 
   kb.text('⬅️ Kursni qayta tanlash', 'schedule_main')
@@ -57,8 +66,11 @@ export async function handleScheduleDetail(ctx, calendarId) {
   const item = res.rows[0];
   const text = formatCalendarCard(item);
 
-  const kb = new InlineKeyboard()
-    .text('⬅️ Yo‘nalishlarga qaytish', `sched_course:${item.course}`)
+  const kb = new InlineKeyboard();
+  if (ctx.chat?.type === 'private' && ctx.isAdmin && isAdminEditModeActive(ctx.from?.id)) {
+    kb.text('✏️ Jadvalni tahrirlash', `content_edit:calendar:${item.id}`).row();
+  }
+  kb.text('⬅️ Yo‘nalishlarga qaytish', `sched_course:${item.course}`)
     .text('🏠 Asosiy menyu', 'menu_home');
 
   await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });

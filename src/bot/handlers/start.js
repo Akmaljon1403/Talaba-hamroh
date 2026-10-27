@@ -1,5 +1,6 @@
 import { getMainKeyboard } from '../keyboards/main.js';
 import { recordSectionClick } from '../../db/queries/stats.js';
+import { adminActionStates, contentEditStates } from '../state/adminState.js';
 import { escapeHtml } from '../utils/formatters.js';
 
 export function buildStartMessage(userName) {
@@ -50,7 +51,26 @@ export async function handleHelp(ctx) {
   });
 }
 
+export async function handleMyId(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.reply('Telegram ID raqamingizni olish uchun botning shaxsiy chatida /myid yuboring.');
+    return;
+  }
+  const id = ctx.from?.id;
+  if (!id) {
+    await ctx.reply('Telegram ID aniqlanmadi.');
+    return;
+  }
+  await ctx.reply(`🪪 Sizning Telegram ID raqamingiz: <code>${id}</code>\n\nAdmin huquqi kerak bo‘lsa, ushbu raqamni bot superadminiga yuboring.`, {
+    parse_mode: 'HTML'
+  });
+}
+
 export async function handleCancel(ctx) {
+  if (ctx.from?.id) {
+    adminActionStates.delete(ctx.from.id);
+    contentEditStates.delete(ctx.from.id);
+  }
   await ctx.reply('Amal bekor qilindi. Asosiy menyudasiz.', {
     reply_markup: getMainKeyboard(ctx.from?.id)
   });

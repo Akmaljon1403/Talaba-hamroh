@@ -9,8 +9,12 @@ import { addBook } from '../../db/queries/books.js';
 import { addTeacher } from '../../db/queries/teachers.js';
 import { getAllDepartments } from '../../db/queries/departments.js';
 import { escapeHtml } from '../utils/formatters.js';
+import { adminActionStates } from '../state/adminState.js';
+import { createAdmin, getAdminByTelegramId, getAdminRoles } from '../../db/queries/admins.js';
+import { registerRuntimeAdmin, isSuperAdmin } from '../../config/env.js';
+import { enableAdminEditMode, disableAdminEditMode, isAdminEditModeActive } from '../utils/adminEditMode.js';
 
-export const adminActionStates = new Map();
+export { adminActionStates };
 
 export async function handleAdminPanel(ctx) {
   if (!ctx.isAdmin) {
@@ -26,7 +30,13 @@ export async function handleAdminPanel(ctx) {
     `Farg‘ona jamoat salomatligi tibbiyot instituti «Talaba Hamrohi» botining ichki boshqaruv xizmatiga xush kelibsiz.\n\n` +
     `<i>Quyidagi amallardan birini tanlang:</i>`;
 
-  const kb = getAdminKeyboard();
+  const privateChat = ctx.chat?.type === 'private';
+  const editModeOn = privateChat && isAdminEditModeActive(ctx.from?.id);
+  const kb = getAdminKeyboard({
+    canManageAdmins: privateChat && isSuperAdmin(ctx.from?.id),
+    editModeOn,
+    canEditContent: privateChat
+  });
 
   if (ctx.callbackQuery) {
     await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });
@@ -34,6 +44,163 @@ export async function handleAdminPanel(ctx) {
   } else {
     await ctx.reply(text, { parse_mode: 'HTML', reply_markup: kb });
   }
+}
+
+export async function handleAdminList(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Admin boshqaruvini bot bilan shaxsiy chatda oching.');
+    return;
+  }
+
+  if (!ctx.isAdmin || !isSuperAdmin(ctx.from?.id)) {
+    await ctx.answerCallbackQuery('Faqat superadmin ko‘ra oladi.');
+    return;
+  }
+
+  const admins = await getAdminRoles();
+  let text = `👥 <b>Administratorlar ro‘yxati</b>\n\n`;
+  admins.forEach((admin, index) => {
+    const roleLabel = admin.role === 'superadmin' ? 'Superadmin' : 'Admin';
+    text += `${index + 1}. <b>${escapeHtml(admin.full_name || 'Nomi kiritilmagan')}</b>\n   ID: <code>${escapeHtml(admin.telegram_id)}</code>\n   Rol: ${roleLabel}\n\n`;
+  });
+  if (admins.length === 0) text += 'Hozircha admin ro‘yxati bo‘sh.';
+
+  await ctx.editMessageText(text, {
+    parse_mode: 'HTML',
+    reply_markup: new InlineKeyboard()
+      .text('👑 Yangi admin', 'admin_add')
+      .text('⬅️ Admin paneli', 'admin_panel')
+  });
+  await ctx.answerCallbackQuery();
+}
+
+export async function handleAdminAddPrompt(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Yangi adminni faqat botning shaxsiy chatida qo‘shish mumkin.');
+    return;
+  }
+
+  if (!ctx.isAdmin || !isSuperAdmin(ctx.from?.id)) {
+    await ctx.answerCallbackQuery('Faqat superadmin yangi admin qo‘sha oladi.');
+    return;
+  }
+
+  adminActionStates.set(ctx.from.id, { action: 'add_admin_id' });
+  const text = `👑 <b>Yangi administrator qo‘shish</b>\n\n` +
+    `Yangi adminning Telegram ID raqamini yuboring.\n\n` +
+    `Yangi admin Telegram’da <code>/myid</code> yuborib, o‘z ID raqamini bilishi mumkin.\n` +
+    `Bu bosqichda admin huquqi hali berilmaydi — keyingi xabarda tasdiqlaysiz.\n\n` +
+    `Bekor qilish uchun pastdagi tugmani bosing yoki /cancel yuboring.`;
+
+  const kb = new InlineKeyboard().text('❌ Bekor qilish', 'admin_add_cancel');
+  if (ctx.callbackQuery) {
+    await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });
+    await ctx.answerCallbackQuery();
+  } else {
+    await ctx.reply(text, { parse_mode: 'HTML', reply_markup: kb });
+  }
+}
+
+export async function handleAdminAddCancel(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Amalni botning shaxsiy chatida bajaring.');
+    return;
+  }
+
+  if (!ctx.isAdmin) {
+    await ctx.answerCallbackQuery('Ruxsat yo‘q.');
+    return;
+  }
+  adminActionStates.delete(ctx.from.id);
+  await handleAdminPanel(ctx);
+}
+
+export async function handleAdminConfirmAdd(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Admin qo‘shishni faqat shaxsiy chatda tasdiqlash mumkin.');
+    return;
+  }
+
+  if (!ctx.isAdmin || !isSuperAdmin(ctx.from?.id)) {
+    await ctx.answerCallbackQuery('Faqat superadmin tasdiqlashi mumkin.');
+    return;
+  }
+
+  const state = adminActionStates.get(ctx.from.id);
+  if (state?.action !== 'confirm_add_admin') {
+    await ctx.answerCallbackQuery('Tasdiqlash holati topilmadi. Qaytadan boshlang.');
+    return;
+  }
+
+  try {
+    const result = await createAdmin(state.targetTelegramId, null);
+    if (result.created) {
+      registerRuntimeAdmin(state.targetTelegramId, 'admin');
+      adminActionStates.delete(ctx.from.id);
+      await ctx.answerCallbackQuery('Yangi admin qo‘shildi.');
+      await ctx.editMessageText(
+        `✅ <b>Yangi admin muvaffaqiyatli qo‘shildi.</b>\n\nTelegram ID: <code>${state.targetTelegramId}</code>\nRoli: <b>Admin</b>\n\nUshbu huquq bazada saqlanadi va bot qayta ishga tushganda ham qoladi.`,
+        {
+          parse_mode: 'HTML',
+          reply_markup: new InlineKeyboard().text('⚙️ Admin paneli', 'admin_panel')
+        }
+      );
+    } else {
+      adminActionStates.delete(ctx.from.id);
+      await ctx.answerCallbackQuery('Bu ID allaqachon admin.');
+      await ctx.editMessageText(
+        `ℹ️ <b>Bu Telegram ID allaqachon administratorlar ro‘yxatida.</b>\nID: <code>${state.targetTelegramId}</code>`,
+        { parse_mode: 'HTML', reply_markup: new InlineKeyboard().text('⚙️ Admin paneli', 'admin_panel') }
+      );
+    }
+  } catch (error) {
+    await ctx.answerCallbackQuery('Admin qo‘shishda xatolik yuz berdi.');
+    console.error('[ADMIN] Admin qo‘shish xatosi:', error?.message || error);
+  }
+}
+
+export async function handleAdminEditModeOn(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Tahrirlash rejimini botning shaxsiy chatida yoqing.');
+    return;
+  }
+
+  if (!ctx.isAdmin) {
+    await ctx.answerCallbackQuery('Admin ruxsati kerak.');
+    return;
+  }
+  enableAdminEditMode(ctx.from.id, ctx.api, ctx.chat?.id);
+  await ctx.editMessageText(
+    `🛠 <b>Tahrirlash rejimi yoqildi.</b>\n\n` +
+    `Endi qidiruv natijalari va ma’lumot kartalarida ✏️ tahrirlash tugmalari paydo bo‘ladi. O‘zgartirishlar tasdiqlangandan keyin ma’lumotlar bazasiga yoziladi va tegishli bog‘langan bo‘limlarda ham aks etadi.\n\n` +
+    `⏳ 5 daqiqa davomida faoliyat bo‘lmasa, rejim avtomatik o‘chadi va siz foydalanuvchi rejimiga qaytasiz.`,
+    {
+      parse_mode: 'HTML',
+      reply_markup: getAdminKeyboard({ canManageAdmins: isSuperAdmin(ctx.from.id), editModeOn: true })
+    }
+  );
+  await ctx.answerCallbackQuery('Tahrirlash rejimi yoqildi.');
+}
+
+export async function handleAdminEditModeOff(ctx) {
+  if (ctx.chat?.type !== 'private') {
+    await ctx.answerCallbackQuery('Tahrirlash rejimini botning shaxsiy chatida boshqaring.');
+    return;
+  }
+
+  if (!ctx.isAdmin) {
+    await ctx.answerCallbackQuery('Admin ruxsati kerak.');
+    return;
+  }
+  disableAdminEditMode(ctx.from.id);
+  await ctx.editMessageText(
+    '✅ <b>Tahrirlash rejimi o‘chirildi.</b> Endi bot oddiy foydalanuvchi rejimida.',
+    {
+      parse_mode: 'HTML',
+      reply_markup: getAdminKeyboard({ canManageAdmins: isSuperAdmin(ctx.from.id), editModeOn: false })
+    }
+  );
+  await ctx.answerCallbackQuery('Foydalanuvchi rejimiga qaytdingiz.');
 }
 
 export async function handleAdminStats(ctx) {
@@ -194,6 +361,7 @@ export async function processAdminInput(ctx) {
   const userId = ctx.from?.id;
   const state = adminActionStates.get(userId);
   if (!state) return false;
+  if (['add_admin_id', 'confirm_add_admin'].includes(state.action) && ctx.chat?.type !== 'private') return false;
 
   const text = ctx.message?.text;
   if (!text) return false;
@@ -202,6 +370,45 @@ export async function processAdminInput(ctx) {
     adminActionStates.delete(userId);
     await ctx.reply('Admin amali bekor qilindi.');
     await handleAdminPanel(ctx);
+    return true;
+  }
+
+  if (state.action === 'add_admin_id') {
+    if (!ctx.isSuperAdmin && !isSuperAdmin(userId)) {
+      adminActionStates.delete(userId);
+      await ctx.reply('⛔️ Faqat superadmin yangi admin qo‘sha oladi.');
+      return true;
+    }
+
+    const candidate = text.trim();
+    if (!/^\d{5,20}$/.test(candidate) || !Number.isSafeInteger(Number(candidate)) || Number(candidate) <= 0) {
+      await ctx.reply('⚠️ Telegram ID noto‘g‘ri ko‘rinishda. Faqat raqam yuboring, masalan: <code>123456789</code>.', { parse_mode: 'HTML' });
+      return true;
+    }
+
+    const targetTelegramId = Number(candidate);
+    const existing = await getAdminByTelegramId(targetTelegramId);
+    if (existing) {
+      adminActionStates.delete(userId);
+      await ctx.reply(`ℹ️ <code>${targetTelegramId}</code> allaqachon administratorlar ro‘yxatida (rol: <b>${escapeHtml(existing.role)}</b>).`, { parse_mode: 'HTML' });
+      await handleAdminPanel(ctx);
+      return true;
+    }
+
+    adminActionStates.set(userId, { action: 'confirm_add_admin', targetTelegramId });
+    const kb = new InlineKeyboard()
+      .text('✅ Admin qilib qo‘shish', 'admin_add_confirm')
+      .text('❌ Bekor qilish', 'admin_add_cancel');
+    await ctx.reply(
+      `🛡 <b>Admin qo‘shishni tasdiqlang</b>\n\nTelegram ID: <code>${targetTelegramId}</code>\n` +
+      `Tasdiqlasangiz, ushbu hisob administrator huquqiga ega bo‘ladi. ID raqamini tekshirib chiqing.`,
+      { parse_mode: 'HTML', reply_markup: kb }
+    );
+    return true;
+  }
+
+  if (state.action === 'confirm_add_admin') {
+    await ctx.reply('Iltimos, yangi adminni qo‘shish yoki bekor qilish uchun yuqoridagi tugmalardan foydalaning.');
     return true;
   }
 

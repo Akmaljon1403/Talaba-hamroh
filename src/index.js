@@ -1,5 +1,6 @@
 import http from 'http';
-import { config, validateEnv } from './config/env.js';
+import { config, validateEnv, replaceRuntimeAdminRoles } from './config/env.js';
+import { getAdminRoles } from './db/queries/admins.js';
 import { testConnection, closePool } from './db/pool.js';
 import { runMigrations } from './db/migrate.js';
 import { seedDatabase } from './db/seed.js';
@@ -38,6 +39,9 @@ async function bootstrap() {
     await runMigrations();
     // Auto-seed if database is fresh
     await seedDatabase();
+    const adminRows = await getAdminRoles();
+    replaceRuntimeAdminRoles(adminRows);
+    console.log(`[ADMIN] ${adminRows.length} ta administrator ma’lumotlar bazasidan yuklandi.`);
   } catch (dbInitErr) {
     console.error('❌ Baza initsializatsiyasida xatolik:', dbInitErr.message);
     process.exit(1);

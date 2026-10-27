@@ -36,6 +36,33 @@ export async function runMigrations() {
       console.log('[MIGRATION] 001_initial_schema allaqachon mavjud, o\'tkazib yuborildi.');
     }
 
+    // Stable source identities keep admin-renamed seed records from being duplicated on restart.
+    const seedIdentityMigration = await client.query(
+      'SELECT version FROM schema_migrations WHERE version = $1',
+      ['002_seed_entity_identity']
+    );
+    if (seedIdentityMigration.rowCount === 0) {
+      console.log('[MIGRATION] 002_seed_entity_identity qo\'llanmoqda...');
+      await client.query(`
+        CREATE TABLE IF NOT EXISTS seed_entity_identity (
+          seed_key TEXT PRIMARY KEY,
+          entity_type TEXT NOT NULL,
+          entity_id INTEGER NOT NULL,
+          created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          UNIQUE (entity_type, entity_id)
+        );
+        CREATE INDEX IF NOT EXISTS idx_seed_entity_identity_entity
+          ON seed_entity_identity(entity_type, entity_id);
+      `);
+      await client.query(
+        'INSERT INTO schema_migrations (version) VALUES ($1)',
+        ['002_seed_entity_identity']
+      );
+      console.log('[MIGRATION] 002_seed_entity_identity muvaffaqiyatli qo\'llandi.');
+    } else {
+      console.log('[MIGRATION] 002_seed_entity_identity allaqachon mavjud, o\'tkazib yuborildi.');
+    }
+
     await client.query('COMMIT');
     console.log('[MIGRATION] Barcha migratsiyalar muvaffaqiyatli bajarildi.');
     return { success: true };
