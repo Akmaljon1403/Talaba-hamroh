@@ -200,7 +200,7 @@ export function validateEditableValue(entityType, fieldKey, rawValue) {
   return { ok: true, value: raw };
 }
 
-export async function updateEditableField(entityType, entityId, fieldKey, value, expectedOldValue) {
+export async function updateEditableField(entityType, entityId, fieldKey, value, expectedOldValue, actorTelegramId) {
   const config = ENTITIES[entityType];
   const field = getEditableField(entityType, fieldKey);
   const id = Number(entityId);
@@ -327,6 +327,13 @@ export async function updateEditableField(entityType, entityId, fieldKey, value,
       );
     }
 
+    if (entityType === 'subject' && fieldKey === 'name' && oldValue !== value) {
+      await client.query(
+        'UPDATE books SET subject_name = $1 WHERE subject_name IS NOT DISTINCT FROM $2;',
+        [value, oldValue]
+      );
+    }
+
     // Keep denormalized display fields synchronized with the canonical linked record.
     if (entityType === 'dept') {
       if (fieldKey === 'level' && oldValue !== value) {
@@ -409,6 +416,22 @@ export async function updateEditableField(entityType, entityId, fieldKey, value,
       );
     }
 
+    if (oldValue !== value) {
+      await client.query(
+        `INSERT INTO admin_edit_logs
+          (actor_telegram_id, entity_type, entity_id, field_name, old_value, new_value)
+         VALUES ($1, $2, $3, $4, $5, $6);`,
+        [
+          String(actorTelegramId),
+          entityType,
+          id,
+          fieldKey,
+          oldValue == null ? null : String(oldValue),
+          value == null ? null : String(value)
+        ]
+      );
+    }
+
     await client.query('COMMIT');
     return updated;
   } catch (error) {
@@ -417,4 +440,18 @@ export async function updateEditableField(entityType, entityId, fieldKey, value,
   } finally {
     client.release();
   }
+}
+
+
+export async function getRecentContentEdits(limit = 12) {
+  const safeLimit = Math.max(1, Math.min(Number(limit) || 12, 30));
+  const pool = getPool();
+  const res = await pool.query(
+    `SELECT actor_telegram_id, entity_type, entity_id, field_name, old_value, new_value, created_at
+     FROM admin_edit_logs
+     ORDER BY created_at DESC
+     LIMIT $1;`,
+    [safeLimit]
+  );
+  return res.rows;
 }
