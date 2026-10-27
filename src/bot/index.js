@@ -222,10 +222,10 @@ export function createBot(token = config.botToken) {
   });
   bot.callbackQuery('admin_confirm_admin_change', handleAdminConfirmMutation);
   bot.callbackQuery('admin_cancel_admin_change', handleAdminCancelMutation);
-  bot.callbackQuery(/^admin_edit:(department|subject|teacher|base|room|book|calendar|service):(\d+)$/, async (ctx) => {
+  bot.callbackQuery(/^admin_edit:(faculty|department|subject|teacher|base|room|book|calendar|service):(\d+)$/, async (ctx) => {
     await handleAdminEntityEditMenu(ctx, ctx.match[1], Number(ctx.match[2]));
   });
-  bot.callbackQuery(/^admin_edit_field:(department|subject|teacher|base|room|book|calendar|service):(\d+):([a-z_]+)$/, async (ctx) => {
+  bot.callbackQuery(/^admin_edit_field:(faculty|department|subject|teacher|base|room|book|calendar|service):(\d+):([a-z_]+)$/, async (ctx) => {
     await handleAdminEditFieldStart(ctx, ctx.match[1], Number(ctx.match[2]), ctx.match[3]);
   });
   bot.callbackQuery('admin_edit_cancel', handleAdminEditCancel);
