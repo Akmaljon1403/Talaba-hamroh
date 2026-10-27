@@ -98,7 +98,7 @@ export async function executeSearch(ctx, rawQuery) {
     text += `🏛 <b>Kafedralar (${depts.length} ta):</b>\n`;
     depts.slice(0, 3).forEach((d) => {
       text += `• <b>${escapeHtml(d.name)}</b>\n`;
-      if (d.head_name) text += `   👤 Mudir: ${escapeHtml(d.head_name)} (${d.contact_phone || 'aloqa mavjud'})\n`;
+      if (d.head_name) text += `   👤 Mudir: ${escapeHtml(d.head_name)} (${escapeHtml(d.contact_phone || 'aloqa mavjud')})\n`;
       kb.text(`🏛 ${d.name.substring(0, 30)}...`, `dept_detail:${d.id}`).row();
       if (adminEditActive) kb.text(`✏️ Kafedra #${d.id}`, `admin_edit:department:${d.id}`).row();
     });
