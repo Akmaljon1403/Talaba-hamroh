@@ -391,6 +391,11 @@ export async function processAdminInput(ctx) {
   const userId = ctx.from?.id;
   const state = adminActionStates.get(userId);
   if (!state) return false;
+  if (ctx.chat?.type !== 'private') {
+    adminActionStates.delete(userId);
+    await ctx.reply('🔒 Admin amallari faqat bot bilan shaxsiy chatda bajariladi.');
+    return true;
+  }
 
   const text = ctx.message?.text;
   if (!text) return false;
