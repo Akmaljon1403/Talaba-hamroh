@@ -71,7 +71,9 @@ async function bootstrap() {
   console.log('⚡️ Telegram Long Polling faollashtirilmoqda...');
   
   // Start bot long polling
-  botInstance.start({
+  // Await polling startup so initialization failures reach bootstrap().catch().
+  // This also keeps the startup lifecycle explicit for Render logs and shutdown.
+  await botInstance.start({
     onStart: (botInfo) => {
       console.log('====================================================');
       console.log(`🎉 Bot muvaffaqiyatli ishga tushdi: @${botInfo.username}`);
