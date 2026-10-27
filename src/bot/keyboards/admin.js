@@ -9,6 +9,7 @@ export function getAdminKeyboard({ isSuperAdmin = false, editModeActive = false 
     .text('➕ Yangi kitob qo‘shish', 'admin_add_book')
     .text('👨‍🏫 O‘qituvchi qo‘shish', 'admin_add_teacher').row()
     .text(editModeActive ? '🛠 Tahrirlash: YOQILGAN' : '🛡 Tahrirlash rejimini yoqish', 'admin_edit_mode_toggle').row();
+    kb.text('🧾 Tahrirlar tarixi', 'admin_edit_history').row();
 
   if (isSuperAdmin) {
     kb.text('➕ Yangi admin qo‘shish', 'admin_add_admin')
