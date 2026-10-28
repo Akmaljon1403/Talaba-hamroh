@@ -325,7 +325,7 @@ export async function handleSupportClose(ctx, conversationId) {
   await ctx.answerCallbackQuery('Suhbat yopildi.');
 }
 
-export function cancelSupportMode(ctx) {
+export async function cancelSupportMode(ctx) {
   const userId = ctx.from?.id;
   if (!userId || !supportStates.has(userId)) return false;
   const state = supportStates.get(userId);
@@ -333,7 +333,7 @@ export function cancelSupportMode(ctx) {
   const message = state.mode === 'admin_reply'
     ? 'Javob yozish bekor qilindi. Suhbat o‘z holicha ochiq qoldi.'
     : 'Yordam yozish rejimidan chiqdingiz. Murojaatingiz bo‘lsa, «🆘 Administratordan yordam» tugmasi orqali davom ettiring.';
-  void ctx.reply(message, { reply_markup: getMainKeyboard(userId) });
+  await ctx.reply(message, { reply_markup: getMainKeyboard(userId) });
   return true;
 }
 
@@ -346,7 +346,7 @@ export async function processSupportMessage(ctx) {
   if (typeof rawText !== 'string') return false;
 
   if (rawText.trim() === '/cancel' || rawText.trim() === '❌ Bekor qilish') {
-    cancelSupportMode(ctx);
+    await cancelSupportMode(ctx);
     return true;
   }
 
@@ -416,13 +416,13 @@ export async function processSupportMessage(ctx) {
     }
 
     try {
-      const { conversation } = await getOrCreateConversation(ctx);
+      const { conversation, created } = await getOrCreateConversation(ctx);
       await query(
         `INSERT INTO support_messages (conversation_id, sender_role, sender_id, message_text)
          VALUES ($1, 'user', $2, $3)`,
         [conversation.id, userId, messageText]
       );
-      const delivered = await sendAdminNotification(ctx, conversation, messageText, true);
+      const delivered = await sendAdminNotification(ctx, conversation, messageText, created);
       if (delivered > 0) {
         await ctx.reply(
           '✅ <b>Xabaringiz administratorga yetkazildi.</b>\n\nJavob shu bot orqali keladi. Administratorning shaxsiy akkaunti sizga ko‘rsatilmaydi. Suhbatni davom ettirish uchun shu oynaga yozing.',
