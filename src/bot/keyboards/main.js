@@ -6,11 +6,12 @@ export function getMainKeyboard(userId) {
     .text('🏛 Institut haqida').text('📍 Manzil va xonalar').row()
     .text('👨‍🏫 O‘qituvchilar').text('📚 Elektron kutubxona').row()
     .text('📅 O‘quv jadvali').text('💡 Talaba xizmatlari').row()
-    .text('🔍 Qidiruv').text('✍️ Fikr bildirish').row()
-    .text('🆘 Administratordan yordam');
+    .text('🔍 Qidiruv').text('✍️ Fikr bildirish');
 
   if (isAdmin(userId)) {
     kb.row().text('⚙️ Admin boshqaruvi');
+  } else {
+    kb.row().text('🆘 Administratordan yordam');
   }
 
   return kb.resized();
