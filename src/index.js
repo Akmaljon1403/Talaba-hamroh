@@ -64,8 +64,10 @@ async function bootstrap() {
   console.log('🤖 Telegram bot initsializatsiya qilinmoqda...');
   botInstance = createBot(config.botToken);
 
-  // Validate the token explicitly so a wrong/stale Render secret fails with a clear startup error.
-  const botInfo = await botInstance.api.getMe();
+  // Initialize grammY before accepting webhook updates. getMe() alone validates the token,
+  // but does not populate bot.botInfo; handleUpdate() requires bot.init() to have completed.
+  await botInstance.init();
+  const botInfo = botInstance.botInfo;
 
   if (process.env.PORT) {
     // Render Web Services start overlapping old/new instances during zero-downtime deploys.
