@@ -56,6 +56,14 @@ import {
   processAdminInput,
   adminActionStates
 } from './handlers/admin.js';
+import {
+  handleAdminEditData,
+  handleAdminEditList,
+  handleAdminEditRecord,
+  handleAdminEditField,
+  handleAdminEditCancel,
+  processAdminEditInput
+} from './handlers/adminEdit.js';
 
 export function createBot(token = config.botToken) {
   if (!token) {
@@ -115,7 +123,10 @@ export function createBot(token = config.botToken) {
   // Commands
   bot.command('start', handleStart);
   bot.command('help', handleHelp);
-  bot.command('cancel', handleCancel);
+  bot.command('cancel', async (ctx) => {
+    if (await processAdminEditInput(ctx)) return;
+    await handleCancel(ctx);
+  });
   bot.command('admin', handleAdminPanel);
 
   // Main menu text handlers
@@ -217,6 +228,17 @@ export function createBot(token = config.botToken) {
   bot.callbackQuery('admin_broadcast', handleAdminBroadcastPrompt);
   bot.callbackQuery('admin_add_book', handleAdminAddBookPrompt);
   bot.callbackQuery('admin_add_teacher', handleAdminAddTeacherPrompt);
+  bot.callbackQuery('admin_edit_data', handleAdminEditData);
+  bot.callbackQuery(/^admin_edit_list:([a-z]+):(\\d+)$/, async (ctx) => {
+    await handleAdminEditList(ctx, ctx.match[1], parseInt(ctx.match[2], 10));
+  });
+  bot.callbackQuery(/^admin_edit_item:([a-z]+):(\\d+)$/, async (ctx) => {
+    await handleAdminEditRecord(ctx, ctx.match[1], parseInt(ctx.match[2], 10));
+  });
+  bot.callbackQuery(/^admin_edit_field:([a-z]+):(\\d+):([a-z_]+)$/, async (ctx) => {
+    await handleAdminEditField(ctx, ctx.match[1], parseInt(ctx.match[2], 10), ctx.match[3]);
+  });
+  bot.callbackQuery('admin_edit_cancel', handleAdminEditCancel);
 
   // Generic text message handler
   bot.on('message:text', async (ctx) => {
@@ -228,6 +250,10 @@ export function createBot(token = config.botToken) {
       const handled = await processAdminInput(ctx);
       if (handled) return;
     }
+
+    // Check if in admin data-edit mode
+    const adminEditHandled = await processAdminEditInput(ctx);
+    if (adminEditHandled) return;
 
     // Check if in feedback mode
     if (feedbackStates.has(userId)) {
