@@ -10,6 +10,8 @@ export function getMainKeyboard(userId) {
 
   if (isAdmin(userId)) {
     kb.row().text('⚙️ Admin boshqaruvi');
+  } else {
+    kb.row().text('🆘 Administratordan yordam');
   }
 
   return kb.resized();

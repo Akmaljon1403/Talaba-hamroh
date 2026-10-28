@@ -152,6 +152,28 @@ CREATE TABLE IF NOT EXISTS admins (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS support_conversations (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    first_name TEXT,
+    last_name TEXT,
+    username TEXT,
+    status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open', 'closed')),
+    assigned_admin_id BIGINT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    closed_at TIMESTAMPTZ
+);
+
+CREATE TABLE IF NOT EXISTS support_messages (
+    id BIGSERIAL PRIMARY KEY,
+    conversation_id BIGINT NOT NULL REFERENCES support_conversations(id) ON DELETE CASCADE,
+    sender_role TEXT NOT NULL CHECK (sender_role IN ('user', 'admin')),
+    sender_id BIGINT NOT NULL,
+    message_text TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS search_logs (
     id SERIAL PRIMARY KEY,
     user_id BIGINT,
@@ -186,3 +208,9 @@ CREATE INDEX IF NOT EXISTS idx_books_course ON books(course);
 CREATE INDEX IF NOT EXISTS idx_feedback_status ON feedback(status);
 CREATE INDEX IF NOT EXISTS idx_unanswered_status ON unanswered_questions(status);
 CREATE INDEX IF NOT EXISTS idx_search_logs_created ON search_logs(created_at);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_support_one_open_per_user
+    ON support_conversations (user_id) WHERE status = 'open';
+CREATE INDEX IF NOT EXISTS idx_support_messages_conversation
+    ON support_messages (conversation_id, created_at);
+CREATE INDEX IF NOT EXISTS idx_support_conversations_status
+    ON support_conversations (status, updated_at DESC);

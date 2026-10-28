@@ -45,6 +45,46 @@ export async function runMigrations() {
       );
     `);
 
+
+    // Anonymous student-to-admin support conversations. These are idempotent so existing
+    // production databases receive the tables without rerunning the initial schema migration.
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS support_conversations (
+        id BIGSERIAL PRIMARY KEY,
+        user_id BIGINT NOT NULL,
+        first_name TEXT,
+        last_name TEXT,
+        username TEXT,
+        status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open', 'closed')),
+        assigned_admin_id BIGINT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        closed_at TIMESTAMPTZ
+      );
+    `);
+    await client.query(`
+      CREATE UNIQUE INDEX IF NOT EXISTS idx_support_one_open_per_user
+      ON support_conversations (user_id) WHERE status = 'open';
+    `);
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS support_messages (
+        id BIGSERIAL PRIMARY KEY,
+        conversation_id BIGINT NOT NULL REFERENCES support_conversations(id) ON DELETE CASCADE,
+        sender_role TEXT NOT NULL CHECK (sender_role IN ('user', 'admin')),
+        sender_id BIGINT NOT NULL,
+        message_text TEXT NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_support_messages_conversation
+      ON support_messages (conversation_id, created_at);
+    `);
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_support_conversations_status
+      ON support_conversations (status, updated_at DESC);
+    `);
+
     await client.query('COMMIT');
     console.log('[MIGRATION] Barcha migratsiyalar muvaffaqiyatli bajarildi.');
     return { success: true };
