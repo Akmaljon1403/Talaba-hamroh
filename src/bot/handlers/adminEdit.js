@@ -192,8 +192,9 @@ function requireAdmin(ctx) {
 }
 
 export async function handleAdminEditData(ctx) {
+  if (ctx.callbackQuery && ctx.from?.id) EDIT_STATES.delete(ctx.from.id);
   if (!requireAdmin(ctx)) {
-    if (ctx.callbackQuery) await ctx.answerCallbackQuery({ text: 'Bu bo‘lim faqat adminlar uchun.', show_alert: true });
+    if (ctx.callbackQuery) await ctx.answerCallbackQuery('Bu bo‘lim faqat adminlar uchun.', { show_alert: true });
     else await ctx.reply('⛔️ Bu bo‘lim faqat adminlar uchun.');
     return;
   }
@@ -205,8 +206,9 @@ export async function handleAdminEditData(ctx) {
 }
 
 export async function handleAdminEditList(ctx, type, requestedPage = 1) {
+  if (ctx.callbackQuery && ctx.from?.id) EDIT_STATES.delete(ctx.from.id);
   if (!requireAdmin(ctx)) {
-    if (ctx.callbackQuery) await ctx.answerCallbackQuery({ text: 'Bu bo‘lim faqat adminlar uchun.', show_alert: true });
+    if (ctx.callbackQuery) await ctx.answerCallbackQuery('Bu bo‘lim faqat adminlar uchun.', { show_alert: true });
     return;
   }
 
@@ -255,8 +257,9 @@ export async function handleAdminEditList(ctx, type, requestedPage = 1) {
 }
 
 export async function handleAdminEditRecord(ctx, type, id) {
+  if (ctx.callbackQuery && ctx.from?.id) EDIT_STATES.delete(ctx.from.id);
   if (!requireAdmin(ctx)) {
-    if (ctx.callbackQuery) await ctx.answerCallbackQuery({ text: 'Bu bo‘lim faqat adminlar uchun.', show_alert: true });
+    if (ctx.callbackQuery) await ctx.answerCallbackQuery('Bu bo‘lim faqat adminlar uchun.', { show_alert: true });
     return;
   }
 
@@ -266,7 +269,7 @@ export async function handleAdminEditRecord(ctx, type, id) {
     entity = getEntity(type);
     record = await getRecord(type, id);
   } catch (error) {
-    if (ctx.callbackQuery) await ctx.answerCallbackQuery({ text: error.message, show_alert: true });
+    if (ctx.callbackQuery) await ctx.answerCallbackQuery(error.message, { show_alert: true });
     else await ctx.reply(error.message);
     return;
   }
@@ -303,7 +306,7 @@ export async function handleAdminEditRecord(ctx, type, id) {
 
 export async function handleAdminEditField(ctx, type, id, fieldKey) {
   if (!requireAdmin(ctx)) {
-    if (ctx.callbackQuery) await ctx.answerCallbackQuery({ text: 'Bu bo‘lim faqat adminlar uchun.', show_alert: true });
+    if (ctx.callbackQuery) await ctx.answerCallbackQuery('Bu bo‘lim faqat adminlar uchun.', { show_alert: true });
     return;
   }
 
@@ -328,13 +331,13 @@ export async function handleAdminEditField(ctx, type, id, fieldKey) {
     await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: kb });
     await ctx.answerCallbackQuery();
   } catch (error) {
-    await ctx.answerCallbackQuery({ text: error.message || 'Xatolik yuz berdi.', show_alert: true });
+    await ctx.answerCallbackQuery(error.message || 'Xatolik yuz berdi.', { show_alert: true });
   }
 }
 
 export async function handleAdminEditCancel(ctx) {
   if (!requireAdmin(ctx)) {
-    if (ctx.callbackQuery) await ctx.answerCallbackQuery({ text: 'Bu bo‘lim faqat adminlar uchun.', show_alert: true });
+    if (ctx.callbackQuery) await ctx.answerCallbackQuery('Bu bo‘lim faqat adminlar uchun.', { show_alert: true });
     return;
   }
 
