@@ -167,6 +167,12 @@ CREATE TABLE IF NOT EXISTS section_analytics (
     last_clicked_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS app_metadata (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Indekslar
 CREATE INDEX IF NOT EXISTS idx_users_last_active ON users(last_active_at);
 CREATE INDEX IF NOT EXISTS idx_departments_name ON departments(name);

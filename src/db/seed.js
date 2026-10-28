@@ -20,6 +20,36 @@ export async function seedDatabase() {
   try {
     await client.query('BEGIN');
 
+    const seedMarker = await client.query('SELECT value FROM app_metadata WHERE key = $1', ['initial_seed_complete']);
+    if (seedMarker.rows[0]?.value === 'true') {
+      await client.query('COMMIT');
+      console.log('[SEED] Boshlang‘ich ma’lumotlar allaqachon yuklangan; admin tahrirlarini saqlash uchun qayta seed o‘tkazilmadi.');
+      return { success: true, skipped: true };
+    }
+
+    // Existing databases have already been seeded by earlier deployments. Mark them as initialized
+    // instead of re-applying JSON defaults that could overwrite admin edits or recreate renamed rows.
+    const existingData = await client.query(`
+      SELECT
+        (SELECT COUNT(*) FROM faculties) AS faculties,
+        (SELECT COUNT(*) FROM departments) AS departments,
+        (SELECT COUNT(*) FROM clinical_bases) AS clinical_bases,
+        (SELECT COUNT(*) FROM rooms) AS rooms,
+        (SELECT COUNT(*) FROM academic_calendars) AS academic_calendars,
+        (SELECT COUNT(*) FROM student_services) AS student_services,
+        (SELECT COUNT(*) FROM books) AS books;
+    `);
+    if (Object.values(existingData.rows[0]).some((count) => Number(count) > 0)) {
+      await client.query(
+        `INSERT INTO app_metadata (key, value) VALUES ($1, $2)
+         ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = CURRENT_TIMESTAMP`,
+        ['initial_seed_complete', 'true']
+      );
+      await client.query('COMMIT');
+      console.log('[SEED] Mavjud baza aniqlangan; eski JSON ma’lumotlari qayta yozilmadi.');
+      return { success: true, skipped: true };
+    }
+
     // 2. Seed Faculties
     const instituteData = JSON.parse(
       fs.readFileSync(path.join(__dirname, '../data/verified_institute.json'), 'utf-8')
@@ -283,6 +313,11 @@ export async function seedDatabase() {
       console.log(`[SEED] ${config.adminIds.length} ta admin ro'yxatga olindi.`);
     }
 
+    await client.query(
+      `INSERT INTO app_metadata (key, value) VALUES ($1, $2)
+       ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = CURRENT_TIMESTAMP`,
+      ['initial_seed_complete', 'true']
+    );
     await client.query('COMMIT');
     console.log('[SEED] Ma\'lumotlar bazasi muvaffaqiyatli to\'ldirildi (100% verified seed complete)!');
     return { success: true };

@@ -51,7 +51,9 @@ Loyiha **Render Background Worker** (Telegram Long Polling) va **Neon PostgreSQL
    - **❓ Javobsiz so‘rovlar:** Talabalar topa olmagan so‘rovlarni ko‘rish va «Hal qilindi» deb belgilash;
    - **💬 Fikrlar:** Foydalanuvchilar qoldirgan mulohaza va takliflarni o‘qish;
    - **📢 E’lon tarqatish (Broadcast):** Barcha talabalarga bitta xabar orqali muhim e’lonlarni yetkazish;
-   - **➕ Kontent boshqaruvi:** Yangi kitob va o‘qituvchilarni Telegram ichidan to‘g‘ridan-to‘g‘ri qo‘shish.
+   - **➕ Kontent qo‘shish:** Yangi kitob va o‘qituvchilarni Telegram ichidan to‘g‘ridan-to‘g‘ri qo‘shish.
+   - **✏️ Ma’lumotlarni tahrirlash:** Fakultetlar, kafedralar, fanlar, klinik bazalar, auditoriyalar, o‘quv jadvali, o‘qituvchilar, kitoblar va talaba xizmatlarining mavjud yozuvlarini admin panelidan maydonma-maydon yangilash.
+   - **💾 Tahrirlarni saqlash:** Boshlang‘ich rasmiy ma’lumotlar birinchi seed vaqtida yuklanadi; keyingi ishga tushishlarda admin kiritgan tahrirlar eski JSON qiymatlari bilan avtomatik ustidan yozilmaydi.
 
 ---
 

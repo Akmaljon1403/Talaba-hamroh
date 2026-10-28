@@ -36,6 +36,15 @@ export async function runMigrations() {
       console.log('[MIGRATION] 001_initial_schema allaqachon mavjud, o\'tkazib yuborildi.');
     }
 
+    // Keep the metadata table available even for databases created before this migration.
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS app_metadata (
+        key TEXT PRIMARY KEY,
+        value TEXT NOT NULL,
+        updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
     await client.query('COMMIT');
     console.log('[MIGRATION] Barcha migratsiyalar muvaffaqiyatli bajarildi.');
     return { success: true };
