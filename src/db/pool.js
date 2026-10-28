@@ -14,9 +14,18 @@ export function getPool() {
     const isProduction = config.nodeEnv === 'production';
     const isNeon = config.databaseUrl.includes('neon.tech');
 
+    // Normalize legacy libpq-style SSL aliases to an explicit, secure mode.
+    // pg-connection-string currently treats "prefer", "require", and "verify-ca"
+    // as aliases for "verify-full", but warns that this will change in a future major.
+    // Explicit verify-full keeps certificate and hostname verification enabled.
+    const connectionUrl = new URL(config.databaseUrl);
+    if (connectionUrl.searchParams.has('sslmode')) {
+      connectionUrl.searchParams.set('sslmode', 'verify-full');
+    }
+
     pool = new Pool({
-      connectionString: config.databaseUrl,
-      ssl: isNeon || isProduction ? { rejectUnauthorized: false } : false,
+      connectionString: connectionUrl.toString(),
+      ssl: isNeon || isProduction ? { rejectUnauthorized: true } : false,
       max: 10,
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 10000
