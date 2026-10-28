@@ -11,8 +11,8 @@ const __dirname = path.dirname(__filename);
 export async function seedDatabase() {
   console.log('[SEED] Baza ma\'lumotlarini kiritish (seed) boshlandi...');
   
-  // 1. Ensure migrations are applied
-  await runMigrations();
+  // Migrations are run by the application bootstrap before seeding.
+  // The standalone "npm run seed" command runs migrations explicitly below.
 
   const pool = getPool();
   const client = await pool.connect();
@@ -332,7 +332,8 @@ export async function seedDatabase() {
 
 // CLI runner
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  seedDatabase()
+  runMigrations()
+    .then(() => seedDatabase())
     .then(async () => {
       await closePool();
       process.exit(0);
