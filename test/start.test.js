@@ -29,3 +29,14 @@ test('handleStart sends a welcome message with HTML mode and a reply keyboard', 
   assert.equal(receivedOptions.parse_mode, 'HTML');
   assert.ok(receivedOptions.reply_markup, 'A reply keyboard should be included');
 });
+
+test('handleStart propagates Telegram send failures for the global error handler', async () => {
+  const expectedError = new Error('Telegram send failed');
+  const ctx = {
+    update: { update_id: 12346 },
+    from: { id: 123456789, first_name: 'Akmal' },
+    reply: async () => { throw expectedError; }
+  };
+
+  await assert.rejects(handleStart(ctx), (error) => error === expectedError);
+});
