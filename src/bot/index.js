@@ -148,7 +148,10 @@ export function createBot(token = config.botToken) {
   bot.hears('💡 Talaba xizmatlari', handleServices);
   bot.hears('🔍 Qidiruv', handleSearchPrompt);
   bot.hears('✍️ Fikr bildirish', handleFeedbackPrompt);
-  bot.hears('🆘 Administratordan yordam', handleSupportPrompt);
+  bot.hears('🆘 Administratordan yordam', async (ctx) => {
+    if (ctx.from?.id) feedbackStates.delete(ctx.from.id);
+    await handleSupportPrompt(ctx);
+  });
   bot.hears('⚙️ Admin boshqaruvi', handleAdminPanel);
   bot.hears('❌ Bekor qilish', async (ctx) => {
     if (await cancelSupportMode(ctx)) return;
