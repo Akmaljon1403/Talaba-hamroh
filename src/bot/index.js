@@ -133,7 +133,7 @@ export function createBot(token = config.botToken) {
   bot.command('start', handleStart);
   bot.command('help', handleHelp);
   bot.command('cancel', async (ctx) => {
-    if (cancelSupportMode(ctx)) return;
+    if (await cancelSupportMode(ctx)) return;
     if (await processAdminEditInput(ctx)) return;
     await handleCancel(ctx);
   });
@@ -151,7 +151,7 @@ export function createBot(token = config.botToken) {
   bot.hears('🆘 Administratordan yordam', handleSupportPrompt);
   bot.hears('⚙️ Admin boshqaruvi', handleAdminPanel);
   bot.hears('❌ Bekor qilish', async (ctx) => {
-    if (cancelSupportMode(ctx)) return;
+    if (await cancelSupportMode(ctx)) return;
     await handleCancel(ctx);
   });
 
@@ -243,13 +243,13 @@ export function createBot(token = config.botToken) {
   bot.callbackQuery('admin_add_book', handleAdminAddBookPrompt);
   bot.callbackQuery('admin_add_teacher', handleAdminAddTeacherPrompt);
   bot.callbackQuery('admin_support_inbox', handleAdminSupportInbox);
-  bot.callbackQuery(/^support_view:(\\d+)$/, async (ctx) => {
+  bot.callbackQuery(/^support_view:(\d+)$/, async (ctx) => {
     await handleSupportView(ctx, parseInt(ctx.match[1], 10));
   });
-  bot.callbackQuery(/^support_reply:(\\d+)$/, async (ctx) => {
+  bot.callbackQuery(/^support_reply:(\d+)$/, async (ctx) => {
     await handleSupportReply(ctx, parseInt(ctx.match[1], 10));
   });
-  bot.callbackQuery(/^support_close:(\\d+)$/, async (ctx) => {
+  bot.callbackQuery(/^support_close:(\d+)$/, async (ctx) => {
     await handleSupportClose(ctx, parseInt(ctx.match[1], 10));
   });
   bot.callbackQuery('admin_edit_data', handleAdminEditData);
