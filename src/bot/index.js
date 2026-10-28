@@ -229,13 +229,13 @@ export function createBot(token = config.botToken) {
   bot.callbackQuery('admin_add_book', handleAdminAddBookPrompt);
   bot.callbackQuery('admin_add_teacher', handleAdminAddTeacherPrompt);
   bot.callbackQuery('admin_edit_data', handleAdminEditData);
-  bot.callbackQuery(/^admin_edit_list:([a-z]+):(\\d+)$/, async (ctx) => {
+  bot.callbackQuery(/^admin_edit_list:([a-z]+):(\d+)$/, async (ctx) => {
     await handleAdminEditList(ctx, ctx.match[1], parseInt(ctx.match[2], 10));
   });
-  bot.callbackQuery(/^admin_edit_item:([a-z]+):(\\d+)$/, async (ctx) => {
+  bot.callbackQuery(/^admin_edit_item:([a-z]+):(\d+)$/, async (ctx) => {
     await handleAdminEditRecord(ctx, ctx.match[1], parseInt(ctx.match[2], 10));
   });
-  bot.callbackQuery(/^admin_edit_field:([a-z]+):(\\d+):([a-z_]+)$/, async (ctx) => {
+  bot.callbackQuery(/^admin_edit_field:([a-z]+):(\d+):([a-z_]+)$/, async (ctx) => {
     await handleAdminEditField(ctx, ctx.match[1], parseInt(ctx.match[2], 10), ctx.match[3]);
   });
   bot.callbackQuery('admin_edit_cancel', handleAdminEditCancel);
