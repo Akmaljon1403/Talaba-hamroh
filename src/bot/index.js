@@ -62,7 +62,32 @@ export function createBot(token = config.botToken) {
     throw new Error('Telegram bot tokeni ko\'rsatilmagan.');
   }
 
-  const bot = new Bot(token);
+  // Bound Telegram API requests so a stalled HTTP request cannot leave handlers pending indefinitely.
+  // Long polling uses a 30-second getUpdates wait, so keep the client timeout above that value.
+  const bot = new Bot(token, { client: { timeoutSeconds: 45 } });
+
+  // Log response timing for user-facing sends without logging message text, tokens, or user data.
+  bot.api.config.use(async (previous, method, payload, signal) => {
+    const shouldTrace = method === 'sendMessage' || method === 'answerCallbackQuery';
+    const startedAt = Date.now();
+
+    if (shouldTrace) {
+      console.info(`[TELEGRAM API] begin method=${method}`);
+    }
+
+    try {
+      const result = await previous(method, payload, signal);
+      if (shouldTrace) {
+        console.info(`[TELEGRAM API] success method=${method} elapsed_ms=${Date.now() - startedAt}`);
+      }
+      return result;
+    } catch (error) {
+      console.error(
+        `[TELEGRAM API] failure method=${method} elapsed_ms=${Date.now() - startedAt} code=${error?.error_code || 'network_or_unknown'} error=${error?.description || error?.message || String(error)}`
+      );
+      throw error;
+    }
+  });
 
   // Global error handler
   bot.catch(errorHandler);
