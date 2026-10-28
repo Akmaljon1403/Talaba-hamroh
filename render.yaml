@@ -1,8 +1,9 @@
 services:
-  - type: worker
+  - type: web
     name: fjsti-talaba-hamroh
     runtime: node
     plan: starter
+    healthCheckPath: /health
     buildCommand: npm install
     startCommand: npm start
     envVars:
