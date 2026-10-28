@@ -64,6 +64,15 @@ import {
   handleAdminEditCancel,
   processAdminEditInput
 } from './handlers/adminEdit.js';
+import {
+  handleSupportPrompt,
+  handleAdminSupportInbox,
+  handleSupportView,
+  handleSupportReply,
+  handleSupportClose,
+  processSupportMessage,
+  cancelSupportMode
+} from './handlers/support.js';
 
 export function createBot(token = config.botToken) {
   if (!token) {
@@ -124,6 +133,7 @@ export function createBot(token = config.botToken) {
   bot.command('start', handleStart);
   bot.command('help', handleHelp);
   bot.command('cancel', async (ctx) => {
+    if (cancelSupportMode(ctx)) return;
     if (await processAdminEditInput(ctx)) return;
     await handleCancel(ctx);
   });
@@ -138,8 +148,12 @@ export function createBot(token = config.botToken) {
   bot.hears('💡 Talaba xizmatlari', handleServices);
   bot.hears('🔍 Qidiruv', handleSearchPrompt);
   bot.hears('✍️ Fikr bildirish', handleFeedbackPrompt);
+  bot.hears('🆘 Administratordan yordam', handleSupportPrompt);
   bot.hears('⚙️ Admin boshqaruvi', handleAdminPanel);
-  bot.hears('❌ Bekor qilish', handleCancel);
+  bot.hears('❌ Bekor qilish', async (ctx) => {
+    if (cancelSupportMode(ctx)) return;
+    await handleCancel(ctx);
+  });
 
   // Inline callback query routers
   bot.callbackQuery('menu_home', async (ctx) => {
@@ -228,6 +242,16 @@ export function createBot(token = config.botToken) {
   bot.callbackQuery('admin_broadcast', handleAdminBroadcastPrompt);
   bot.callbackQuery('admin_add_book', handleAdminAddBookPrompt);
   bot.callbackQuery('admin_add_teacher', handleAdminAddTeacherPrompt);
+  bot.callbackQuery('admin_support_inbox', handleAdminSupportInbox);
+  bot.callbackQuery(/^support_view:(\\d+)$/, async (ctx) => {
+    await handleSupportView(ctx, parseInt(ctx.match[1], 10));
+  });
+  bot.callbackQuery(/^support_reply:(\\d+)$/, async (ctx) => {
+    await handleSupportReply(ctx, parseInt(ctx.match[1], 10));
+  });
+  bot.callbackQuery(/^support_close:(\\d+)$/, async (ctx) => {
+    await handleSupportClose(ctx, parseInt(ctx.match[1], 10));
+  });
   bot.callbackQuery('admin_edit_data', handleAdminEditData);
   bot.callbackQuery(/^admin_edit_list:([a-z]+):(\d+)$/, async (ctx) => {
     await handleAdminEditList(ctx, ctx.match[1], parseInt(ctx.match[2], 10));
@@ -244,6 +268,10 @@ export function createBot(token = config.botToken) {
   bot.on('message:text', async (ctx) => {
     const userId = ctx.from?.id;
     if (!userId) return;
+
+    // Active support chat takes priority over generic search and other text workflows.
+    const supportHandled = await processSupportMessage(ctx);
+    if (supportHandled) return;
 
     // Resolve the most recently selected admin data-edit field first.
     const adminEditHandled = await processAdminEditInput(ctx);
