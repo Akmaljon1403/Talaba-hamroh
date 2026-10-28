@@ -245,15 +245,15 @@ export function createBot(token = config.botToken) {
     const userId = ctx.from?.id;
     if (!userId) return;
 
+    // Resolve the most recently selected admin data-edit field first.
+    const adminEditHandled = await processAdminEditInput(ctx);
+    if (adminEditHandled) return;
+
     // Check if in admin input mode
     if (adminActionStates.has(userId)) {
       const handled = await processAdminInput(ctx);
       if (handled) return;
     }
-
-    // Check if in admin data-edit mode
-    const adminEditHandled = await processAdminEditInput(ctx);
-    if (adminEditHandled) return;
 
     // Check if in feedback mode
     if (feedbackStates.has(userId)) {
